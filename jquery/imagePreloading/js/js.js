@@ -141,7 +141,7 @@ $(function() {
             "images/13.jpg",
             "images/14.jpg"
         ],
-        logs: true
+        logs: false
     });
 });
 
