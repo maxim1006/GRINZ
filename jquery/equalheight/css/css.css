@@ -1,0 +1,21 @@
+/* reset */
+a,abbr,acronym,address,applet,b,big,blockquote,body,caption,center,cite,code,dd,del,dfn,div,dl,dt,em,fieldset,font,form,h1,h2,h3,h4,h5,h6,html,i,iframe,ins,kbd,label,legend,li,object,ol,p,pre,q,s,samp,small,span,strike,strong,sub,sup,table,tbody,td,tfoot,th,thead,tr,tt,u,ul,var{background:0 0;margin:0;padding:0;outline:0;border:0;vertical-align:baseline;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit}body{line-height:1}blockquote,q{quotes:none}img{border:0;-ms-interpolation-mode:bicubic}table{border-collapse:collapse;border-spacing:0}caption,td,th{vertical-align:middle;text-align:left}form,input,select,textarea{margin:0}h1,h2,h3,h4,h5,h6{display:block;color:inherit;font-weight:inherit;font-style:inherit}* html h1,* html h2,* html h3,* html h4,* html h5,* html h6,*+html h1,*+html h2,*+html h3,*+html h4,*+html h5,*+html h6{font-weight:400}article,aside,footer,header,nav,section{display:block}
+
+.line {
+    max-width: 1200px;
+    margin: 30px auto;
+    font-size: 0;
+    text-align:  center;
+}
+
+.line__item {
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid #000;
+    padding: 1%;
+    width: 25%;
+    margin: 0 1%;
+    font-size: 14px;
+    *display: inline;
+    zoom: 1;
+}

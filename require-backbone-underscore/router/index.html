@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--[if IE 7]>    <html class="no-js ie7 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 borderradius rgba"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js borderradius rgba"> <!--<![endif]-->
+<head>
+    <title>Backbone router, роутер в Бекбон</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+    <link rel="stylesheet" href="css/_css.css">
+    <link type="text/css" rel="stylesheet" href="../../js/brush/shCoreDefault.css"/>
+
+    <script type="text/javascript" src="../../js/brush/shCore.js"></script>
+    <script type="text/javascript" src="../../js/brush/shBrushJScript.js"></script>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+    <!--[if !IE 7]>
+    <style type="text/css">
+        #layout-outer {display:table;height:100%}
+    </style>
+    <![endif]-->
+</head>
+<body>
+
+<a href="/">&larr; grinz.ru</a>
+
+<div class="outer">
+
+    <h1>Backbone router (роутер в Бекбон)</h1>
+
+    <p class="center">
+        В данном разделе представлены примеры  роутера в Backbone.
+    </p>
+
+    <pre class="brush: js;">
+        window.App = {
+            Views: {},
+            Models: {},
+            Collections : {},
+            Router: {}
+        };
+
+
+
+        App.Router = Backbone.Router.extend({
+            routes: {
+                //индексная страница
+                ''                 : 'index',
+                //так будет роутер на страницы http://grinz.ru/require-backbone-underscore/router/index.html#page/5
+                'page/:id'         : 'page',
+                //роутер на страницу http://grinz.ru/require-backbone-underscore/router/index.html#page/5/300
+                'page/:id/300'     : 'page300',
+                //роутер на страницу http://grinz.ru/require-backbone-underscore/router/index.html#page/5/199
+                'page/:id/*anyPage': 'anyPage',
+                //пример для серча http://grinz.ru/require-backbone-underscore/router/index.html#search/5
+                'search/:query'    : 'search',
+                //дефолтный роут, нужно делать в конце
+                '*other'           : 'default'
+            },
+            index: function() {
+                console.log('index page');
+            },
+            page: function(id) {
+                console.log('page id ' + id);
+            },
+            page300: function(id) {
+                console.log('page300 id ' + id);
+            },
+            anyPage: function(id, anyPage) {
+                console.log('id ' + id +' anyPage ' + anyPage);
+            },
+            search: function(query) {
+                console.log('Поисковый запрос ' + query);
+            },
+            default: function(id) {
+                console.log('Дефолтный запрос ' + id);
+            }
+        });
+
+        new App.Router();
+
+        Backbone.history.start();
+    </pre>
+
+
+    <p>Что почитать:</p>
+
+    <ul>
+        <li><a href="http://backbonejs.org/">http://backbonejs.org/</a></li>
+    </ul>
+
+</div>
+
+
+<script  src="js/jquery.js"></script>
+<script  src="js/underscore.js"></script>
+<script  src="js/backbone.js"></script>
+<script  src="js/_js.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+
+.main1,
+.main2  {
+    min-height: 100%;
+    border: 1px solid;
+}
+
+.main1 {
+    padding-bottom: 100px;
+}
+
+.footer1 {
+    height: 100px;
+    margin-top: -100px;
+    background-color: #ccc;
+
+    /*another approach*/
+    /*height: 100px;
+    position: relative;
+    top: -100px;
+    background-color: #ccc;*/
+}
+
+.main2 {
+    position: relative;
+}
+
+.section {
+    padding-bottom: 100px;
+}
+
+.footer2 {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    background-color: lightblue;
+}
+
+
+
+
+/*not required styles for sticky footer*/
+.variant1,
+.variant2 {
+    height: 100%;
+    width: 40%;
+}
+
+.variant1 {
+    float: left;
+}
+
+.variant2 {
+    float: right;
+}
+
+h2 {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.buttons {
+    position: absolute;
+    left: 50%;
+    text-align: center;
+    -webkit-transform: translate(-50%,20px);
+    -ms-transform: translate(-50%,20px);
+    transform: translate(-50%,20px);
+}
+
+.button {
+    display: block;
+    width: 100%;
+    margin: 20px auto;
+    padding: 10px;
+    cursor: pointer;
+}

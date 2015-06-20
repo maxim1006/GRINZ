@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='UTF-8'>
+	
+	<title>Flexible table</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+	
+	@media 
+	only screen and (max-width: 600px),
+	(min-device-width: 600px) and (max-device-width: 600px)  {
+	
+		table#plan,table#plan thead,table#plan tbody,table#plan th,table#plan td,table#plan tr { 
+			display: block; 
+		}
+		
+		table#plan thead tr { 
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+		
+		table#plan tr { border: 1px solid #ccc; }
+		
+		table#plan td { 
+			/* Behave  like a "row" */
+			border: none;
+			border-bottom: 1px solid #eee; 
+			position: relative;
+			padding-left: 50%; 
+		}
+		table#plan td.book{text-align:center}
+		
+		table#plan td:before { 
+			position: absolute;
+			top: 6px;
+			left: 6px;
+			width: 45%; 
+			padding-right: 10px; 
+			white-space: nowrap;
+		}
+		
+		table#plan td:nth-of-type(1):before { content: "Text"; }
+		table#plan td:nth-of-type(2):before { content: "Starter"; }
+		table#plan td:nth-of-type(3):before { content: "2"; }
+		table#plan td:nth-of-type(4):before { content: "3"; }
+		table#plan td:nth-of-type(5):before { content: "4"; }
+		table#plan td:nth-of-type(6):before { content: "5"; }
+		table#plan td:nth-of-type(7):before { content: "6"; }
+		table#plan td:nth-of-type(8):before { content: "7"; }
+		table#plan td:nth-of-type(9):before { content: "8"; }
+		table#plan td:nth-of-type(10):before { content: "9"; }
+		table#plan td:nth-of-type(11):before { content: "10"; }
+		table#plan td:nth-of-type(12):before { content: "11"; }
+	}
+	
+	/* Smartphones (portrait and landscape) ----------- */
+	@media only screen
+	and (min-device-width : 320px)
+	and (max-device-width : 480px) {
+		body { 
+			padding: 0; 
+			margin: 0; 
+			width: 320px; }
+		}
+	
+	/* iPads (portrait and landscape) ----------- */
+	@media only screen and (min-device-width: 600px) and (max-device-width: 600px) {
+		body { 
+			width: 495px; 
+		}
+	}
+	
+	</style>
+
+</head>
+
+<body>
+
+	<div>
+		<a href="/">&larr; grinz.ru</a>
+	</div>	
+
+	<div id="page-wrap">
+    
+	<table id="plan">
+    	<colgroup></colgroup><colgroup></colgroup><colgroup></colgroup><colgroup></colgroup><colgroup></colgroup><colgroup></colgroup><colgroup></colgroup><colgroup></colgroup><colgroup></colgroup><colgroup></colgroup><colgroup></colgroup><colgroup></colgroup>
+		<thead>
+		<tr>
+			<th>Text</th>
+			<th>Text</th>
+			<th>2</th>
+			<th>3</th>
+			<th>4</th>
+			<th>5</th>
+			<th>6</th>
+			<th>7</th>
+			<th>8</th>
+			<th>9</th>
+            <th>10</th>
+            <th>11</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="book">Some text</td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+            <td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td>2013</td>
+			<td>2014</td>
+            <td>2014</td>
+			<td>2013</td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+            <td><img src="img/check.png" title="Вышел"> </td>
+			<td>2013</td>
+			<td>2013</td>
+			<td>2014</td>
+            <td>2014</td>
+			<td>2013</td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td>&nbsp;</td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+            <td><img src="img/check.png" title="Вышел"></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+            <td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td>&nbsp;</td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+            <td><img src="img/check.png" title="Вышел"></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+            <td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td>&nbsp;</td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+            <td><img src="img/cross.png" title="Не планируется"></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+            <td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>2013</td>
+			<td>2013</td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+            <td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td>2013</td>
+			<td>2014</td>
+            <td>2014</td>
+			<td>2013</td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+		</tr>
+        <tr>
+        	<td class="book">Some text</td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+            <td><img src="img/check.png" title="Вышел"> </td>
+			<td>2013</td>
+			<td>2014</td>
+			<td>2014</td>
+            <td>2013</td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td>2013</td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+            <td><img src="img/check.png" title="Вышел"></td>
+			<td>2013</td>
+			<td>2013</td>
+			<td>2014</td>
+            <td>2014</td>
+			<td>2013</td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+            <td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+            <td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/globe.png" title="На сайте"></td>
+			<td><img src="img/globe.png" title="На сайте"></td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td><img src="img/globe.png" title="На сайте"></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+            <td>&nbsp;</td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+            <td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td><img src="img/globe.png" title="На сайте"></td>
+			<td><img src="img/globe.png" title="На сайте"></td>
+			<td><img src="img/globe.png" title="На сайте"></td>
+            <td><img src="img/globe.png" title="На сайте"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+            <td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td>&nbsp;</td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+            <td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+            <td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/work.png" title="В разработке"></td>
+			<td><img src="img/work.png" title="В разработке"></td>
+            <td><img src="img/work.png" title="В разработке"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+            <td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+            <td><img src="img/check.png" title="Вышел"></td>
+			<td>2013</td>
+			<td>2013</td>
+			<td>2013</td>
+            <td>2013</td>
+			<td>2013</td>
+			<td>2013</td>
+			<td>2013</td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/cross.png" title="Не будет, т.к. есть РАБОЧИЕ"></td>
+            <td><img src="img/cross.png" title="Не будет, т.к. есть РАБОЧИЕ"></td>
+            <td><img src="img/cross.png" title="Не будет, т.к. есть РАБОЧИЕ"></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+            <td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td><img src="img/check.png" title="Вышел"></td>
+			<td><img src="img/check.png" title="Вышел"></td>
+		</tr>
+        <tr>
+			<td class="book">Some text</td>
+			<td><img src="img/cross.png" title="Не планируется"></td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+			<td><img src="img/check.png" title="Вышел"> </td>
+            <td><img src="img/check.png" title="Вышел"> </td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+            <td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		</tbody>
+	</table>
+	
+	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script>
+		$("table").delegate('td','mouseover mouseleave', function(e) {
+			if (e.type == 'mouseover') {
+			  $(this).parent().addClass("hover");
+			  $("colgroup").eq($(this).index()).addClass("hover");
+			}
+			else {
+			  $(this).parent().removeClass("hover");
+			  $("colgroup").eq($(this).index()).removeClass("hover");
+			}
+		});
+	</script>	
+</body>
+
+</html>

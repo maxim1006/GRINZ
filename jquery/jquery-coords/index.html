@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jquery coords</title>
+	<style>
+		/* reset */
+a,abbr,acronym,address,applet,b,big,blockquote,body,caption,center,cite,code,dd,del,dfn,div,dl,dt,em,fieldset,font,form,h1,h2,h3,h4,h5,h6,html,i,iframe,ins,kbd,label,legend,li,object,ol,p,pre,q,s,samp,small,span,strike,strong,sub,sup,table,tbody,td,tfoot,th,thead,tr,tt,u,ul,var{background:0 0;margin:0;padding:0;outline:0;border:0;vertical-align:baseline;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit}body{line-height:1}blockquote,q{quotes:none}img{border:0;-ms-interpolation-mode:bicubic}table{border-collapse:collapse;border-spacing:0}caption,td,th{vertical-align:middle;text-align:left}form,input,select,textarea{margin:0}h1,h2,h3,h4,h5,h6{display:block;color:inherit;font-weight:inherit;font-style:inherit}* html h1,* html h2,* html h3,* html h4,* html h5,* html h6,*+html h1,*+html h2,*+html h3,*+html h4,*+html h5,*+html h6{font-weight:400}article,aside,footer,header,nav,section{display:block}
+
+		.fixed {
+			position: fixed;
+			top: 0;
+			left: 50%;
+			margin-left: -350px;
+			width: 700px;
+			box-shadow: 0 0 20px 20px #fff;
+			font-size: 16px;
+			background: #fff;
+			z-index: 10;
+		}
+
+		.box {
+			margin: 50px 0;
+		}
+		.box_left500 {
+			margin-left: 500px;
+		}
+		.box_left1000 {
+			margin-left: 1000px;
+		}
+		.box_left1500 {
+			margin-left: 1500px;
+		}
+		.box_left2000{
+			margin-left: 2000px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+        <a href="/">← grinz.ru</a>
+    </div>
+	
+	<div class="fixed">
+		<div class="window"></div>
+		<div class="doc"></div>
+		<div class="offset-top"></div>
+		<div class="offset-left"></div>
+		<div class="position-top"></div>
+		<div class="position-left"></div>
+		<div class="page-x"></div>
+		<div class="page-y"></div>
+		<div class="client-x"></div>
+		<div class="client-y"></div>
+		<div class="screen-x"></div>
+		<div class="screen-y"></div>
+	</div>	
+
+	<div class="box">
+		<img src="http://dummyimage.com/600x400/000/fff" alt="" width="600" height="400">
+	</div>	
+
+	<div class="box box_left500">
+		<img src="http://dummyimage.com/600x400/000/fff" alt="" width="600" height="400">
+	</div>	
+
+	<div class="box box_left1000">
+		<img src="http://dummyimage.com/600x400/000/fff" alt="" width="600" height="400">
+	</div>	
+
+	<div class="box box_left1500">
+		<img src="http://dummyimage.com/600x400/000/fff" alt="" width="600" height="400">
+	</div>	
+
+	<div class="box box_left2000">
+		<img src="http://dummyimage.com/600x400/000/fff" alt="" width="600" height="400">
+	</div>			
+	
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/jqueryCoords.js"></script>
+</body>
+</html>

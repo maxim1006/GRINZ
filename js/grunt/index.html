@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="keywords" content="Grunt, gruntfile, node, npm, примеры">
+    <meta name="description" content="Grunt, руководство по эксплуатации с примерами">
+    <title>Grunt, руководство с примерами</title>
+    <link rel="stylesheet" href="css/css.css">
+    <script type="text/javascript" src="../brush/shCore.js"></script>
+    <script type="text/javascript" src="../brush/shBrushJScript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../brush/shCoreDefault.css"/>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="css/ie7.css">
+    <![endif]-->
+</head>
+    <body>
+        <a href="/">&larr; grinz.ru</a>
+
+        <div class="outer">
+
+            <h1>Grunt</h1>
+
+            <p class="center">
+                <strong>Grunt</strong> - билдер для улучшения жизни веб-разработчиков, то что раньше приходилось делать руками, теперь можно автоматизировать.
+            </p>
+
+            <p>
+                Сперва устанавливаем <a href="http://nodejs.org/" target="_blank">node.js</a>. Он в себе уже содержит <a
+                    href="https://www.npmjs.org/">npm</a> - инсталлер модулей, которые будут выполнять задачи, которые мы ему скажем.
+            </p>
+
+            <p>
+                Затем устанавливаем сам грант командой
+            </p>
+
+            <pre class="brush: js;">
+                //установится глобально на пк
+                npm install -g grunt-cli
+            </pre>
+
+            <p>
+                А затем создаем пару файлов, один из которых содержит в себе общую информацию о проекте и модулях: package.json, второй, сам Gruntfile.js.
+                gruntfile.js может быть разным, здесь будет приведен вариант с обычным набором модулей, необходимых для разработок, практически любой сложности.
+            </p>
+
+            <h3>
+                Файл <strong>package.json</strong>
+            </h3>
+
+            <pre class="brush: js;">
+            {
+                "name": "имя_проекта", //например "Project"
+                "version": "версия", //например "0.0.1"
+                "description": "описание проекта", //пример "Simple project"
+                 //на одном уровне с package.json должен лежать Gruntfile.js
+                "main": "Gruntfile.js",
+                "author": "имя_автора", //например "maxim1006"
+                //а дальше зависимости модулей, которые в файле package.json
+                //появятся автоматом по мере их установки. Можно писать сразу,
+                //это не важно, потом если что заменятся.
+                "devDependencies": {
+                    "grunt": "^0.4.5",
+                    "grunt-autoprefixer": "~1.0.1",
+                    "grunt-contrib-less": "^0.11.4",
+                    "grunt-contrib-uglify": "^0.6.0",
+                    "grunt-contrib-watch": "^0.6.1"
+                }
+            }
+            </pre>
+
+            <p>
+                После создания <strong>package.json</strong>, нужно установить пакеты с тасками, которые будут использоваться в процессе девелопмента. В стандартном проекте, на мой взгляд, достаточно 4х.
+                Открываем консоль, заходим в папочку, где лежит package.json и набираем команду
+            </p>
+            <pre class="brush: js;">
+                //i - означает install, если запустить эту команду в папке,
+                //в которой лежит package.json, то npm установит все зависимости из
+                //devDependencies
+                npm i --save-dev
+            </pre>
+
+            <p>Таски можно установить и последовательно:</p>
+            <pre class="brush: js;">
+                // --save-dev - инсталлить таск прямо
+                //в проект в папочку node_modules (которая создасться автоматом)
+                //этот таск нужен для конвертации less в css
+                npm i grunt-contrib-less --save-dev
+
+                //этот таск нужен для конкатенации и минификации js
+                npm i grunt-contrib-uglify --save-dev
+
+                //таск для отслеживания изменений в файлах в режиме
+                //реального времени
+                npm i grunt-contrib-watch --save-dev
+
+                //таск, который автоматом проставляет префиксы в css файле
+                npm i grunt-autoprefixer --save-dev
+            </pre>
+
+            <h3>
+                Файл <strong>Gruntfile.js</strong>
+            </h3>
+
+            <pre class="brush: js;">
+            module.exports = function(grunt) {
+                grunt.initConfig({
+                    //таск для конвертации less в css
+                    less: {
+                        development: {
+                            options: {
+                                //указать, минифицировать ли файл
+                                compress: false
+                            },
+                            files: {
+                                //тут соответственно указать путь где создавать
+                                //конвертируемый файл
+                                "css/main.css": "styles/main.less"
+                            }
+                        }
+                    },
+                    //таск для отслеживания изменений чего-либо
+                    watch: {
+                        //тут пишем за каким типом файлов следить
+                        less: {
+                            //тут указываем за какими файлами следить **/**/*.less - означает
+                            //следить за всеми .less файлами, которые находятся на 2х уровнях
+                            //вложенности от папки less/
+                            files: ['styles/**/**/*.less'],
+                            //какие таски надо выполнить при изменении файлов .less
+                            tasks: ['less', 'autoprefixer']
+                        }
+                    },
+                    //после того как создали скрипты, их надо объединить и минифицировать
+                    //для этого используем таск uglify
+                    uglify: {
+                        options: {
+                            //нужно ли минифицировать (false) или просто склеить (true)
+                            beautify: false
+                        },
+                        my_target: {
+                            files: {
+                                    //файл на выходе будет main.js, а файлы на входе указываем в
+                                    //массиве по порядку.
+                                    'scripts/new/main.js': [
+                                    'scripts/lib/jquery-2.1.1.min.js',
+                                    'scripts/module.js'
+                                ]
+                            }
+                        }
+                    },
+                    //этот таск из серии postcss, те теперь не нужно будет сразу писать префиксы в css
+                    //autoprefixer сделает это сам, инфу берет с caniuse.com
+                    autoprefixer: {
+                            //указывам файл в котором нужно проставить префиксы, он сам его перезапишит
+                            no_dest: {
+                                src: "css/main.css"
+                            }
+                        }
+                    });
+
+                //указываем названия модулей необходимых для работы
+                grunt.loadNpmTasks('grunt-autoprefixer');
+                grunt.loadNpmTasks('grunt-contrib-watch');
+                grunt.loadNpmTasks('grunt-contrib-less');
+                grunt.loadNpmTasks('grunt-contrib-uglify');
+
+                //Здесь указываем какие таски запускать на дефолтный вызов грант (в командной строке пишмем
+                //слово grunt и он по дефолту запустит эти таски)
+                grunt.registerTask('default', ['uglify', 'watch']);
+            };
+            </pre>
+
+            <p>После того как установили node, grunt, модули, создали Gruntfile.js и package.json, открываем консоль, заходим в директорию, где лежит Gruntfile.js, и вводим grunt, затем начинаем разработку.</p>
+
+            <p><a href="./project.zip">Скачать пример проекта (можно сразу использовать)</a></p>
+
+            <p>Дальше можно усложнять Gruntfile, используя bower, yeoman и все такое.</p>
+
+            <p><a href="https://github.com/maxim1006/generator-nc-static" target="_blank">Более сложный пример уже с автоматической установкой с помощью yeoman</a></p>
+        </div>
+    </body>
+</html>

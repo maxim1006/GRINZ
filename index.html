@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!--[if IE 7]> <html class="no-js ie7 no-borderradius no-rgba ie"> <![endif]-->
+<!--[if IE 8]> <html class="no-js ie8 no-borderradius no-rgba ie"> <![endif]-->
+<!--[if IE 9]> <html class="no-js ie9 borderradius rgba ie"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js borderradius rgba"> <!--<![endif]-->
+<head>
+    <title>Grinz</title>
+    <meta name='yandex-verification' content='541fcc7ece1f938f' />
+    <meta http-equiv=Content-Type content="text/html; charset=utf-8" />
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name=viewport content="width=device-width, initial-scale = 1.0, user-scalable = no">
+    <meta name=keywords content="Grinz, HTML, CSS, javascript, jquery">
+    <meta name=description content="Grinz, Готовые примеры для веб-разработчика">
+    <style type="text/css">
+    html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {    margin: 0;  padding: 0; border: 0;  font-size: 100%; font-weight: 400; font: inherit;  vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {    display: block;}body {  line-height: 1;}ol, ul {    list-style: none;}blockquote, q {   quotes: none;}blockquote:before, blockquote:after,q:before, q:after {   content: '';    content: none;}table {  border-collapse: collapse;  border-spacing: 0;}a{color: #4e7f9f;}a:hover{color:orange;text-decoration: none;}
+        html,body{height:100%}
+        body{background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAIAAAC0Ujn1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUUwMTk3NDM3OTM1MTFFNEI3QTRGNTgwRUMwQTZCRUIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUUwMTk3NDQ3OTM1MTFFNEI3QTRGNTgwRUMwQTZCRUIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpFRTAxOTc0MTc5MzUxMUU0QjdBNEY1ODBFQzBBNkJFQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpFRTAxOTc0Mjc5MzUxMUU0QjdBNEY1ODBFQzBBNkJFQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PoHcXzwAAAPZSURBVHjaTNbXTu0wFEVRTjj0Jvj/TwRE7+UOZyLr+iFynLXb2sXZ3Nzc7O3tLcvy8/Pz9fW13W5/f393dnY+Pj42m83BwYH97u6uPYDD7+9vhy8vL6Q6d9JXz8/PTxoSWeAODw/JeN/f36fXKdzx8fHp6akNFQSIOQfghCeRrFIEAAlzcnJCamdd8Aubz8/PEF6ACDghWRC0wLEHU0wwNr46tMkSz/Ivz7K6DPXL8B2a0hyMHyu/bJZ1MRAD2YuBx8dHADCAQs/wkv8Je08d+4w5wWm+iJQ7pcGT79FCI2QOvb+/D43LYjPyl2TkEoMTZnQDHR0dFSBhSJwSc/L6+vq+Lhq36yos9iDjcwtnx7vPdcU1ASdR5rWkv729EWDMJhV0PT09ecLwj567uztgOmNyGDw7OwM6Pz8vn5YgKGLAJ96VwwR8KnyClU116TW92BhBR0gfPBkojZwiU3ptFJZzfgHzESEVL0AniYjJOT8G1wTsor8UQ/DIRupH5a/xRnFlk7P11MPDw0ydE17vr2voopeuVNR+sy3xkwt8rMCrzjoif8URgV5FBhktIxOOfKik4BjPcn2BVpvCLJNeJQBvcUi2TsaADXzZGgYq1Zpt1jhhCD7iRBq/1tXEiB9PhUiKE9FCdSKRMwIxngrKt4YO49ycgWfShpbqkg1Ka4JyWPEQrK04NzquOeAJTW/CzPocrhIiOZstXZPuuik9Tijh63j1jUxDi0CnlNZjNiKohAJMQhjDeCzDNEb69Leurq5K/f39PUegZ5dXvw5J2pfD+GnCNaEaRgzU9NLzu64N4WZelVD7OZnzofqhKAwZCby9vRVoOa9Afa2QqvehWtfX8l6YycEYnPdFvGcjXflVRTXEheuEPTn7q6UIlX3Pi4uLitceUT5dXl4Si1DOOvGsreI9eynRYgUqYaMolWTt3w1p8b1ZAV2p1G8xC1apUFTCqyIOkcrfma1lulCw/0fNwZn3hkMAr3SlNNtNu5LZiF4mm9/rmq1R73RP/g3JNfzkq+KimXmjR3nMgTPqOqK7cwUrIZI5Wx80RZTypesR49X+vFm6FeOk23JzfX2dmw3opnYxxoxatBf+LIxGQnXpCa8wAhRTtbvlUQOoO393Xd0jHdLSMCLczZlq6sRX/WQSpp4iS+fo+oZsFcb9tDey+8GoKWwmsolW19RNWZ05GFxxcI755kv97Rta+4OIpVyrrauNeYGVw+qkwfuXxm6jWQn1nj2r3Vs9Yar9fnoCY6ZAuy1b+Tfc6Tehi4qBKi8DzftS2iyFaYQ1fPrXqFRq4xrQ+ifAAMnRc/fOQg02AAAAAElFTkSuQmCC');}
+        #layout-outer{min-height:100%;width:100%}
+        #layout-inner{padding-bottom:60px}
+        #layout-footer{position:relative;margin-top:-60px;height:60px;clear:both;box-shadow:inset 0 2px 10px #ccc}
+        body:before{content:"";height:100%;float:left;width:0;margin-top:-32767px}
+        .header{position:relative;text-align:center;font-size:0;padding:20px}
+        .header a{text-decoration:none}
+        .header__label_part1,.header__label_part2,.header__label_part3,.header__label_part4,.header__label_part5,.header__label_part6,.header__label_part7,.header__label_part8{font:60px/1.2 Arial;color:#000;display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom:1;*display:inline;position:relative;text-shadow:2px 1px 2px #ccc;z-index:10}
+        .header__label_part1{color:purple}
+        .header__label_part2{color:blue}
+        .header__label_part3{color:orange}
+        .header__label_part4{color:green}
+        .header__label_part5{color:red}
+        .header__label_part6{color:#a52a2a}
+        .header__label_part7{color:#a52a2a}
+        .header__label_part8{color:#a52a2a}
+        .header__h1{font:30px/1.4 Gabriola,Arial;font-feature-settings:ss03;-webkit-font-feature-settings:ss03;-moz-font-feature-settings:ss03;color:#1a1a1a;margin-bottom:30px}
+        .header__h1 strong{font-weight:700}
+        .nav{font-size:0;text-align:center}
+        .nav__list{font-size:0;text-align:center}
+        .nav__list-item{position:relative;display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom:1;*display:inline;margin:0 2% 10px}
+        .nav__dropdown,.nav__dropdown_right-rows{position:absolute;left:-5000px;text-align:left;background-color:#FFD5A9;-webkit-border-radius:0 0 5px 5px;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;border:4px solid #e28f26;opacity:0;z-index:2;-webkit-transition:opacity .3s ease-out;-moz-transition:opacity .3s ease-out;-o-transition:opacity .3s ease-out;transition:opacity .3s ease-out}
+        .nav__dropdown_right-rows{white-space:nowrap}
+        .nav__dropdown_right-rows .nav__list-inner{display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom:1;*display:inline}
+        .nav__list-item:hover .nav__dropdown,.nav__list-item:hover .nav__dropdown_right-rows{left:0;opacity:1}
+        .nav__list-item:hover .nav__list-item-link{text-decoration:none;color:orange}
+        .nav__list-item:hover .nav__dropdown_right-rows{right:0;left:auto}
+        .nav__list-inner{margin:5px 0}
+        .nav__list-item-link{font:24px/1.2 Arial;padding:10px 20px}
+        .nav__list-inner-item{white-space:nowrap}
+        .nav__list-inner-item a{display:block;padding:10px 20px;text-align:left;font:16px/1.4 Arial}
+        #layout-footer{overflow:hidden}
+        .layout-footer__corp{padding:23px;font:italic 12px/1.2 Arial;text-align:center}
+        .ie{opacity:1}
+        @media screen and (max-width: 600px) {
+            .header{padding-bottom:0}
+            .nav__list-item{width:90%;margin:0 5% 10%}
+            .nav__list-item:first-child{margin-top:0}
+            .nav__list-inner-item{white-space: normal;}
+            .nav__dropdown,.nav__dropdown_right-rows{position:static;width:80%;margin:10px 10%;opacity:1}
+            .nav__dropdown_right-rows{white-space:normal}
+        }
+    </style>
+    <!--[if lt IE 9]>
+    <script src=http://html5shiv.googlecode.com/svn/trunk/html5.js></script>
+    <script src=http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js></script>
+    <![endif]-->
+    <!--[if !IE 7]>
+    <style type=text/css>#layout-outer{display:table;height:100%}</style>
+    <![endif]-->
+</head>
+<body>
+<div id=layout-outer>
+    <div id=layout-inner>
+        <header class=header>
+            <a href=/ class=header__label>
+                <span class=header__label_part1>G</span>
+                <span class=header__label_part2>R</span>
+                <span class=header__label_part3>I</span>
+                <span class=header__label_part4>N</span>
+                <span class=header__label_part5>Z</span>
+                <span class=header__label_part6>.</span>
+                <span class=header__label_part7>r</span>
+                <span class=header__label_part8>u</span>
+            </a>
+        </header>
+        <header class=header>
+            <h1 class=header__h1><strong>Grinz</strong> - готовые примеры для веб-разработчика</h1>
+        </header>
+        <nav class=nav>
+            <ul class=nav__list>
+                <li class=nav__list-item>
+                    <a class=nav__list-item-link href=#html-css id=html-css><strong>html/css</strong></a>
+                    <div class=nav__dropdown>
+                        <ul class=nav__list-inner>
+                            <li class=nav__list-inner-item><a href=css-examples/stickyFooter/>Sticky Footer</a></li>
+                            <li class=nav__list-inner-item><a href=css-examples/flexbox/>Flexboxes</a></li>
+                            <li class=nav__list-inner-item><a href=css-examples/svg-background/>SVG background</a></li>
+                            <li class=nav__list-inner-item><a href=css-examples/flexible-table/>Flexible table</a></li>
+                            <li class=nav__list-inner-item><a href=css-examples/super-blocks.html>Super blocks</a></li>
+                            <li class=nav__list-inner-item><a href=css-examples/rotated-cubes.html>Rotated cubes</a></li>
+                            <li class=nav__list-inner-item><a href=css-examples/shadows.html>CSS shadows</a></li>
+                            <li class=nav__list-inner-item><a href=css-examples/fonts.html>Наборы шрифтов</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class=nav__list-item>
+                    <a class=nav__list-item-link href=#javascript id=javascript><strong>JavaScript</strong></a>
+                    <div class=nav__dropdown>
+                        <ul class=nav__list-inner>
+                            <li class=nav__list-inner-item><a href=js/grunt/>Grunt, руководство с примерами</a></li>
+                            <li class=nav__list-inner-item><a href=js/promises/>Promises in Javascript</a></li>
+                            <li class=nav__list-inner-item><a href=js/video-player/>Video player IE9+</a></li>
+                            <li class=nav__list-inner-item><a href=js/throttle/>Throttle, debounce, resizeend</a></li>
+                            <li class=nav__list-inner-item><a href=js/call-apply-bind-proxy.html>Call, apply, bind, proxy</a></li>
+                            <li class=nav__list-inner-item><a href=js/scrolltop-scrollleft/>ScrollLeft, ScrollTop</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class=nav__list-item>
+                    <a class=nav__list-item-link href=#jquery id=jquery><strong>jQuery</strong></a>
+                    <div class=nav__dropdown_right-rows>
+                        <ul class=nav__list-inner>
+                            <li class=nav__list-inner-item><a href=jquery/maxcarousel/>Maxcarousel</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/maxgallery/>Maxgallery</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/maxscroll/>Maxscroll</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/maxslider/>Maxslider</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/maxtooltip/>Maxtooltip</a></li>
+                        </ul>
+                        <ul class=nav__list-inner>
+                            <li class=nav__list-inner-item><a href=jquery/Collapser/>Collapser</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/simple-popup/>Simple popup</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/floating-menu/>Floating menu</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/equalheight/>Equal height</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/memory-training/>Memory training</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/lazy-load/>Lazy load</a></li>
+                        </ul>
+                        <ul class=nav__list-inner>
+                            <li class=nav__list-inner-item><a href=jquery/deferred/>jQuery deferred</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/jquery-coords/>jQuery coords</a></li>
+                            <li class=nav__list-inner-item><a href=jquery/jquery-vs-velocity/>jQuery vs Velocity.js</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class=nav__list-item>
+                    <a class=nav__list-item-link href=#require-backbone-underscore id=require-backbone-underscore><strong>Require.js + Underscore.js + Backbone.js</strong></a>
+                    <div class=nav__dropdown>
+                        <ul class=nav__list-inner>
+                            <li class=nav__list-inner-item><a href=require-backbone-underscore/models/>Backbone models</a></li>
+                            <li class=nav__list-inner-item><a href=require-backbone-underscore/collections/>Backbone collections</a></li>
+                            <li class=nav__list-inner-item><a href=require-backbone-underscore/views/>Backbone views</a></li>
+                            <li class=nav__list-inner-item><a href=require-backbone-underscore/router/>Backbone router</a></li>
+                            <li class=nav__list-inner-item><a href=require-backbone-underscore/inheritance/>Backbone inheritance</a></li>
+                            <li class=nav__list-inner-item><a href=require-backbone-underscore/underscore-template/>Underscore.js template</a></li>
+                            <li class=nav__list-inner-item><a href=require-backbone-underscore/backbone-underscore-require/>Backbone + underscore + require</a></li>
+                            <li class=nav__list-inner-item><a href=require-backbone-underscore/require-backbone-router/>Backbone Routing + underscore + require</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div id=layout-footer>
+    <div class=layout-footer__corp>
+        2014 © - "grinz.ru". Use it as you want :-) <a href=https://github.com/maxim1006>Github link</a>. Write me a letter: maxim1006@list.ru
+    </div>
+</div>
+
+<script type = "text/javascript">
+    window.onload = function() {
+        var link = document.createElement('link');
+        link.rel = "stylesheet";
+        link.href = "_css_anim.css";
+        document.head.appendChild(link);
+
+        (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter24251140 = new Ya.Metrika({id:24251140, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");
+    }
+</script>
+
+</body>
+</html>
+

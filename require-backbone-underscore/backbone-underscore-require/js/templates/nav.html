@@ -1,0 +1,14 @@
+<a class="nav__list-item-link" href="#">
+    <strong><%=navLink%></strong>
+</a>
+<div class="nav__dropdown 
+    <%if(typeof(navDropdownRightRows) !== 'undefined') { %>
+        <%=navDropdownRightRows%>
+    <% } %>    
+">  
+    <%_.each(arr, function(el) {%>
+        <ul class="nav__list-inner">  
+            <li class="nav__list-inner-item"><%=el%></li>
+        </ul>    
+    <%});%>
+</div>  

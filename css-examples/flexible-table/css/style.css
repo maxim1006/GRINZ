@@ -1,0 +1,34 @@
+* { 
+	margin: 0; 
+	padding: 0; 
+}
+body { 
+	font: 14px/1.4 Georgia, Serif; 
+}
+#page-wrap {
+	margin: 20px;
+}
+
+	/* 
+	Generic Styling, for Desktops/Laptops 
+	*/
+	table#plan { 
+		width: 100%; 
+		border-collapse: collapse; 
+	}
+	/* Zebra striping */
+	table#plan th { 
+		background: #4a759a; 
+		color: white; 
+		font-weight: bold; 
+		text-align:center !important;
+	}
+	table#plan td, table#plan th { 
+		padding: 6px; 
+		border: 1px solid #ccc; 
+		text-align: center;
+		vertical-align: middle; 
+	}
+table#plan td:hover{background:#fff !important;}
+table#plan td.book{font-weight:700;text-align:left;background:#ecf3f9 !important;}
+table#plan .hover { background-color: #eee; }

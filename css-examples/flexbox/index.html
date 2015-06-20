@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--[if IE 7]>    <html class="ie ie7">   <![endif]-->
+<!--[if IE 8]>    <html class="ie ie8">   <![endif]-->
+<!--[if IE 9]>    <html class="ie ie9">   <![endif]-->
+<!--[if gt IE 9]><!--> <html class="ie"> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox</title>
+    <link rel="stylesheet" href="css/__main.css">
+    <!--[if lt IE 9]>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<a href="/">← grinz.ru</a>
+
+    <div class="wrap">
+
+        <h1>Flexbox model</h1>
+        <h2>
+            flex-direction: <b>row</b> (default)<br/>
+            justify-content: <b>flex-start</b> (default)
+        </h2>
+        <div class="example1">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">lorem</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+        
+        <h3>justify-content: <b>flex-end</b></h3>
+        <div class="example1 example1_justify-end">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">lorem</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>justify-content: <b>flex-center</b></h3>
+        <div class="example1 example1_justify-center">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">lorem</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>justify-content: <b>space-between</b></h3>
+        <div class="example1 example1_space-between">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">lorem</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>justify-content: <b>space-around</b></h3>
+        <div class="example1 example1_space-around">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">lorem</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>flex-direction: <b>row-reverse</b></h3>
+        <div class="example1 example1_row-reverse">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>flex-direction: <b>column</b></h3>
+        <div class="example1 example1_column">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>flex-direction: <b>column-reverse</b></h3>
+        <div class="example1 example1_column-reverse">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h2><b>order</b></h2>
+        <div class="example2">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">order: 1</div>
+                <div class="flex__item">order: 2</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h2>align-items: <b>flex-start</b> (default)</h2>
+        <div class="example3">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>align-items: <b>flex-end</b></h3>
+        <div class="example3 example3_align-items-end">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>align-items: <b>center</b></h3>
+        <div class="example3 example3_align-items-center">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h2>margin: <b>auto</b></h2>
+        <div class="example4">
+            <div class="flex">
+                <div class="flex__item flex__item_popup">Текст</div>
+            </div>
+        </div>
+
+        <h2><b>flex-grow</b></h2>
+        <div class="example5">
+            <div class="flex">
+                <div class="flex__item flex__item_start">flex-grow: 2</div>
+                <div class="flex__item">flex-grow: 1</div>
+                <div class="flex__item">flex-grow: 1</div>
+                <div class="flex__item">flex-grow: 1</div>
+                <div class="flex__item flex__item_end">flex-grow: 1</div>
+            </div>
+        </div>
+
+        <h2><b>flex-shrink</b></h2>
+        <div class="example6">
+            <div class="flex">
+                <div class="flex__item flex__item_start">flex-shrink: 4</div>
+                <div class="flex__item">flex-shrink: 1</div>
+                <div class="flex__item">flex-shrink: 1</div>
+                <div class="flex__item">flex-shrink: 1</div>
+                <div class="flex__item flex__item_end">flex-shrink: 1</div>
+            </div>
+        </div>
+
+        <h2>flex-wrap: <b>nowrap</b> (default)</h2>
+        <div class="example7">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>flex-wrap: <b>wrap</b> + align-content: <b>stretch</b> (default)</h3>
+        <div class="example7 example7_wrap">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>flex-wrap: <b>wrap</b> + align-content: <b>center</b></h3>
+        <div class="example7 example7_wrap-align-content">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>flex-wrap: <b>wrap-reverse</b></h3>
+        <div class="example7 example7_wrap-reverse">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h3>flex-wrap: <b>wrap</b> + flex: <b>auto</b></h3>
+        <div class="example7 example7_wrap-auto">
+            <div class="flex">
+                <div class="flex__item flex__item_start">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item">Текст</div>
+                <div class="flex__item flex__item_end">Текст</div>
+            </div>
+        </div>
+
+        <h2>flex layout</h2>
+        <div class="example8">
+            <div class="flex">
+                <div class="flex__item flex__item_header">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam at, natus repudiandae! Officiis amet laudantium enim, fugit quos iusto aspernatur dolorem, non alias, aut eligendi commodi soluta harum voluptatum modi?</div>
+                <div class="flex__item flex__item_aside">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam at, natus repudiandae! Officiis amet laudantium enim, fugit quos iusto aspernatur dolorem, non alias, aut eligendi commodi soluta harum voluptatum modi?</div>
+                <div class="flex__item flex__item_body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam at, natus repudiandae! Officiis amet laudantium enim, fugit quos iusto aspernatur dolorem, non alias, aut eligendi commodi soluta harum voluptatum modi?</div>
+                <div class="flex__item flex__item_footer">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam at, natus repudiandae! Officiis amet laudantium enim, fugit quos iusto aspernatur dolorem, non alias, aut eligendi commodi soluta harum voluptatum modi?</div>
+            </div>
+        </div>
+
+    </div><!-- /end of wrap -->
+
+    <script src="js/__main.js"></script>
+
+</body>
+</html>

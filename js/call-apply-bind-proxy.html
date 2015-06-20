@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!--[if IE 7]>    <html class="no-js ie7 no-borderradius no-rgba" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 no-borderradius no-rgba" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 borderradius rgba" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js borderradius rgba" lang="en"> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <META name="keywords" content="Call, apply, bind, proxy">
+    <META name="description" content="Примеры call, apply, bind, proxy в javascript">
+    <script type="text/javascript" src="brush/shCore.js"></script>
+    <script type="text/javascript" src="brush/shBrushJScript.js"></script>
+    <link type="text/css" rel="stylesheet" href="brush/shCoreDefault.css"/>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+    <title>Call, apply, bind, proxy в javascript</title>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+    <!--[if !IE 7]>
+        <style type="text/css">
+            #layout-outer {display:table;height:100%}
+        </style>
+    <![endif]-->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-size: 100%; 
+        }
+        .wrap {
+            max-width: 37.5em;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            font-family: Gabriola, serif; /* available on Windows 7, and on Mac OS */
+            margin: 0 0 30px;
+            font-size: 2.5em;
+            line-height: 1.1;
+            -webkit-font-feature-settings: "liga", "dlig";
+        }
+        p {
+            margin: 50px 0 0;
+            padding: 0 20px;
+            font: 0.875em/1.7 Helvetica, Arial, Tahoma, sans-serif;
+            color: #000;
+        }
+        .wrap__text:nth-of-type(1) {
+            margin-top:  20px;
+        }
+        .syntaxhighlighter div.toolbar {
+            display: none !important;
+        }
+        .example-link {
+            position: relative;
+            display: inline-block;
+            margin: 50px 0 0;
+            font: 16px/1 Arial;
+        } 
+        .example-link:hover {
+            text-decoration: none;
+        }
+        .example-link:before {
+            content:'';
+            position: absolute;
+            left: -12px;
+            top: 2px;
+            border-top: 6px solid transparent;
+            border-left: 8px solid #008200;
+            border-bottom: 6px solid transparent;
+        }       
+    </style>
+</head>
+<body>
+    <a href="/">&larr; grinz.ru</a>
+    
+    <div class="wrap">
+        <h1>Call, apply, bind, proxy в javascript. <br> Примеры использования.</h1>
+
+        <p class="wrap__text">Call, apply, bind и proxy нужны для привязки контекста функции (по сути дела this) к нужному нам объекту при ее выполнении.</p>
+
+        <p class="wrap__text">Эмуляция кроссбраузерного метода bind, нужна для IE9- (не включительно)</p>
+
+        <pre class="brush: js;">
+            function bind(func, context) {
+              return function() { 
+                return func.apply(context, arguments); 
+              };
+            }
+        </pre>
+
+        <p class="wrap__text">
+            Cоздаю для примера функцию f, this у этой функции = window, так как this определяется объектом в контексте которого вызвана ф-ция. this.name - это обращение к свойству name объекта, в контексте которого будет вызвана ф-ция f. Создаю рандомный объект, к которому буду "привязывать" контекст функции f. Второй консоль лог выведет аргумент, который передаем функции.
+        </p>
+
+        <pre class="brush: js;">    
+            function f(name) {
+              console.log(this.name);
+              console.log(name ? name : 'нет имени');
+            }
+        
+            var user = { name: "Максим" };
+        </pre>
+
+        <p class="wrap__text">А теперь используем различные методы для привязки функции к объекту. Для того, чтобы посмотреть их в работе: открываем консоль (F12 на клавиатуре, вкладка console) и смотрим на результат.</p>
+        
+        <a href="#" class="example-link" onclick="makeCall()">Выполнить</a>
+        <pre class="brush: js;"> 
+            //метод с call, 
+            //user - это объект к которому
+            //привязываю функцию f, 'Алия' - аргумент,
+            //который передаю функции (т.е. при вызове ф-ции f(name)
+            //'Алия' это name)
+            f.call(user, 'Алия'); //Максим, Алия
+        </pre>
+        <a href="#" class="example-link" onclick="makeApply()">Выполнить</a>
+        <pre class="brush: js;">
+            //метод с apply
+            f.apply(user, ['Max']); //Максим, Max
+        </pre>  
+        <a href="#" class="example-link" onclick="makeBind()">Выполнить</a>  
+        <pre class="brush: js;">
+            //кроссбраузерный метод,
+            bind(f, user)('Алия'); //Максим, Алия
+        </pre>   
+        <a href="#" class="example-link" onclick="makeModernBind()">Выполнить</a> 
+        <pre class="brush: js;">
+            //современный метод
+            var f2 = f.bind(user, 'Алия');
+            f2(); // выполнит f с this = user, результа Максим, Алия
+        </pre>    
+
+        <p class="wrap__text">
+            И напоследок метод jQuery Proxy ($.proxy()). Для того чтобы использовать этот метод нужен jQuery, принцип тотже, что и у примеров выше. Пусть нам понадобилось использовать эту функцию при клике на какой-то div, а как мы уже знаем, this внутри функции ссылается на объект в рамках которого вызвана эта функция. А нам захотелось чтобы f при клике на какой-то там div всегда вызывалась в контексте user. Используем $.proxy(). Теперь при клике на див функция f будет вызываться в контексте user. 3ий аргумент это параметр, который мы можем передать ф-ции.
+        </p>
+
+        <pre class="brush: js;">    
+            $(function() {
+                function f(name) {
+                  console.log(this.name);
+                  console.log(name ? name : 'нет имени');
+                }
+        
+                var user = { name: "Максим" };
+
+                $('div').click($.proxy(f, user, 'Алия'));
+            });  
+        </pre>
+    </div>    
+    
+    <script>
+        var exampleLinks = document.querySelectorAll('.example-link');
+
+        Array.prototype.forEach.call(exampleLinks, function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+
+        function bind(func, context) {
+          return function() { 
+            return func.apply(context, arguments); 
+          };
+        }
+
+        function f(name) {
+          console.log(this.name);
+          console.log(name ? name : 'нет имени');
+        }
+    
+        var user = { name: "Максим" };
+
+        function makeCall() {
+            f.call(user, 'Алия');
+        }
+
+        function makeApply() {
+            f.apply(user, ['Max']);
+        }
+
+        function makeBind() {
+            bind(f, user)('Алия');
+        }
+
+        function makeModernBind() {
+            var f2 = f.bind(user, 'Алия');
+            f2(); // выполнит f с this = user
+        }
+    </script>
+</body>
+</html>

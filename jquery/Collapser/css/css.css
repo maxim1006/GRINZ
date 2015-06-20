@@ -1,0 +1,140 @@
+/** * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/) * http://cssreset.com */html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {    margin: 0;  padding: 0; border: 0;  font-size: 100%;    font: inherit;  vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {    display: block;}body {  line-height: 1;}ol, ul {    list-style: none;}blockquote, q {   quotes: none;}blockquote:before, blockquote:after,q:before, q:after {   content: '';    content: none;}table {  border-collapse: collapse;  border-spacing: 0;}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+.flex {
+    height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    box-sizing: border-box;
+}
+
+.flex__item {
+    display: none;
+    position: relative;
+    height: 400px;
+    min-width: 600px;
+    max-width: 600px;
+    margin: auto;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    box-sizing: content-box;
+    font-size: 0;
+}
+
+.block__btns {
+    padding-left: 220px;
+    height: 100%;
+    position: relative;
+    -webkit-transition: padding 0.5s linear;
+    transition: padding 0.5s linear;
+}
+
+.block {
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    font-size: 12px;
+    -webkit-transition: -webkit-transform 0.5s linear;
+    transition: transform 0.5s linear;
+    z-index: 10;
+}
+
+.block__top {
+    background-color: yellow;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.block__top-inner {
+    padding: 20px;
+    overflow: hidden;
+}
+
+.block__bottom {
+    background-color: green;
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.block__bottom-inner {
+    padding: 20px;
+    overflow: hidden;
+}
+
+
+.block__separator {
+    position: absolute;
+    width: 199px;
+    height: 20px;
+    line-height: 20px;
+    background: #ccc;
+    cursor: pointer;
+    text-align: center;
+    z-index: 20;
+}
+
+.block__separator-span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    padding: 2px 0;
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+}
+
+.block_collapsed {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+.block_collapsed + .block__btns {
+    padding-left: 20px;
+}
+
+.btn {
+   display: inline-block;
+   vertical-align: top; 
+   margin: 20px 0 20px 20px;
+   cursor: pointer;
+}
+
+.btn:first-child {
+    margin-left: 0;
+}
+
+.btn_collapse {
+    position: absolute;
+    display: block;
+    margin: 0;
+    width: 12px;
+    height: 40px;
+    top: 50%;
+    right: -13px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background-color: #ccc;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.scrollbar-measure {
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+    position: absolute;
+    top: -9999px;
+}

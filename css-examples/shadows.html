@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CSS shadows</title>
+</head>
+<body>
+<style type="text/css">
+    .shadow-wrap {
+        text-align: center;
+        margin: 100px 0;
+    }
+    .shadow {
+        display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom: 1;*display:inline;
+    }
+    .img{position:relative;width:250px;}
+    .img img{width:100%;height:auto !important;max-width:100%;border:0;}
+    .img:before{
+        content: '';
+        z-index: -1;
+        position: absolute;
+        background: transparent;
+        width: 90%;
+        height: 55%;
+        right: 8px;
+        bottom: 12px;
+        -webkit-transform: rotate(3deg) skew(8deg);
+        -moz-transform: rotate(3deg) skew(8deg);
+        -o-transform: rotate(3deg) skew(8deg);
+        -ms-transform: rotate(3deg) skew(8deg);
+        transform: rotate(3deg) skew(8deg); 
+        box-shadow: 0 10px 5px rgba(0,0,0,0.25);
+    }
+</style>
+
+    <div>
+        <a href="/">&larr; grinz.ru</a>
+    </div>
+    
+    <div class="shadow-wrap">
+        <div class="shadow img">
+            <img src="../img/cat.jpg">
+        </div>
+    </div>    
+</body>
+</html>

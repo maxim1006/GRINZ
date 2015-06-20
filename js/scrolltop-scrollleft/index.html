@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ScrollLeft, ScrollTop in Javascript</title>
+        <link rel="stylesheet" href="css/css.css">
+    </head>
+    <body>
+        <a href="/">&larr; grinz.ru</a>
+
+        <div class="outer">
+
+            <h1>ScrollLeft, ScrollTop in Javascript</h1>
+
+            <p>
+                Здесь представлен пример подсчета ScrollLeft и ScrollTop, сразу в пересчете в проценты (для удобства), реализовано с помощью JS и на всякий случай с jQuery. Код можно посмотреть в "посмотреть код страницы" &rarr; js/js.js
+            </p>
+
+            <h2>Vanilla JS</h2>
+            <div class="wrapper">
+                <div id="container">
+                    <div id="contained" style="width:3000px;">Start</div>
+                </div>
+                <div id="log">0%</div>
+            </div>
+            <div class="wrapper">
+                <div id="containerH">
+                    <div id="containedH" style="height:3000px;">Start</div>
+                </div>
+                <div id="logH">0%</div>
+            </div>
+
+                <h2>jQuery</h2>
+
+            <div class="wrapper">
+                <div id="containerJquery">
+                    <div id="containedJquery" style="width:3000px;">Start</div>
+                </div>
+                <div id="logJquery">0%</div>
+            </div>
+            <div class="wrapper">
+                <div id="containerJqueryH">
+                    <div id="containedJqueryH" style="height:3000px;">Start</div>
+                </div>
+                <div id="logJqueryH">0%</div>
+            </div>
+        </div>
+
+        <script src="js/jquery.js"></script>
+        <script src="js/js.js"></script>
+    </body>
+</html>

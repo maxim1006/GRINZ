@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Super blocks</title>
+        <style type="text/css">
+.test1, .test2, .test3, .test4, .test5, .test6, .test7, .test8{margin:30px 0; text-align:center; font-size:0; position:relative}
+.l1, .l2, .l3, .l4{padding:20px; margin:10px; display:-moz-inline-stack; display:inline-block; vertical-align:top; zoom:1; *display:inline; font:30px Georgia,"Times New Roman",Times,serif; color:#1a1a1a; text-decoration:none !important;  -webkit-transition:color 0.3s linear;  -moz-transition:color 0.3s linear;  -o-transition:color 0.3s linear;  transition:color 0.3s linear; text-align:center; -webkit-box-sizing:border-box;  -moz-box-sizing:border-box;  box-sizing:border-box; width:250px; height:150px;}
+.test7 .l1{color:#cfcd00}.test7 .l2{color:#5d9348}.test7 .l3{color:#425a8f}.test7 .l4{color:#ffa100}
+.test5 .l1{color:#cfcd00}.test5 .l2{color:#5d9348}.test5 .l3{color:#425a8f}.test5 .l4{color:#ffa100}
+.l1:hover, .l2:hover, .l3:hover, .l4:hover{color:#7db4f4 !important}
+
+.test1 .l1, .test1 .l2, .test1 .l3, .test1 .l4{position:relative; padding:0; border:1px solid #efefef; margin:0 30px 30px 0; background:#fff; -webkit-box-shadow:0 1px 4px rgba(0,0,0,0.27),0 0 40px rgba(0,0,0,0.06) inset; -moz-box-shadow:0 1px 4px rgba(0,0,0,0.27),0 0 40px rgba(0,0,0,0.06) inset; box-shadow:0 1px 4px rgba(0,0,0,0.27),0 0 40px rgba(0,0,0,0.06) inset; padding-top:35px;border:1px solid #ccc;}
+
+.test1 .l1:before, .test1 .l1:after, .test1 .l2:before, .test1 .l2:after, .test1 .l3:before, .test1 .l3:after, .test1 .l4:before, .test1 .l4:after{content:''; z-index:-1; position:absolute; left:10px; bottom:10px; width:70%; max-width:300px; max-height:100px; height:55%; -webkit-box-shadow:0 8px 16px rgba(0,0,0,0.3); -moz-box-shadow:0 8px 16px rgba(0,0,0,0.3); box-shadow:0 8px 16px rgba(0,0,0,0.3); -webkit-transform:skew(-15deg) rotate(-6deg); -moz-transform:skew(-15deg) rotate(-6deg); -ms-transform:skew(-15deg) rotate(-6deg); -o-transform:skew(-15deg) rotate(-6deg); transform:skew(-15deg) rotate(-6deg)}
+
+.test1 .l1:after, .test1 .l2:after, .test1 .l3:after, .test1 .l4:after{left:auto; right:10px; -webkit-transform:skew(15deg) rotate(6deg); -moz-transform:skew(15deg) rotate(6deg); -ms-transform:skew(15deg) rotate(6deg); -o-transform:skew(15deg) rotate(6deg); transform:skew(15deg) rotate(6deg)}
+.group:after{content:"";  display:table;  clear:both}
+
+.test2 .l1, .test2 .l2, .test2 .l3, .test2 .l4{box-shadow:0 0 10px rgba(0,0,0,0.4); background:#f4f7fd; position:relative; padding-top:38px; margin:15px}
+.test2 .l1:before, .test2 .l1:after, .test2 .l2:before, .test2 .l2:after, .test2 .l3:before, .test2 .l3:after, .test2 .l4:before, .test2 .l4:after{content:""; position:absolute; top:6px; left:6px; width:100%; height:100%; background:#c1c4cb; z-index:-1; box-shadow:0 0 10px rgba(0,0,0,0.4)}
+.test2 .l1:after, .test2 .l2:after, .test2 .l3:after, .test2 .l4:after{top:12px; left:12px; background:#a1a4ab; z-index:-2}
+.test3 .l1, .test3 .l2, .test3 .l3, .test3 .l4{border:1px solid #cfcd00; border-left:50px solid #cfcd00; border-radius:20px; text-align:left; box-shadow:2px 2px 10px #999; position:relative}
+.test3 .l2{border:1px solid #5d9348; border-left:50px solid #5d9348}
+.test3 .l3{border:1px solid #425a8f; border-left:50px solid #425a8f}
+.test3 .l4{border:1px solid #ffa100; border-left:50px solid #ffa100}
+.test3 .l1 span, .test3 .l2 span, .test3 .l3 span, .test3 .l4 span{font-size:34px; position:absolute; left:5px; top:31px}
+.test3 .l1 b, .test3 .l2 b, .test3 .l3 b, .test3 .l4 b{font-size:34px; position:absolute; left:-38px; top:32px; color:#fff}
+.test3 .l1 i, .test3 .l2 i, .test3 .l3 i, .test3 .l4 i{font-size:34px; position:absolute; left:-38px; top:41px; color:#fff; font-style:normal}
+.test4 .l1, .test4 .l2, .test4 .l3, .test4 .l4{border:1px solid #ccc; box-shadow:inset 0 0 10px #ccc; background:#f8f5f5; padding-top:35px}
+.test5 .l1, .test5 .l2, .test5 .l3, .test5 .l4{background:#fff; border:1px solid #cfcd00; box-shadow:inset 0 0 5px #ccc; padding-top:35px; position:relative}
+.test5 .l2{border:1px solid #5d9348}
+.test5 .l3{border:1px solid #425a8f}
+.test5 .l4{border:1px solid #ffa100}
+.test5 .l1:after, .test5 .l2:after, .test5 .l3:after, .test5 .l4:after{content:""; position:absolute; right:0; top:0; width:0; height:0; border-top:40px solid #cfcd00; border-left:40px solid transparent}
+.test5 .l2:after{border-top:40px solid #5d9348; border-left:40px solid transparent}
+.test5 .l3:after{border-top:40px solid #425a8f; border-left:40px solid transparent}
+.test5 .l4:after{border-top:40px solid #ffa100; border-left:40px solid transparent}
+.test6 .l1, .test6 .l2, .test6 .l3, .test6 .l4{margin:20px 10px; padding-top:35px; box-shadow: 0 1px 1px rgba(0,0,0,0.3), 0 10px 0 -5px #eee, 0 10px 1px -4px rgba(0,0,0,0.3), 0 20px 0 -10px #eee, 0 20px 1px -9px rgba(0,0,0,0.3); -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.3), 0 10px 0 -5px #eee, 0 10px 1px -4px rgba(0,0,0,0.3), 0 20px 0 -10px #eee, 0 20px 1px -9px rgba(0,0,0,0.3); -webkit-transition:all .5s ease-in-out; -moz-transition:all .5s ease-in-out; -o-transition:all .5s ease-in-out; -ms-transition:all .5s ease-in-out; transition:all .5s ease-in-out;border:1px solid #ccc;background:#fff;}
+.test6 .l1:hover, .test6 .l2:hover, .test6 .l3:hover, .test6 .l4:hover{box-shadow:0 0;  -webkit-box-shadow:0 0 10px rgba(0,0,0,0.3); box-shadow:0 0 10px rgba(0,0,0,0.3)}
+.test7 .l1, .test7 .l2, .test7 .l3, .test7 .l4{position:relative; padding:5px; margin:20px 10px; background:white; box-shadow:0 1px 4px rgba(0,0,0,0.3),0 0 5px rgba(0,0,0,0.1) inset; border-radius:4px; background:#fff; padding-top:35px;border:1px solid #ccc;}
+.test7 .l1:before, .test7 .l1:after, .test7 .l2:before, .test7 .l2:after, .test7 .l3:before, .test7 .l3:after, .test7 .l4:before, .test7 .l4:after{content:""; position:absolute; z-index:-2; bottom:15px; left:10px; width:50%; height:20%; max-width:300px; box-shadow:0 15px 10px rgba(0,0,0,0.7); -webkit-transform:rotate(-3deg); -moz-transform:rotate(-3deg); -ms-transform:rotate(-3deg); -o-transform:rotate(-3deg); transform:rotate(-3deg)}
+.test7 .l1:after, .test7 .l2:after, .test7 .l3:after, .test7 .l4:after{right:10px; left:auto; -webkit-transform:rotate(3deg); -moz-transform:rotate(3deg); -ms-transform:rotate(3deg); -o-transform:rotate(3deg); transform:rotate(3deg)}
+.header{text-align:center; font:700 18px Georgia,"Times New Roman",Times,serif; margin:30px; color:#000}
+.test8 .l1, .test8 .l2 {
+    background: #F4F4F4;
+    background: -moz-linear-gradient(top, #F4F4F4 0%, #E2EAFB 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F4F4F4), color-stop(100%,#E2EAFB));
+    background: -webkit-linear-gradient(top, #F4F4F4 0%,#E2EAFB 100%);
+    background: -o-linear-gradient(top, #F4F4F4 0%,#E2EAFB 100%);
+    background: -ms-linear-gradient(top, #F4F4F4 0%,#E2EAFB 100%);
+    background: linear-gradient(to bottom, #F4F4F4 0%,#E2EAFB 100%);
+    border-radius: 255px 15px 225px 15px/15px 112px 15px 255px;
+    border: 2px solid #E2EAFB;
+    margin: 20px 20px 30px;
+    padding: 20px;
+    box-shadow: 0 10px 10px -10px rgba(0,0,0,0.4);
+}
+.test8 .l3, .test8 .l4 {
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    border: 4px solid #e28f26;
+    box-shadow: 0 10px 10px -10px rgba(0,0,0,0.4);
+    background: #fddfbe;
+    background: -moz-linear-gradient(top, #fed09e 0%, #fff3e6 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fed09e), color-stop(100%,#fff3e6));
+    background: -webkit-linear-gradient(top, #fed09e 0%,#fff3e6 100%);
+    background: -o-linear-gradient(top, #fed09e 0%,#fff3e6 100%);
+    background: -ms-linear-gradient(top, #fed09e 0%,#fff3e6 100%);
+    background: linear-gradient(to bottom, #fed09e 0%,#fff3e6 100%);
+}
+div.var9-block{width:80%;margin:30px auto;}
+div.var9-block__text {
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 1px 0 black;
+    line-height: 56px;
+    font-size: 16px; 
+    font-family: Georgia, "Times New Roman", Times, serif; 
+    font-weight:700;
+    border-right: 30px solid transparent;
+    border-bottom: 30px solid #4a6499; 
+    height: 0;
+    display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom: 1;*display:inline;  
+}
+
+div.var9-block__text + div {
+    border: 1px solid #4a6499; 
+    border-top: 3px solid #4a6499;      
+    padding: 20px;
+}
+</style>
+<!--[if lt IE 9]>
+<style type="text/css">
+    .test2 .l1:before, .test2 .l1:after, .test2 .l2:before, .test2 .l2:after, .test2 .l3:before, .test2 .l3:after, .test2 .l4:before, .test2 .l4:after{display:none;}
+    </style>
+<![endif]-->
+</head>
+<body>
+
+    <div>
+        <a href="/">&larr; grinz.ru</a>
+    </div>
+
+    <p class="header">Variant 1</p>
+    <div class="test1">
+            <a href="#" class="l1">These <br> are</a>
+            <a href="#" class="l2">Interesting <br> blocks</a><br>
+            <a href="#" class="l3">You <br> can</a>
+            <a href="#" class="l4">Use <br> them</a>
+    </div>   
+    <p class="header">Variant 2</p>
+    <div class="test2">
+        <a href="#" class="l1">These <br> are</a>
+        <a href="#" class="l2">Interesting <br> blocks</a><br>
+        <a href="#" class="l3">You <br> can</a>
+        <a href="#" class="l4">Use <br> them</a>
+    </div> 
+    <p class="header">Variant 3</p>
+    <div class="test3">
+        <a href="#" class="l1"><b>T</b><span>hese<br> <i>a</i>re</span></a>
+        <a href="#" class="l2"><b>I</b><span>nteresting<br> <i>b</i>locks</span></a><br>
+        <a href="#" class="l3"><b>Y</b><span>ou<br> <i>c</i>an</span></a>
+        <a href="#" class="l4"><b>U</b><span>se<br> <i>t</i>hem</span></a>
+    </div>
+    <p class="header">Variant 4</p>
+    <div class="test4">
+        <a href="#" class="l1">These <br> are</a>
+        <a href="#" class="l2">Interesting <br> blocks</a><br>
+        <a href="#" class="l3">You <br> can</a>
+        <a href="#" class="l4">Use <br> them</a>
+    </div>  
+    <p class="header">Variant 5</p>
+    <div class="test5">
+        <a href="#" class="l1">These <br> are</a>
+        <a href="#" class="l2">Interesting <br> blocks</a><br>
+        <a href="#" class="l3">You <br> can</a>
+        <a href="#" class="l4">Use <br> them</a>
+    </div> 
+    <p class="header">Variant 6</p>
+    <div class="test6">
+        <a href="#" class="l1">These <br> are</a>
+        <a href="#" class="l2">Interesting <br> blocks</a><br>
+        <a href="#" class="l3">You <br> can</a>
+        <a href="#" class="l4">Use <br> them</a>
+    </div> 
+    <p class="header">Variant 7</p>
+    <div class="test7">
+        <a href="#" class="l1">These <br> are</a>
+        <a href="#" class="l2">Interesting <br> blocks</a><br>
+        <a href="#" class="l3">You <br> can</a>
+        <a href="#" class="l4">Use <br> them</a>
+    </div> 
+    <p class="header">Variant 8</p>
+    <div class="test8">
+        <a href="#" class="l1">These <br> are</a>
+        <a href="#" class="l2">Interesting <br> blocks</a><br>
+        <a href="#" class="l3">You <br> can</a>
+        <a href="#" class="l4">Use <br> them</a>
+    </div> 
+    <p class="header">Variant 9</p>
+    <div class="var9-block">
+        <div class="var9-block__text">Dear friends</div>
+        <div>
+            <p>
+                Some text
+            </p>
+        </div>
+    </div>  
+
+</body>
+</html>

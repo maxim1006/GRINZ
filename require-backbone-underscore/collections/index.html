@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--[if IE 7]>    <html class="no-js ie7 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 borderradius rgba"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js borderradius rgba"> <!--<![endif]-->
+<head>
+    <title>Backbone collections, коллекции в Бекбон</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+    <link rel="stylesheet" href="css/_css.css">
+    <link type="text/css" rel="stylesheet" href="../../js/brush/shCoreDefault.css"/>
+
+    <script type="text/javascript" src="../../js/brush/shCore.js"></script>
+    <script type="text/javascript" src="../../js/brush/shBrushJScript.js"></script>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+    <!--[if !IE 7]>
+    <style type="text/css">
+        #layout-outer {display:table;height:100%}
+    </style>
+    <![endif]-->
+</head>
+<body>
+
+<a href="/">&larr; grinz.ru</a>
+
+<div class="outer">
+
+    <h1>Backbone collections, коллекции в Бекбон</h1>
+
+    <p class="center">
+        В данном разделе представлены примеры  работы с коллекциями в бекбон.
+    </p>
+
+    <pre class="brush: js;">
+        names = [
+            {
+                name: 'Max'
+            },
+            {
+                name: 'Aliya'
+            },
+            {
+                name: 'Anton'
+            }
+        ];
+
+
+
+        var Model = Backbone.Model.extend({
+           defaults: {
+               name: 'Default name'
+           }
+        });
+
+
+
+        var Collection = Backbone.Collection.extend({
+           model: Model
+        });
+
+
+        var collection = new Collection(names);
+
+
+        collection.on({
+            "add": function(model) {
+                console.log('%o is added', model);
+            },
+            "change:name": function(model) {
+                console.log('%o is changed', model);
+            },
+            "remove": function(model) {
+                console.log('%o is removed', model);
+            },
+            "reset": function(collection, options) {
+                console.log('%o is reseted', collection); // коллекция из 0 элементов
+                console.log('%o is reseted', options.previousModels); //array из 3х элементов
+            }
+        });
+
+        console.log(collection.length); //3
+        console.log(collection.models); // array из 3х моделей
+
+        collection.add({name: 'Denis'});
+
+        console.log(collection.length); //4
+        console.log(collection.models); // array из 4х моделей
+
+        collection.remove(collection.models[3]);
+
+        console.log(collection.length); //3
+        console.log(collection.models); // array из 3х моделей, удалена модель {name: 'Denis'}
+
+        collection.models[0].set('name', 'Maxim');
+
+        collection.reset();
+        console.log(collection.length); // 0
+        console.log(collection.models); // []
+
+        collection.reset({name: 'Max'});
+        console.log(collection.length); // 1
+        console.log(collection.models); // array из 1й модели
+
+        collection.set([{name: 'Aliya'}, {name: 'Anton'}, {name: 'Denis'}]);
+        console.log(collection.length); // 3
+        console.log(collection.models); // array из 3x моделей, причем {name: 'Max'} была удалена
+
+
+        collection.forEach(function(model){
+            console.log(model.get('name')); //Aliya Anton Denis
+        });
+    </pre>
+
+    <p>Что почитать:</p>
+
+    <ul>
+        <li><a href="http://backbonejs.org/">http://backbonejs.org/</a></li>
+    </ul>
+
+</div>
+
+<script  src="js/jquery.js"></script>
+<script  src="js/underscore.js"></script>
+<script  src="js/backbone.js"></script>
+<script  src="js/_js.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Poll</title>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<div id="poll">
+    <div class="poll__question">Пример вопроса?</div>
+    <form class="poll__form">
+        <div class="poll__answer">
+            <label class="poll__question jsPollLabel" for="rad0">вариант 1</label>
+            <input type="radio" class="jsPollRadio" name="variant" value="0" id="rad0">
+        </div>
+        <div class="poll__answer">
+            <label class="poll__question jsPollLabel" for="rad1">вариант 2</label>
+            <input type="radio" class="jsPollRadio" name="variant" value="1" id="rad1">
+        </div>
+        <div class="poll__answer">
+            <label class="poll__question jsPollLabel" for="rad2">вариант 3</label>
+            <input type="radio" class="jsPollRadio" name="variant" value="2" id="rad2">
+        </div>
+        <button type="button" id="pollButton">ответить</button>
+    </form>
+</div>
+
+<script src="jquery.js"></script>
+<script>
+    (function() {
+
+        var xhr = new XMLHttpRequest(),
+            poll = document.getElementById("poll"),
+            pollButton = document.getElementById("pollButton"),
+            labels = document.querySelectorAll('.jsPollLabel'),
+            inputs = document.querySelectorAll('.jsPollRadio'),
+            checkedInput, checkedValue, data;
+
+        function makeXHR() {
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    poll.innerHTML = xhr.responseText;
+                }
+            };
+
+            Array.prototype.forEach.call(inputs, function(input) {
+                if (input.checked) {
+                    checkedInput = input;
+                    checkedValue = input.value;
+                }
+            });
+
+            data = {
+                checkedValue: checkedValue
+            };
+
+            xhr.open("POST", "poll.php", true);
+            xhr.send(JSON.stringify(data));
+        }
+
+        pollButton.addEventListener("click", function() {
+            makeXHR();
+        }, false);
+    })();
+</script>
+
+</body>
+</html>

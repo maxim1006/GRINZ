@@ -1,0 +1,628 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Rotated Cubes</title>
+    <style type="text/css">
+* {
+    margin: 0;
+    padding: 0;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1,h2,h3,p {
+    margin: 0 0 1em;
+}
+
+.wrap {
+    padding: 20px;
+}
+
+.wrap:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.box-rotate-wrap {
+    float: left;
+    margin: 0 30px 30px 0;
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+    -ms-perspective: 1000px;
+    perspective: 1000px;
+}
+
+.box,.box div {
+    width: 150px;
+    height: 150px;
+}
+
+.box-rotate {
+    position: relative;
+
+    -webkit-transition: all 0.8s ease;
+    -moz-transition: all 0.8s ease;
+    -o-transition: all 0.8s ease;
+    -ms-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+
+    -webkit-transform: translate3d(0, 0, -75px);
+    -moz-transform: translate3d(0, 0, -75px);
+    -o-transform: translate3d(0, 0, -75px);
+    -ms-transform: translate3d(0, 0, -75px);
+    transform: translate3d(0, 0, -75px);
+}
+
+.box-rotate div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: #fff;
+    padding: 20px;
+}
+
+.box-rotate img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.box-rotate .front {
+    background: red;
+    z-index: 2;
+
+    -webkit-transform: rotate3d(0, 1, 0, 0deg) translate3d(0, 0, 75px);
+    -moz-transform: rotate3d(0, 1, 0, 0deg) translate3d(0, 0, 75px);
+    -o-transform: rotate3d(0, 1, 0, 0deg) translate3d(0, 0, 75px);
+    -ms-transform: rotate3d(0, 1, 0, 0deg) translate3d(0, 0, 75px);
+    transform: rotate3d(0, 1, 0, 0deg) translate3d(0, 0, 75px);
+}
+
+.box-rotate .back {
+    background: orange;
+
+    -webkit-transform: rotate3d(0, 1, 0, 180deg) rotate(180deg) translate3d(0, 0, 75px);
+    -moz-transform: rotate3d(0, 1, 0, 180deg) rotate(180deg) translate3d(0, 0, 75px);
+    -o-transform: rotate3d(0, 1, 0, 180deg) rotate(180deg) translate3d(0, 0, 75px);
+    -ms-transform: rotate3d(0, 1, 0, 180deg) rotate(180deg) translate3d(0, 0, 75px);
+    transform: rotate3d(0, 1, 0, 180deg) rotate(180deg) translate3d(0, 0, 75px);
+}
+
+.box-rotate .top {
+    background: purple;
+
+    -webkit-transform: rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 75px);
+    -moz-transform: rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 75px);
+    -o-transform: rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 75px);
+    -ms-transform: rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 75px);
+    transform: rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 75px);
+}
+
+.box-rotate .bottom {
+    background: blue;
+
+    -webkit-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 75px);
+    -moz-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 75px);
+    -o-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 75px);
+    -ms-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 75px);
+    transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 75px);
+}
+
+.box-rotate .left {
+    background: yellow;
+
+    -webkit-transform: rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 75px);
+    -moz-transform: rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 75px);
+    -o-transform: rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 75px);
+    -ms-transform: rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 75px);
+    transform: rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 75px);
+}
+
+.box-rotate .right {
+    background: green;
+
+    -webkit-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 75px);
+    -moz-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 75px);
+    -o-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 75px);
+    -ms-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 75px);
+    transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 75px);
+}
+
+.box-rotate-top:hover {
+    -webkit-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -90deg);
+    -moz-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -90deg);
+    -o-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -90deg);
+    -ms-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -90deg);
+    transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -90deg);
+}
+
+.box-rotate-bottom:hover {
+    -webkit-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, 90deg);
+    -moz-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, 90deg);
+    -o-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, 90deg);
+    -ms-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, 90deg);
+    transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, 90deg);
+}
+
+.box-rotate-left:hover {
+    -webkit-transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, 90deg);
+    -moz-transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, 90deg);
+    -o-transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, 90deg);
+    -ms-transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, 90deg);
+    transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, 90deg);
+}
+
+.box-rotate-right:hover {
+    -webkit-transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, -90deg);
+    -moz-transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, -90deg);
+    -o-transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, -90deg);
+    -ms-transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, -90deg);
+    transform: translate3d(0, 0, -75px) rotate3d(0, 1, 0, -90deg);
+}
+
+.box-rotate-back:hover {
+    -webkit-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -180deg);
+    -moz-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -180deg);
+    -o-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -180deg);
+    -ms-transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -180deg);
+    transform: translate3d(0, 0, -75px) rotate3d(1, 0, 0, -180deg);
+}
+
+.box-rotate-gyro .back {
+    -webkit-transform: rotate3d(0, 1, 0, 180deg) rotate(90deg) translate3d(0, 0, 75px);
+    -moz-transform: rotate3d(0, 1, 0, 180deg) rotate(90deg) translate3d(0, 0, 75px);
+    -o-transform: rotate3d(0, 1, 0, 180deg) rotate(90deg) translate3d(0, 0, 75px);
+    -ms-transform: rotate3d(0, 1, 0, 180deg) rotate(90deg) translate3d(0, 0, 75px);
+    transform: rotate3d(0, 1, 0, 180deg) rotate(90deg) translate3d(0, 0, 75px);
+}
+
+.box-rotate-gyro:hover {
+    -webkit-transform: translate3d(0, 0, -75px) rotate3d(1, 1, 0, -180deg);
+    -moz-transform: translate3d(0, 0, -75px) rotate3d(1, 1, 0, -180deg);
+    -o-transform: translate3d(0, 0, -75px) rotate3d(1, 1, 0, -180deg);
+    -ms-transform: translate3d(0, 0, -75px) rotate3d(1, 1, 0, -180deg);
+    transform: translate3d(0, 0, -75px) rotate3d(1, 1, 0, -180deg);
+}
+
+.box.box-blend div {
+    background: #fff;
+
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
+}
+
+</style>
+</head>
+<body>
+
+<div>
+    <a href="/">&larr; grinz.ru</a>
+</div>    
+
+<div class="wrap wrap-defaults">
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-top">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+                This is what will be shown.
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-bottom">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+                This is what will be shown.
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-left">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+                This is what will be shown.
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-right">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+                This is what will be shown.
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-back">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+                This is what will be shown.
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-gyro">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+                This is what will be shown.
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrap wrap-blank">
+    <div class="box-rotate-wrap">
+        <div class="box box-blend box-rotate box-rotate-top">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+                This is what will be shown.
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-blend box-rotate box-rotate-bottom">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+                This is what will be shown.
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-blend box-rotate box-rotate-left">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+                This is what will be shown.
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-blend box-rotate box-rotate-right">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+                This is what will be shown.
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-blend box-rotate box-rotate-back">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+                This is what will be shown.
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-rotate-wrap">
+        <div class="box box-blend box-rotate box-rotate-gyro">
+            <div class="front">
+                <h2>Front</h2>
+                This is on front.
+            </div>
+            <div class="back">
+                <h2>Back</h2>
+                This is what will be shown.
+            </div>
+            <div class="top">
+                <h2>Top</h2>
+            </div>
+            <div class="bottom">
+                <h2>Bottom</h2>
+            </div>
+            <div class="left">
+                <h2>Left</h2>
+            </div>
+            <div class="right">
+                <h2>Right</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrap wrap-special">
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-top">
+            <div class="front">
+            </div>
+            <div class="back">
+            </div>
+            <div class="top">
+            </div>
+            <div class="bottom">
+            </div>
+            <div class="left">
+            </div>
+            <div class="right">
+            </div>
+        </div>
+    </div>
+    
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-bottom">
+            <div class="front">
+            </div>
+            <div class="back">
+            </div>
+            <div class="top">
+            </div>
+            <div class="bottom">
+            </div>
+            <div class="left">
+            </div>
+            <div class="right">
+            </div>
+        </div>
+    </div>
+    
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-left">
+            <div class="front">
+            </div>
+            <div class="back">
+            </div>
+            <div class="top">
+            </div>
+            <div class="bottom">
+            </div>
+            <div class="left">
+            </div>
+            <div class="right">
+            </div>
+        </div>
+    </div>
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-right">
+            <div class="front">
+            </div>
+            <div class="back">
+            </div>
+            <div class="top">
+            </div>
+            <div class="bottom">
+            </div>
+            <div class="left">
+            </div>
+            <div class="right">
+            </div>
+        </div>
+    </div>
+    
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-back">
+            <div class="front">
+            </div>
+            <div class="back">
+            </div>
+            <div class="top">
+            </div>
+            <div class="bottom">
+            </div>
+            <div class="left">
+            </div>
+            <div class="right">
+            </div>
+        </div>
+    </div>
+    
+    <div class="box-rotate-wrap">
+        <div class="box box-rotate box-rotate-gyro">
+            <div class="front">
+            </div>
+            <div class="back">
+            </div>
+            <div class="top">
+            </div>
+            <div class="bottom">
+            </div>
+            <div class="left">
+            </div>
+            <div class="right">
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+</body>
+</html>

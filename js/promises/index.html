@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+	<title>Promises js</title>
+	<link rel="stylesheet" href="css/css.css">
+	<script type="text/javascript" src="../brush/shCore.js"></script>
+    <script type="text/javascript" src="../brush/shBrushJScript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../brush/shCoreDefault.css"/>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="css/ie7.css">
+	<![endif]-->
+</head>
+<body>
+
+<div>
+    <a href="/">&larr; grinz.ru</a>
+</div>	
+	
+	<h1>Promises in javascript. <br> Примеры использования.</h1>
+	
+	<p>Вся эта история про promises заключается в том, что JS язык однопоточный (single threaded) и поэтому надо было придумать api, чтобы обрабатывать асинхронные события (отслеживать окончания ajax запросов, таймеров, анимаций и т.д.) Вот и придумали promises. Грубо говоря мы из кода даем обещание, что например эта функция выполнится и отслеживаем момент окончания выполнения.</p>
+
+	<p>
+		Promises работают не во всех браузерах, но есть полифил <a href="https://www.promisejs.org/polyfills/promise-6.0.0.min.js" target="_blanc">Полифил promises</a>
+	</p>	
+
+	<p>Все примеры лежат в js.js (правой кнопкой, содержимое страницы, клик на js.js).</p>
+	<p>Чтобы посмотреть в действии открываем консоль и нажимаем на "Выполнить".</p>
+
+	<h3>
+		Общая структура
+	</h3>
+
+	<pre class="brush: js;">
+		/**Basic example**/
+		//Создаю объект promise
+		var promise = new Promise(function(resolve, reject) {
+		  Сюда вставляю любую логику, необходимую для отслеживания
+
+		  if (/*Если условие верно*/) {
+		    resolve("Worked!");
+		  }
+		  else {
+		    reject(Error("Error"));
+		  }
+		});
+		
+		//ну а тут уже отслеживаем окончание события, 
+		принимаем аргументы и возможно дальше что-то с ними делаем.
+		promise.then(function(result) {
+		  console.log(result); // Worked!
+		}, function(err) {
+		  console.log(err); // Error
+		});
+	</pre>	
+
+	<h3>
+		Пример отслеживания загрузки всех картинок про кошек и Галию (6 картинок, седьмой нет, поэтому выводится ошибка)
+	</h3>	
+	
+	<a href="#" class="example-link" onclick="runCatEx()">Выполнить</a>
+	<pre class="brush: js;">
+		/**Example with imgs loading jQuery**/
+		  var $imgs = $('img');
+	      $imgs.each(function(index, elem) {
+	          var $this = $(this);
+	          index += 1;
+	          var promise = new Promise(function(resolve, reject) { 
+	              $this.attr('src', 'img/' + index + '.jpg');
+	              $this.one("load", function() {
+	                  resolve('img ' + index + ' loaded');
+	              }).error(function(){
+	                  console.log('error');
+	              });  
+	          });  
+
+	          promise.then(function(result) {
+	              console.log(result); // "Stuff worked!"
+	              $this.fadeIn(200);
+	          }, function(err) {
+	              console.log(err); // Error: "It broke"
+	          });
+	      });
+	</pre>	
+
+	<img src="">
+	<img src="">
+	<img src="">
+	<img src="">
+	<img src="">	
+	<img src="">
+	<img src="">
+
+	<h3>Пример запроса за файлом json.json (лежит на серве на одном уровне с этой страничкой)</h3>
+	
+	<a href="#" class="example-link" onclick="getJson()">Выполнить</a>
+	<pre class="brush: js;">
+		/**get example**/
+		function get(url) {
+		  return new Promise(function(resolve, reject) {
+		    var req = new XMLHttpRequest();
+		    req.open('GET', url);
+
+		    req.onload = function() {
+		      if (req.status == 200) {
+		        resolve(req.response);
+		      }
+		      else {
+		        reject(Error(req.statusText));
+		      }
+		    };
+		    req.onerror = function() {
+		      reject(Error("Network Error"));
+		    };
+		    req.send();
+		  });
+		}
+
+		get('json.json').then(function(response) {
+		  console.log("Success!", response);
+		}, function(error) {
+		  console.error("Failed!", error);
+		});
+	</pre>	
+
+	<h3>Пример chaining, т.е. результат выполнения, можно еще и несколько раз преобразовывать</h3>
+	<a href="#" class="example-link" onclick="makeChain()">Выполнить</a>
+	<pre class="brush: js;">
+		/***Chaining example***/
+		var promise = new Promise(function(resolve, reject) {
+		    resolve(123);
+		});
+
+		promise
+		.then(function(num){
+		/*тут обязательно надо сделать return чего-нибудь
+		иначе следующий then не взлетит*/
+		console.log(num);return num})
+		.then(function(num){console.log(num + 123);});
+	</pre>	
+	
+	<h3>Пример отслеживания окончания типо анимации</h3>
+	<a href="#" class="example-link" onclick="startAnimation()">Выполнить</a>
+	<pre class="brush: js;">
+		/***Signature example***/
+		  var leftMargin = 0,
+	      flag = 0,
+	      span = document.querySelector('.run');  
+
+		function startAnimation() {
+
+		  if (flag === 1) return;
+
+		  var promise = new Promise(function(resolve, reject) {
+
+		    interval = setInterval(function() {
+		        if (leftMargin === 100) { 
+		          resolve(leftMargin);
+		          span.innerHTML = ' Прибежали (в консоли появилось resolve)';
+		        } else {
+		          span.style.marginLeft = leftMargin + 'px';
+		          leftMargin += 1;
+		        } 
+		    }, 20);
+		  });
+
+		  promise.then(function(leftMargin) {
+		      clearInterval(interval);
+		      console.log('leftMargin: ' + leftMargin + 'px ' + 'resolve');
+		      flag = 0;
+		  },function(){console.log('error');})
+
+		  flag = 1;
+		}
+	</pre>	
+	<p>	
+		<span class="run">Побежали</span>
+	</p>
+	
+	<p>
+		Что почитать: <a href="../../jquery/deferred/">jQuery deferred</a><br>
+		Что почитать: <a href="http://www.html5rocks.com/en/tutorials/es6/promises/" target="_blanc">JavaScript Promises</a><br>
+		Что почитать: <a href="http://habrahabr.ru/post/210820/" target="_blanc">О применении $.Deferred в работе с асинхронными задачами</a>
+	</p>
+
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/js.js"></script>
+</body>
+</html>

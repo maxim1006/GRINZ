@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--[if IE 7]>    <html class="no-js ie7 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 borderradius rgba"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js borderradius rgba"> <!--<![endif]-->
+<head>
+    <title>Backbone inheritance, наследование в Бекбон</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+    <link rel="stylesheet" href="css/_css.css">
+    <link type="text/css" rel="stylesheet" href="../../js/brush/shCoreDefault.css"/>
+
+    <script type="text/javascript" src="../../js/brush/shCore.js"></script>
+    <script type="text/javascript" src="../../js/brush/shBrushJScript.js"></script>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+    <!--[if !IE 7]>
+        <style type="text/css">
+            #layout-outer {display:table;height:100%}
+        </style>
+    <![endif]-->
+</head>
+<body>
+
+<a href="/">&larr; grinz.ru</a>
+
+<div class="outer">
+
+    <h1>Backbone inheritance (наследование в Бекбон)</h1>
+
+    <p class="center">
+        В данном разделе представлены примеры наследования в <strong>Backbone</strong>, отображающие всю суть происходящего. В качестве элементов наследования возьмем Backbone view.
+    </p>
+
+    <p> Демонстрация предназначена для показа того как:</p>
+
+    <ul>
+        <li>- Как наследовать методы</li>
+        <li>- Как вызывать методы родителя</li>
+        <li>- Показать, что наследумых элеметов может быть сколько угодно</li>
+    </ul>
+
+    <p>Для начала рассмотрим общий принцип наследования в Backbone</p>
+
+    <button id="simpleChild">Вывести parent в консоль лог child</button>
+    <pre class="brush: js;">
+        //создаем обычную модель
+        var Parent = Backbone.Model.extend({
+            //этот метод попадет в прототип Parent и в свойство __proto__ объекта child
+            method: function() {
+                console.log('method from Parent');
+            },
+            defaults: {
+                //этот метод попадет в defaults прототипа Parent и в attributes объекта child
+                defaultsMethod: function() {
+                    console.log('method from defaults in Parent');
+                }
+            }
+        });
+
+        var child = new Parent({
+            //этот метод попадет в attributes объекта child
+            methodFromInitialization: function() {
+                console.log('method from initialization');
+            }
+        });
+    </pre>
+
+    <p>Теперь применим этот принцип к наследованию объектов, которые будут наследоваться от Backbone.View</p>
+
+    <button id="viewChildChild">Вывести parent в консоль лог viewChildChild</button>
+    <pre class="brush: js;">
+        //Создаем родительский объект
+        var ViewParent = Backbone.View.extend({
+            initialize: function() {
+                //выводим проверку на инициализацию
+               console.log('ViewParent initialized');
+            },
+            render: function() {
+                //выводим в консоль проверку на render();
+                console.log('ViewParent rendered');
+
+                //хорошая практика возвращать объект, чтобы можно его было потом использовать
+                //в цепочечных вызовах
+                return this;
+            },
+            //метод родителя, наличие которого будем проверять у чайлда
+            methodParent: function() {
+                console.log('methodParent is triggered');
+            }
+        });
+
+
+
+        //Создаем потомка
+        var ViewChild = ViewParent.extend({
+            //метод вызовется при создании нового экземпляра класса ViewChild
+            initialize: function() {
+                //проверяю инициализацию
+                console.log('ViewChild initialized');
+            },
+            render: function() {
+                //вызываю метод рендер родителя, для демонстрации
+                ViewParent.prototype.render.apply(this, arguments);
+
+                //проверяю рендер чайлда
+                console.log('ViewChild rendered');
+
+                return this;
+            },
+            //метод чайлда, который будем проверять у его чайлда
+            methodChild: function() {
+                console.log('methodChild is triggered');
+            }
+        });
+
+        //создаю экземпляр
+        var viewChild = new ViewChild;
+        //запускаю у чайлда рендер
+        viewChild.render();
+
+
+
+        //Создаю вьюху чайлда чайлда.
+        var ViewChildChild = ViewChild.extend({
+            //нужно задать собственный элемент, иначе он будет наследоваться от чайлда
+            el: '.elementViewChildChild',
+            //создаем собственный метод чайлда чайлда
+            methodChildChild: function() {
+                console.log('methodChildChild is triggered');
+            }
+        });
+
+            //создаю экземпляр чайлда чайлда и проверяю у него наличие всех
+            //методов его родителей.
+            var viewChildChild = new ViewChildChild;
+            viewChildChild.methodParent(); // methodParent is triggered
+            viewChildChild.methodChild(); // methodChild is triggered
+            viewChildChild.methodChildChild(); //methodChildChild is triggered
+        }
+
+    </pre>
+
+    <p>Что почитать:</p>
+
+    <ul>
+        <li><a href="http://backbonejs.org/">http://backbonejs.org/</a></li>
+    </ul>
+
+</div>
+
+
+    
+    <script  src="js/jquery.js"></script>
+    <script  src="js/underscore.js"></script>
+    <script  src="js/backbone.js"></script>
+    <script  src="js/_js.js"></script>
+
+
+</body>
+</html>

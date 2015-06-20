@@ -1,0 +1,139 @@
+/** * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/) * http://cssreset.com */html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {    margin: 0;  padding: 0; border: 0;  font-size: 100%;    font: inherit;  vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {    display: block;}body {  line-height: 1;}ol, ul {    list-style: none;}blockquote, q {   quotes: none;}blockquote:before, blockquote:after,q:before, q:after {   content: '';    content: none;}table {  border-collapse: collapse;  border-spacing: 0;}
+
+
+.row {
+    width: 60%;
+    margin: 20px auto;
+    font: 16px Arial;
+}
+
+.link { 
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    *display: inline;
+    font-size: 16px;
+    color: blue;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link .maxtooltip {
+    text-decoration: none; 
+}
+
+.js-maxtooltip {
+    position: relative;
+}
+
+.link:hover, 
+.js-maxtooltip-hover {
+    color: orange;
+    text-decoration: underline;
+}
+
+.maxtooltip {
+    display: none;
+    position: absolute;
+    padding: 10px;
+    color: #000;
+    z-index: 999999;
+    font: 14px Arial;
+    text-align: left;
+    background: #ccc;
+}
+
+.maxtooltip__right {
+    left: 100%;
+    margin-left: 14px;
+    background: -moz-linear-gradient(left,  rgba(204,204,204,1) 0%, rgba(237,237,237,1) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(204,204,204,1)), color-stop(100%,rgba(237,237,237,1)));
+    background: -webkit-linear-gradient(left,  rgba(204,204,204,1) 0%,rgba(237,237,237,1) 100%);
+    background: -o-linear-gradient(left,  rgba(204,204,204,1) 0%,rgba(237,237,237,1) 100%);
+    background: -ms-linear-gradient(left,  rgba(204,204,204,1) 0%,rgba(237,237,237,1) 100%);
+    background: linear-gradient(to right,  rgba(204,204,204,1) 0%,rgba(237,237,237,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#ededed',GradientType=1 );
+}
+
+.maxtooltip__left {
+    right: 100%;
+    margin-right: 14px;
+    background: -moz-linear-gradient(left,  rgba(237,237,237,1) 0%, rgba(204,204,204,1) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(237,237,237,1)), color-stop(100%,rgba(204,204,204,1)));
+    background: -webkit-linear-gradient(left,  rgba(237,237,237,1) 0%,rgba(204,204,204,1) 100%);
+    background: -o-linear-gradient(left,  rgba(237,237,237,1) 0%,rgba(204,204,204,1) 100%);
+    background: -ms-linear-gradient(left,  rgba(237,237,237,1) 0%,rgba(204,204,204,1) 100%);
+    background: linear-gradient(to right,  rgba(237,237,237,1) 0%,rgba(204,204,204,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#cccccc',GradientType=1 );
+}
+
+.maxtooltip__bottom {
+    top: 100%;
+    margin-top: 14px;
+    background: -moz-linear-gradient(top,  rgba(204,204,204,1) 0%, rgba(237,237,237,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(204,204,204,1)), color-stop(100%,rgba(237,237,237,1)));
+    background: -webkit-linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(237,237,237,1) 100%);
+    background: -o-linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(237,237,237,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(237,237,237,1) 100%);
+    background: linear-gradient(to bottom,  rgba(204,204,204,1) 0%,rgba(237,237,237,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#ededed',GradientType=0 );
+}
+
+.maxtooltip__top {
+    bottom: 100%;
+    margin-bottom: 14px;
+    background: -moz-linear-gradient(top,  rgba(237,237,237,1) 0%, rgba(204,204,204,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(237,237,237,1)), color-stop(100%,rgba(204,204,204,1)));
+    background: -webkit-linear-gradient(top,  rgba(237,237,237,1) 0%,rgba(204,204,204,1) 100%);
+    background: -o-linear-gradient(top,  rgba(237,237,237,1) 0%,rgba(204,204,204,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(237,237,237,1) 0%,rgba(204,204,204,1) 100%);
+    background: linear-gradient(to bottom,  rgba(237,237,237,1) 0%,rgba(204,204,204,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#cccccc',GradientType=0 );
+}
+
+.maxtooltip__left:after,
+.maxtooltip__right:after,
+.maxtooltip__bottom:after,
+.maxtooltip__top:after {
+    content:"";
+    position: absolute;
+    width: 0;
+    height: 0;   
+}
+
+.maxtooltip__right:after {
+    top: 50%;
+    margin-top: -7px;
+    left: -14px;
+    border-top: 7px solid transparent;
+    border-right: 14px solid #ccc;
+    border-bottom: 7px solid transparent;
+}
+
+.maxtooltip__left:after {
+    top: 50%;
+    margin-top: -7px;
+    left: 100%;
+    border-top: 7px solid transparent;
+    border-left: 14px solid #ccc;
+    border-bottom: 7px solid transparent;
+}
+
+.maxtooltip__bottom:after {
+    top: -14px;
+    left: 50%;
+    margin-left: -7px;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 14px solid #ccc;
+}
+
+.maxtooltip__top:after {
+    top: 100%;
+    left: 50%;
+    margin-left: -7px;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 14px solid #ccc;
+}

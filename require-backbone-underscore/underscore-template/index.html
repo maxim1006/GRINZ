@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--[if IE 7]>    <html class="no-js ie7 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 borderradius rgba"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js borderradius rgba"> <!--<![endif]-->
+<head>
+    <title>Underscore template</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+    <link rel="stylesheet" href="css/_css.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+    <!--[if !IE 7]>
+        <style type="text/css">
+            #layout-outer {display:table;height:100%}
+        </style>
+    <![endif]-->
+</head>
+<body>
+
+    <div class="header">
+        <a href="/">← grinz.ru</a>
+        <h1>Underscore template</h1>
+    </div>
+    
+    <div id="layout-outer">
+        <div id="layout-inner">
+
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__list-item"></li>
+                    <li class="nav__list-item"></li>
+                    <li class="nav__list-item"></li>
+                </ul>               
+            </nav>
+
+        </div><!--end of #layout-inner-->
+    </div><!--end of #layout-outer-->
+
+    <div id="layout-footer"></div>
+
+    <script id="template" type="underscore/template">  
+        <a class="nav__list-item-link" href="#">
+            <strong><%=navLink%></strong>
+        </a>
+        <div class="nav__dropdown 
+            <%if(typeof(navDropdownRightRows) !== 'undefined') { %>
+                <%=navDropdownRightRows%>
+            <% } %>    
+        ">  
+            <%_.each(arr, function(el) {%>
+                <ul class="nav__list-inner">  
+                    <li class="nav__list-inner-item"><%=el%></li>
+                </ul>    
+            <%});%>
+        </div>        
+    </script>
+    
+    <script  src="js/jquery.js"></script>
+    <script  src="js/underscore.js"></script>
+    <script  src="js/backbone.js"></script>
+    <script  src="js/_js.js"></script>
+
+
+</body>
+</html>

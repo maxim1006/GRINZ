@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!--[if IE 7]>    <html class="no-js ie7 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 no-borderradius no-rgba"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9 borderradius rgba"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js borderradius rgba"> <!--<![endif]-->
+<head>
+    <title>Backbone view, представления в Бекбон</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+    <link rel="stylesheet" href="css/_css.css">
+    <link type="text/css" rel="stylesheet" href="../../js/brush/shCoreDefault.css"/>
+
+    <script type="text/javascript" src="../../js/brush/shCore.js"></script>
+    <script type="text/javascript" src="../../js/brush/shBrushJScript.js"></script>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+    <!--[if !IE 7]>
+        <style type="text/css">
+            #layout-outer {display:table;height:100%}
+        </style>
+    <![endif]-->
+</head>
+<body>
+
+<a href="/">&larr; grinz.ru</a>
+
+<div class="outer">
+
+    <h1>Backbone view (представления в Бекбон)</h1>
+
+    <p class="center">
+        В данном разделе представлены примеры  представлений в Backbone, также для удобства и полноты представления информации будут использоваться коллекции.
+    </p>
+
+    <p>Здесь представлен результат низлежащего кода. Далее будет представлен код с подробным объяснением. <br> Двойной клик - переход в режим редакирования</p>
+    <div id="id" class="wrapper"></div>
+    <input id="input" class="input_add" type="text" placeholder="введите имя и нажмите enter" />
+
+    <p>Создаю модель и коллекцию. Коллекция - ни что иное как массив из моделей, к которым можно применять дополнительные методы из Бэкбон</p>
+
+    <pre class="brush: js;">
+        //Создаю массив, это может также быть json или что угодно.
+        names = [
+            {
+                name: 'Max'
+            },
+            {
+                name: 'Aliya'
+            },
+            {
+                name: 'Anton'
+            }
+        ];
+
+
+        //создаю модель
+        var Model = Backbone.Model.extend({
+            defaults: {
+                name: 'Default name'
+            }
+        });
+
+        var model = new Model();
+
+
+        //затем создаю коллекцию
+        var Collection = Backbone.Collection.extend({
+            model: Model
+        });
+        //при создании чайлда коллекции пробрасываю массив из объектов
+        var collection = new Collection(names);
+    </pre>
+
+
+    <p>Создаю вью для элемента списка (li), самого списка (ul)</p>
+
+
+    <pre class="brush: js;">
+        //создаю вью для li
+        var View = Backbone.View.extend({
+            //могу указать, что это будет за элемент, класс, id
+            tagName: 'li',
+            className: 'list__item',
+            id: 'listItemId',
+            //использую вспомогательную функцию template, для того чтобы забрать html из underscore шаблона
+            template: template('viewExample'),
+            //могу задавать эвенты, как с делегацией на внутренние элементы данного представления, так и на само
+            //представление
+            events: {
+                'dblclick': 'onClick',
+                'keydown .jsInputItem': 'onEnter',
+                'click .jsDelete': 'onDelete'
+            },
+            //как и в модели есть функция инициализции
+            initialize: function() {
+                //так могу навешивать события на изменения модели
+                this.model.on('change:name', this.render, this)
+            },
+            onClick: function(e) {
+                this.$el.addClass('_hidden');
+                console.log('is clicked %o', e.target);
+            },
+            onEnter: function(e) {
+                if (e.which === 13) {
+                    this.model.set('name', e.target.value);
+                    this.$el.removeClass('_hidden');
+                }
+            },
+            onDelete: function() {
+                this.$el.remove();
+                //так удаляю модель
+                this.model.destroy();
+
+                return this;
+            },
+            render: function() {
+                // this.model.toJSON() - это данные в формате json, которые необходимо прокинуть в underscore шаблон,
+                // console.log(this.model.toJSON()); // {name: "Max"}
+                this.$el.html(this.template(this.model.toJSON()));
+
+                return this;
+            }
+        });
+
+        //далее создаю представление для коллекции
+        var ViewCollection =  Backbone.View.extend({
+            tagName: 'ul',
+            className: 'list',
+            initialize: function() {
+                //могу также навешивать события на изменения коллекции, например на 'add' или 'remove'
+                this.collection.on('add', this.onAdd, this);
+            },
+            onAdd: function(model) {
+                //при добавлении новой модели к коллекции (вводе имени в главный инпут)
+                //создается новое представление li и аппендится к списку
+                var newName = new View({model: model});
+                this.$el.append(newName.render().el);
+            },
+            render: function() {
+                //у каждой модели в коллекции вызываю метод render и аппендю к списку
+                _.each(this.collection.models, function(model) {
+                    var view = new View({model: model});
+
+                    this.$el.append(view.render().el);
+                }, this);                                                                                                 ;
+
+                return this;
+            }
+        });
+        //создаю чайлда ViewCollection, стоит отметить что у вьюх тоже есть attributes
+        var viewCollection = new ViewCollection({collection: collection, attributes: {canGo:'yes'}});
+
+
+        //к заранее созданному врапперу аппендю html, который получился в результате метода
+        //render viewCollection
+        $('#id').append(viewCollection.render().el);
+
+
+
+        //используемый underscore шаблон (в html страницу его необходимо вставлять перед загрузкой underscore.js)
+        /*<script type="text/template" id="viewExample">
+            <span class="jsName"><%= name %></span> <span class="list__edit">редактировать имя</span>
+            <input class="input list__input jsInputItem" type="text" placeholder="введите имя и нажмите enter"/>
+            <span class="list__delete jsDelete">delete</span>
+        </script>*/
+
+
+
+        //вспомогательная функция template
+        function template(id) {
+            return _.template($('#' + id).html());
+        }
+    </pre>
+
+
+
+    <pre class="brush: js;">
+        //Также делаю представление для главного инпута.
+        var ViewMainInput = Backbone.View.extend({
+            el: '#input',
+            events: {
+                'keyup': 'onKeyup'
+            },
+            onKeyup: function(e) {
+                //обратим внимание, что при добавлении модели в коллекцию срабатывает this.collection.on('add', this.onAdd, this); во ViewCollection
+                if (e.which === 13) this.collection.add({name: e.target.value});
+            }
+        });
+
+        var  viewMainInput = new ViewMainInput({collection: collection});
+    </pre>
+
+
+    <h3>Пример использования setElement()</h3>
+    <pre class="brush: js;">
+        // Пример использования setElement - этот метод нужен для переопределения свойства this.el
+        // а также заново привязывает собития к новому элементу, убирая их со старого элемента
+        var button1 = $('button');
+        var button2 = $('button');
+        // Определение нового представления
+        var View = Backbone.View.extend({
+                events: {
+                    click: function(e) {
+                        console.log(view.el === e.target);
+                    }
+                }
+            });
+        // Создание нового экземпляра представления, его
+        // применение к элементу button1
+        var view = new View({el: button1});
+        // Применение представления к элементу button2 с помощью метода setElement
+        view.setElement(button2);
+        button1.trigger('click');
+        button2.trigger('click'); // возвращает true
+    </pre>
+
+    <p>Что почитать:</p>
+
+    <ul>
+        <li><a href="http://backbonejs.org/">http://backbonejs.org/</a></li>
+    </ul>
+
+</div>
+
+    <script type="text/template" id="viewExample">
+        <span class="jsName"><%= name %></span> <span class="list__edit">редактировать имя</span>
+        <input class="input list__input jsInputItem" type="text" placeholder="введите имя и нажмите enter"/>
+        <span class="list__delete jsDelete">delete</span>
+    </script>
+
+    
+    <script  src="js/jquery.js"></script>
+    <script  src="js/underscore.js"></script>
+    <script  src="js/backbone.js"></script>
+    <script  src="js/_js.js"></script>
+
+
+
+
+
+</body>
+</html>

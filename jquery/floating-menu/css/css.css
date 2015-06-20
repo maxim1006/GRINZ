@@ -1,0 +1,108 @@
+/** * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/) * http://cssreset.com */html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {    margin: 0;  padding: 0; border: 0;  font-size: 100%;    font: inherit;  vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {    display: block;}body {  line-height: 1;}ol, ul {    list-style: none;}blockquote, q {   quotes: none;}blockquote:before, blockquote:after,q:before, q:after {   content: '';    content: none;}table {  border-collapse: collapse;  border-spacing: 0;}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #3b1128;
+}
+
+.main-page-link {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+}
+
+.main-page-link a {
+    color: #fff;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #47708e;
+    text-align: center;
+    z-index: 10;
+}
+
+.menu__container {
+    max-width: 980px;
+    margin: auto;
+}
+
+.menu__list {
+    font-size: 0;
+    text-align: center;
+}
+
+.menu__list-item {
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    *display: inline;
+    width: 25%;
+}
+
+.menu__link {
+    display: inline-block;
+    padding: 20px;
+    color: white;
+    letter-spacing: 1px;
+    font-size: 16px;
+    text-decoration: none;      
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+
+  -webkit-transition: background-color 0.3s ease-out; 
+     -moz-transition: background-color 0.3s ease-out; 
+       -o-transition: background-color 0.3s ease-out; 
+          transition: background-color 0.3s ease-out; 
+      
+}
+
+.menu__link:hover,
+.menu__list-item_active a {
+    background-color: #5b8aad;
+}
+
+.margin {
+    margin: 600px 0;
+}
+
+.margin_last {
+    margin-bottom: 1200px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-top: 0;
+    color: #000;
+}
+
+.arrow-top {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 30px;
+    background: #ecf2f6;   
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.5;
+    background: #eef0f2 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAqCAYAAAG2MSnwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NUYzRjhBOUFCNDA2MTFFM0FBNDZDRkVFNjlGOEZGNEYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NUYzRjhBOUJCNDA2MTFFM0FBNDZDRkVFNjlGOEZGNEYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1RjNGOEE5OEI0MDYxMUUzQUE0NkNGRUU2OUY4RkY0RiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1RjNGOEE5OUI0MDYxMUUzQUE0NkNGRUU2OUY4RkY0RiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrMyV/AAAARYSURBVHjaYvz//z/D58+fGVAASBDGhGIGJiSBZCBmBLFhgowwVSA2EwM2ADIThCdPngxnAwQQ46dPn2Dy3ED8lYkJofk71MwIXV1dsO1aQMwBlVwOc9I7qO0Qm4HaQYIvkC3+9+8fwnZ+fv63MDZAACF7E92752ACMMthYD6ST0HAEMpnRQ64/0iKEtE0/EcPN0YG7IARaDUj3OEwPGXKlBSIRajiAAHE+P37d4bfv38z4AO8vLwMDFFRUchiLGjuhfsDPRp/o3kCDphwSaCLMaEJ6CEpuowU62CFy6ACq5AkkTVxwBSCfGMHxOHYwhCIvZCtPowndLajewYvYERPPYyMjP+hYceIK3jAAJgGFwCxPro4QACBQz0sLAyfrSpIsfURlyINDQ1EDLKwsOBSBzLkNhKfDyo2DV0hKysrA77AuYIj5mEgEyqvgi6BbiAss2gjiWWgqWlBYt/GlRbZoRLz0AwCxcwvNANrsYj/f/z48WVY9gABYyTJ+0CsREQSATmCB4jBpeuHDx90kA08hifr4wNfYPpAJRNJKZZYADYQVJxQCr58+YJa9uPCPT09DkgJ+z8h9QABxIi11sIE4DqFYIGIVuPhAo+RXGiOM0vhqVuQwTZk70KxALkGVmAx7D+uLEnIQDs8hmE1FJ+BwkQYBsLPiDXwPwl4OyED0TVsRuNPwKKmCpeBr9EUvsViyUwgFsRiqC3MQFhe3gPEIljCEltwvAdiJzTxQ21tbULYWiTYYhBZfAaSeCuynJOT035srQIQkCGyPKgG4rMwzq9fv6aiZz13IGbD4U1sLoQBUHaUIzbrEWMgSrKhTQE7Ag3EV6QjAzc3N0ZC6khy4Z8/fx4QUsNCSAGwySYCbetc4ObmbiekHiDA4A3EgoICho0bN5IbdMpAXA/EVlD+BSBuR85JxAJQs3D79u2YCRytR0AsAJVkF/GUv6AKU5EUA0EtGuS4piQVzoD2DfXwqAGVW/eAeAsQM9Mrm0RBQyedBD3eoDQMxGW0dKAatOO8lIJQ7wTib0BsTU0HgmqE3UB8E4jFqVAWcQLxEWjaFaTUgQ1A/BOIXfCoeUmmnB40Dc8ix4HOUIfV49F7G9rqLMCjZg20v7EVj5pUaJqOJsaBokB8HdrGYcNVYAOxBzRNfoRGGaGC2weq/hUetUuA+DkTE5MqLgemQA3QIJDIQf3hnWSkvdvQNJyMR43ExYsXb1laWjZhc6ARHo3HoV2eCipkknnQaF+FSwEXF5chrpokGRqKsJoAVFXpErAwEU9NMoOAXlkg3o88MqKoqFh57tw5uLvQK/e5UEwvAKoKHZEFeHh4GAwNDWnX4Br0LcJRBw42AM8kVlZWZBlw/fp1hvPnz2OVExcXZ3B2dibJPFlZWew9MnJxT09PGq5iBtjBnUep+RRH8b9//0ATDHuxSL34+/dvHaXmMxLRN8YLQINuHz/CR55FoFXhc/BwJzs7g6ioKEXmAwA9Y9JP1HkyvAAAAABJRU5ErkJggg==) 50% 50% no-repeat;
+    -webkit-transition: opacity 0.3s ease-out; 
+     -moz-transition: opacity 0.3s ease-out; 
+       -o-transition: opacity 0.3s ease-out; 
+          transition: opacity 0.3s ease-out; 
+}
+
+.arrow-top:hover {
+    opacity: 1;
+};

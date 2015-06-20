@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+	<title>Deferred jQuery</title>
+	<link rel="stylesheet" href="css/css.css">
+	<script type="text/javascript" src="../brush/shCore.js"></script>
+    <script type="text/javascript" src="../brush/shBrushJScript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../brush/shCoreDefault.css"/>
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="css/ie7.css">
+	<![endif]-->
+</head>
+<body>
+
+<div>
+    <a href="/">&larr; grinz.ru</a>
+</div>	
+	
+	<h1>Deferred in jQuery. <br> Примеры использования.</h1>
+	
+	<p>Вся эта история про Deferred заключается в том, что JS язык однопоточный (single threaded) и поэтому надо было придумать api, чтобы обрабатывать асинхронные события (отслеживать окончания ajax запросов, таймеров, анимаций и т.д.) Вот и придумали promises (в чистом javascript <a href="../js/promises/">Promises в Javascript</a>), а в jQuery реализовали это с помощью Deferred. Грубо говоря мы из кода даем обещание, что например эта функция выполнится и отслеживаем момент окончания выполнения.</p>
+
+	<p>
+		Deferred работают во всех браузерах, в которых работает ваша версия jQuery (deferred появились в jQuery >= 1.5)
+	</p>	
+
+	<p>Все примеры лежат в js.js (правой кнопкой, содержимое страницы, клик на js.js).</p>
+	<p>Чтобы посмотреть в действии открываем консоль и нажимаем на "Выполнить".</p>
+
+	<h3>
+		Общая структура
+	</h3>
+
+	<pre class="brush: js;">
+		/**Basic example**/
+		//Создаю объект deferred
+		var $def = $.Deferred();
+
+		//прописываю то что надо сделать при наступлении состояния
+		//готово или ошибка. В данном случае вывожу консоль лог
+		$def.done(function() {console.log('resolved');});
+		$def.fail(function() {console.log('rejected');});
+		
+		//указываю когда наступает resolve или reject 
+		$("#btnResolve").click(function(){ $def.resolve(); });
+		$("#btnReject").click(function(){ $def.reject(); });
+		//узнать в каком состоянии находится объект deferred
+		$("#btnReport").click(function(){ console.log($def.state()); });
+	</pre>	
+
+    <p>
+        <input id="btnResolve" type="button" value="Resolve" />
+        <input id="btnReject" type="button" value="Reject" />
+        <input id="btnReport" type="button" value="Report State" />
+    </p>
+
+	<h3>
+		Пример с отслеживанием окончания slideUp
+	</h3>
+
+    <pre class="brush: js;">
+        //создаю 2 Deferred
+		  var a1 = $.Deferred(),
+              a2 = $.Deferred();
+        //ловлю resolve по окончании slideUp
+        $('#slide1').click(function(){
+            $(this).slideUp(1000, a1.resolve);
+        });
+        //ловлю resolve по окончании slideUp
+        $('#slide2').click(function(){
+            $(this).slideUp(2000, a2.resolve);
+        });
+        //как только закончился 1 slideUp сработает 1 done
+        a1.done(function() {
+            console.log('#slide1 resolved');
+        });
+        //как только закончился 2 slideUp сработает 2 done
+        a2.done(function() {
+            console.log('#slide2 resolved');
+        });
+        //как только сработают оба вызываю then, и прокидываю переменную
+        //ради интереса в следующий вызов done
+        $.when(a1, a2)
+            .then(function(){console.log('both done'); return 3;})
+            .done(
+                function(a){
+                    setTimeout(function(){
+                        console.log(a);
+                        console.log('after 2s both done');
+                    }, 2000);
+                }
+            )
+	</pre>
+    <p>Жми на квадратик</p>
+    <div id="slide1"></div>
+    <div id="slide2"></div>
+
+    <h3>
+        Пример с возвратом deferred из функции (для удобства использования)
+    </h3>
+    <a href="#" class="example-link" onclick="Examples.funcTest();">Выполнить</a>
+    <pre class="brush: js;">
+        function test() {
+            //создаю объект deferred
+            var d = $.Deferred();
+            //тут какая-то логика (любая) которая длится 3 секунды
+            setTimeout(function() { d.resolve(); }, 3000);
+            //возвращая объект deferred с промисом, чтобы не смог поменять deferred
+            //вне этой функции
+            return d.promise();
+        }
+
+        //по окончании функции вывожу консоль
+        var t = test().done(function() { console.log('timeout'); });
+    </pre>
+
+    <h3>
+        Deferred можно устанавливать на элемент, на котором производится какая-либо анимация
+    </h3>
+    <a href="#" class="example-link animation__btn">Выполнить</a>
+    <pre class="brush: js;">
+        $( ".animation__btn" ).on( "click", function() {
+            $( ".animation__par" ).append( "Started..." );
+
+            $( ".animation__div" ).each(function( i ) {
+                $( this ).fadeIn().fadeOut( 1000 * ( i + 1 ) );
+            });
+
+            $( ".animation__div" ).promise().done(function() {
+                $( ".animation__par" ).append( " Finished! " );
+            });
+        });
+    </pre>
+    <p class="animation__par"></p>
+    <div>
+        <div class="animation__div"></div>
+        <div class="animation__div"></div>
+        <div class="animation__div"></div>
+        <div class="animation__div"></div>
+    </div>
+
+    <h3>
+        Так же можно использовать when в комбинации с функциями, чтобы закончить все анимации
+    </h3>
+    <a href="#" class="example-link seek-animation__btn">Выполнить</a>
+    <pre class="brush: js;">
+         function seekAnimation() {
+             return $( ".seek-animation__div" ).fadeIn( 800 ).delay( 1200 ).fadeOut();
+         }
+
+         $( ".seek-animation__btn" ).on( "click", function() {
+             $( ".seek-animation__par" ).append( " Started... " );
+            //Обрати внимание на объект, который возвращается из seekAnimation()
+             $.when( seekAnimation() ).done(function() {
+                 $( ".seek-animation__par" ).append( " Finished! " );
+             });
+         });
+    </pre>
+    <p class="seek-animation__par"></p>
+    <div class="seek-animation__div"></div>
+
+    <h3>
+        Пример с использованием then();
+    </h3>
+    <a href="#" class="example-link then__btn" onclick="Examples.then();">Выполнить</a>
+        <pre class="brush: js;">
+            function makeDeferred() {
+                //пытаюсь получить json дату из файла json.json на сервере
+                return $.getJSON('json.json');
+            }
+
+            function makeDeferred1() {
+                //пытаюсь получить json дату из файла json1.json на сервере, json1.json не
+                //существует, поэтому будет ошибка
+                return $.getJSON('json1.json');
+            }
+
+            //первый аргумент в then это ф-ция, выполняющаяся при положительном исходе,
+            //вторая ф-ция выведется, если что-то пошло не так
+            makeDeferred().then(
+                function(data) {
+                    console.log(data);
+                },
+                function() {
+                     console.log("something went wrong");
+                }
+            );
+
+            makeDeferred1().then(
+                function(data) {
+                    console.log(data);
+                },
+                function() {
+                     console.log("something went wrong");
+                }
+            );
+        </pre>
+
+        <h3>
+            Результат Deferred можно вызывать по цепочке
+        </h3>
+        <a href="#" class="example-link" onclick="Examples.chaining();">Выполнить</a>
+        <pre class="brush: js;">
+        //Открываем консоль вебтулз и смотрим на
+        //время появления значений сдвигов
+        var $div = $('.chaining__div');
+        function makeDef(leftPos) {
+            var def = $.Deferred();
+            $div.animate({left: leftPos}, 1000, function(){def.resolve();});
+            return def.promise();
+        }
+        makeDef(200)
+            .then(function() {
+                $div.css('backgroundColor', 'red');
+                console.log($div.css('left') + ' leftPosition');
+            })
+            .then(function() {
+                makeDef(400)
+                    .done(function () {
+                        $div.css('backgroundColor', 'purple');
+                        console.log($div.css('left') + ' leftPosition');
+                    });
+            })
+            .then(function() {
+                makeDef(600)
+                    .done(function() {
+                        $div.css('backgroundColor', 'yellow');
+                        console.log($div.css('left') + ' leftPosition');
+                    });
+            })
+            .then(function() {
+                makeDef(800)
+                    .done(function() {
+                        $div.css('backgroundColor', 'green');
+                        console.log($div.css('left') + ' leftPosition');
+                    });
+            })
+            .then(function() {
+                makeDef(0)
+                    .done(function() {
+                        $div.css('backgroundColor', 'blue');
+                        console.log($div.css('left') + ' leftPosition');
+                    });
+            });
+        </pre>
+        <div class="chaining__div"></div>
+
+        <h3>
+            Отслеживание загрузки изображений
+        </h3>
+        <a href="#" class="example-link" onclick="Examples.imgsLoad();">Выполнить</a>
+                <pre class="brush: js;">
+                    var $imgs = $('img');
+                    //прохожусь по картинкам и пытаюсь их загрузить, если не получилось
+                    //то будет error
+                    $imgs.each(function(index, elem) {
+                        var $this = $(this);
+                        index += 1;
+                        var $def = $.Deferred();
+
+                        $this.attr('src', 'img/' + index + '.jpg');
+
+                        //тут исполь
+                        $this.one("load", function() {
+                            $def.resolve('img ' + index + ' loaded');
+                        }).error(function(){
+                            console.log('error');
+                        });
+
+                        $def.then(function(result) {
+                            console.log(result); // "Stuff worked!"
+                            $this.fadeIn(200);
+                        }, function(err) {
+                            console.log(err); // Error: "It broke"
+                        });
+                    });
+                </pre>
+        <img src="">
+        <img src="">
+        <img src="">
+        <img src="">
+        <img src="">
+        <img src="">
+        <img src="">
+
+    <p>
+		Что почитать:
+        <a href="../../js/promises/">JavaScript Promises</a><br>
+        <a href="http://www.html5rocks.com/en/tutorials/es6/promises/" target="_blanc">JavaScript Promises на html5rocks</a><br>
+		<a href="http://habrahabr.ru/post/210820/" target="_blanc">О применении $.Deferred в работе с асинхронными задачами на хабре</a>
+	</p>
+
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/js.js"></script>
+</body>
+</html>

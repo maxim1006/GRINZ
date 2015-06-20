@@ -1,0 +1,255 @@
+/** * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/) * http://cssreset.com */html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {    margin: 0;  padding: 0; border: 0;  font-size: 100%;    font: inherit;  vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {    display: block;}body {  line-height: 1;}ol, ul {    list-style: none;}blockquote, q {   quotes: none;}blockquote:before, blockquote:after,q:before, q:after {   content: '';    content: none;}table {  border-collapse: collapse;  border-spacing: 0;}
+
+
+/*playground styles*/
+body {
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -ms-perspective: 800px;
+    perspective: 800px;
+}
+
+.wrap {
+    max-width: 1280px;
+    margin: 30px auto;
+}
+
+.h1,
+.field-header {
+    font-family: Gabriola, serif;
+    text-align: center;
+    margin: 0 0 30px;
+    font-size: 2.5em;
+    line-height: 1.1;
+    -webkit-font-feature-settings: "liga", "dlig";
+}
+
+.field-header {
+    font-size: 2em;
+    line-height: 1;
+    text-align: center;
+}
+
+.field-header span {
+    font-family: serif;
+    font-size: 0.8em;
+}
+
+.field-outer {
+    position: relative;
+}
+
+#field {
+    position: relative;
+    width: 300px;
+    margin: 20px auto;
+    border-right: 0;
+    border-bottom: 0;
+    font-size: 0;
+}
+
+.field__cell {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 99px;
+    height: 100px;
+    border-right: 1px solid #333;
+    border-top: 1px solid #333;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    -webkit-transition: -webkit-transform 0.8s ease;
+    -moz-transition: -webkit-transform 0.8s ease;
+    -o-transition: -webkit-transform 0.8s ease;
+    -ms-transition: -webkit-transform 0.8s ease;
+    transition: -webkit-transform 0.8s ease;
+
+    -webkit-transition: -moz-transform 0.8s ease;
+    -moz-transition: -moz-transform 0.8s ease;
+    -o-transition: -moz-transform 0.8s ease;
+    -ms-transition: -moz-transform 0.8s ease;
+    transition: -moz-transform 0.8s ease;
+
+    -webkit-transition: -o-transform 0.8s ease;
+    -moz-transition: -o-transform 0.8s ease;
+    -o-transition: -o-transform 0.8s ease;
+    -ms-transition: -o-transform 0.8s ease;
+    transition: -o-transform 0.8s ease;
+
+    -webkit-transition: transform 0.8s ease;
+    -moz-transition: transform 0.8s ease;
+    -o-transition: transform 0.8s ease;
+    -ms-transition: transform 0.8s ease;
+    transition: transform 0.8s ease;
+
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d; 
+}
+
+.field__cell div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #664b38;
+    -webkit-backface-visibility: hidden;
+    -mox-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    background: -webkit-radial-gradient(90% 84%, #856445, #664b38);
+    background: -moz-radial-gradient(90% 84%, #856445, #664b38);
+    background: -o-radial-gradient(90% 84%, #856445, #664b38);
+    background: radial-gradient(90% 84%, #856445, #664b38);
+}
+
+.field__cell .front {
+    z-index: 100;    
+}
+
+.field__cell .back {
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    -o-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+    border: 0;
+}
+
+.field__cell_active,
+.field__cell_error {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+    border-right: 0;
+    cursor: default;
+}
+
+.field__cell:first-child.field__cell_active {
+    border-right: 1px solid #333;
+}
+
+.field__cell_active .back,
+.field__cell_error .back {
+    border-right: 1px solid #333;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #38566d;
+    background: -webkit-radial-gradient(90% 84%, #5f93bb, #38566d); 
+    background: -moz-radial-gradient(90% 84%, #5f93bb, #38566d);
+    background: -o-radial-gradient(90% 84%, #5f93bb, #38566d);  
+    background: radial-gradient(90% 84%, #5f93bb, #38566d); 
+}
+
+.field__cell_error .back {
+    background: #872020;
+    background: -webkit-radial-gradient(90% 84%, #cb2e2e, #872020); 
+    background: -moz-radial-gradient(90% 84%, #cb2e2e, #872020);
+    background: -o-radial-gradient(90% 84%, #cb2e2e, #872020);  
+    background: radial-gradient(90% 84%, #cb2e2e, #872020); 
+}
+
+#field__cover {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.field__cover-menu {
+    opacity: 0;
+    position: absolute;
+    width: 270px;
+    height: 270px;
+    top: 50%;
+    margin-top: -135px;
+    left: 50%;
+    margin-left: -135px;
+    padding: 30px 20px;
+    -webkit-box-shadow: inset 0 0 20px #333;
+    box-shadow: inset 0 0 20px #333;
+    background: #fff;
+    border: 15px solid #38566d;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    text-align: center;
+
+    -webkit-transition: opacity 1.5s ease 1s;
+    -moz-transition: opacity 1.5s ease 1s;
+    -o-transition: opacity 1.5s ease 1s;
+    -ms-transition: opacity 1.5s ease 1s;
+    transition: opacity 1.5s ease 1s;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+
+/*field__cover-menu styles*/
+.field__cover-menu-text_next,
+.field__cover-menu-text_error,
+#field__cover-menu-btn_again,
+#field__cover-menu-btn_next {
+    display: none;
+    font: 20px/1.4 Arial;
+    color: #333;
+}
+
+#field__cover.field__cover_error,
+#field__cover.field__cover_next {
+    opacity: 1;
+    visibility: visible;
+}
+
+.field__cover_error .field__cover-menu,
+.field__cover_next .field__cover-menu {
+    opacity: 1;
+}
+
+.field__cover_error .field__cover-menu-text_error,
+.field__cover_error #field__cover-menu-btn_again,
+.field__cover_next .field__cover-menu-text_next,
+.field__cover_next #field__cover-menu-btn_next{
+    display: block;
+}
+
+#field__cover-menu-btn_again,
+#field__cover-menu-btn_next {
+    color: #fff;
+    background: #c14251;
+    padding: 10px;
+    margin: 35px;
+    -webkit-box-shadow: 1px 0px 1px #791c27, 0px 1px 1px #791c27, 2px 1px 1px #791c27, 1px 2px 1px #791c27, 3px 2px 1px #791c27, 2px 3px 1px #791c27, 4px 3px 1px #791c27, 3px 4px 1px #791c27, 5px 4px 1px #791c27, 4px 5px 1px #791c27, 6px 5px 1px #791c27, 7px 6px 1px #791c27;
+    box-shadow: 1px 0px 1px #791c27, 0px 1px 1px #791c27, 2px 1px 1px #791c27, 1px 2px 1px #791c27, 3px 2px 1px #791c27, 2px 3px 1px #791c27, 4px 3px 1px #791c27, 3px 4px 1px #791c27, 5px 4px 1px #791c27, 4px 5px 1px #791c27, 6px 5px 1px #791c27, 7px 6px 1px #791c27;
+    position: relative;
+    cursor: pointer;
+}
+
+#field__cover-menu-btn_again:hover,
+#field__cover-menu-btn_next:hover {
+    background: #A73B48;
+}   
+
+#field__cover-menu-btn_again:active,
+#field__cover-menu-btn_next:active {
+    background: #A73B48;
+    -webkit-box-shadow: 1px 0px 1px #791c27, 0px 1px 1px #791c27, 2px 1px 1px #791c27, 1px 2px 1px #791c27;
+    box-shadow: 1px 0px 1px #791c27, 0px 1px 1px #791c27, 2px 1px 1px #791c27, 1px 2px 1px #791c27;
+    top: 2px;
+    left: 2px;
+} 

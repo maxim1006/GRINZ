@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+     <meta charset="utf-8" />
+     <title>Video player IE9+</title>
+     <meta name="description" content="Video player IE9+" />
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- PX-VIDEO CSS -->
+<link rel="stylesheet" href="css/px-video.css" />
+
+<style>
+/*** for demo only ***/
+#wrapper {
+	width: 640px;
+	margin: 1em auto;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+#brand a,
+p a {
+	border: 1px #fff dotted;
+}
+#brand a:focus,
+p a:focus {
+	border: 1px #999 dotted;
+	outline: none;
+}
+p {
+	padding-top: 1em;
+}
+</style>
+
+</head>
+
+<body>
+
+<a href="/">← grinz.ru</a>
+
+<div id="wrapper">
+
+<h1>Video player IE9+ (all browsers with "video" tag)</h1>
+
+<div class="px-video-container" id="ex">
+	<div class="px-video-img-captions-container">
+		<div class="px-video-captions hide" aria-hidden="true"></div>
+		<video width="640" height="360" poster="images/panda.png" controls>
+			<!-- video files -->
+			<source src="example.mp4" type="video/mp4" />
+			<source src="example.webm" type="video/webm" />
+			
+			<!-- text track file -->
+<!--			<track kind="captions" label="English captions" src="media/captions_PayPal_Austin_en.vtt" srclang="en" default />-->
+			
+			<!-- fallback for browsers that don't support the video element -->
+			<div>
+				<a href="example.mp4">
+					<img src="media/poster_PayPal_Austin2.jpg" width="640" height="360" alt="download video" />
+				</a>
+			</div>
+		</video>
+	</div><!-- end container for captions and video -->
+	<div class="px-video-controls"></div>
+</div><!-- end video container -->
+
+<p><a href="https://github.com/paypal/accessible-html5-video-player" target="_blank">GitHub</a></p>
+
+</div><!-- end page wrapper container -->
+
+<script src="js/px-video.js"></script>
+
+<script>
+
+    (function() {})()
+// Initialize
+new InitPxVideo({
+	"videoId": "ex",
+	"captionsOnDefault": true,
+	"seekInterval": 20,
+	"videoTitle": "Example of the video codec from PayPal",
+	"debug": true
+});
+
+</script>
+
+</body>
+</html>
+
+

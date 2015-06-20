@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Throttle</title>
+        <link rel="stylesheet" href="css/css.css">
+    </head>
+    <body>
+        <a href="/">&larr; grinz.ru</a>
+
+        <div class="outer">
+
+            <p>
+                Код всех примеров лежит в файле js.js (открой dev tools и посмотри)
+            </p>
+
+            <h2>Throttle</h2>
+
+            <p>
+                <strong>Throttle</strong> - способ вызывать функцию (например коллбек какого-либо события) не чаще одного раза в заданный промежуток времени.
+            </p>
+
+            <p>
+                Чтобы посмотреть пример в действии нажмите f12 и откройте вкладку console.
+            </p>
+
+            <p>
+                Более предпочтительный и точный способ от underscore и Ben Alman's plugin.
+            </p>
+
+            <div class="wrap">
+                <div class="throttle1"><span class="wrap__line-through">jQuery способ <br> (из 3его издания)<br>Не использовать</span></div>
+                <div class="throttle2"><span>Underscore throttle способ <br> (из underscore.js)<br><a href="http://underscorejs.ru/#throttle" target="_blank" class="wrap__link">Ссылка на underscore.js</a></span></div>
+                <div class="throttle3"><span>Ben Alman's throttle plugin <br> плагин jQuery <br> <a href="https://github.com/cowboy/jquery-throttle-debounce" target="_blank" class="wrap__link">Ссылка на гитхаб</a></span></div>
+            </div>
+
+            <h2>Debounce</h2>
+            <p>
+                <strong>Debounce</strong> делает следующее: через заданный промежуток времени после того как юзер закончил выполнять какие-то действия, к примеру: resize or mousemove, срабатывает коллбек. Похоже на throttle, но в отличие от него не вызывается постоянно, а вызывается по окончании действия.
+            </p>
+
+            <div class="wrap">
+                <div class="debounce2"><span>Underscore debounce способ <br> (из underscore.js)<br><a href="http://underscorejs.ru/#throttle" target="_blank" class="wrap__link">Ссылка на underscore.js</a></span></div>
+                <div class="debounce3"><span>Ben Alman's debounce plugin <br> плагин jQuery <br> <a href="https://github.com/cowboy/jquery-throttle-debounce" target="_blank" class="wrap__link">Ссылка на гитхаб</a></span></div>
+                <div class="debounce4"><span>Javascript approach</span></div>
+            </div>
+
+            <h2>Resizeend</h2>
+            <p>
+                Иногда может потребоваться сэмулировать resizeend.<br>
+                Чтобы запустить событие <strong>resizeend</strong> нужно поресайзить окно браузера (задержка 300 мс).
+            </p>
+
+        </div>
+            
+        <script src="js/jquery.js"></script>
+        <script src="js/js.js"></script>
+    </body>
+</html>

@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.scroll {
+    position: relative;
+    width: 600px;
+    margin: 100px auto;
+    border: 1px solid #ccc;
+    background: #999;
+}
+
+.scroll:hover .scroll__slider,
+.scroll:hover .scroll__slider_horizontal {
+    opacity: 0.6;
+    filter: alpha(opacity = 60);
+}
+
+.scroll__inner {
+    height: 400px;
+    position: relative;
+    overflow: hidden;     
+}
+
+.scroll__slider-wrap {
+    position: absolute;
+    overflow: hidden;
+    right: 0;
+    top: 0;
+    width: 10px;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.scroll__slider-wrap_horizontal {
+    position: absolute;
+    overflow: hidden;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    border-radius: 10px;
+}
+
+.scroll__slider {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10px;
+    background: #333;
+    border-radius: 10px;
+
+    opacity: 0;
+    filter: alpha(opacity = 0);
+    cursor: pointer;
+
+    -webkit-transition: opacity 0.3s ease-out;
+    -moz-transition: opacity 0.3s ease-out;
+    -o-transition: opacity 0.3s ease-out;
+    transition: opacity 0.3s ease-out;
+}
+
+.scroll__slider_horizontal {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 10px;
+    background: #333;
+    border-radius: 10px;
+
+    opacity: 0;
+    filter: alpha(opacity = 0);
+    cursor: pointer;
+
+    -webkit-transition: opacity 0.3s ease-out;
+    -moz-transition: opacity 0.3s ease-out;
+    -o-transition: opacity 0.3s ease-out;
+    transition: opacity 0.3s ease-out;
+}
+
+.scroll__par {
+    border: 1px solid #ccc;
+    margin: 30px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: inset 0 0 60px #ccc;
+}
+
+.scroll__par_wide {
+    width: 1000px;
+}
+
