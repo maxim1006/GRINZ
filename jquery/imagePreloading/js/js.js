@@ -2,71 +2,44 @@ $.fn.maxImagePreloader = function(options) {
 
     var arr = options.images;
 
-    if ( !($.type(arr) === 'array' && arr.length > 0)  ) return;
+    if ( !($.type(arr) === 'array' && arr.length > 0) ) return;
 
     var arrLength = arr.length,
         i = arrLength,
         defaults = {
-            logs: true,
-            loader: '<div id="maxImagePreloaderDefault" style="display: none">' +
-                    '<div id="maxImagePreloaderDefault__cover">' +
-                    '<div id="maxImagePreloaderDefault__content">' +
-                    '<div id="maxImagePreloaderDefault__spinner"></div>' +
-                    '<div id="maxImagePreloaderDefault__loaderText"></div>' +
-                    '</div></div></div>'
+            logs: true
         };
 
     var mainOptions = $.extend({}, defaults, options);
-
-
 
     var Preloader = {
         loadedImagesNumber: 0,
 
         init: function() {
-
-            this.setHTML();
-            this.setVars();
-            this.show();
+            this.start();
 
             while (i--) {
                 this.load(arr[i]);
             }
         },
 
-        setHTML: function() {
-            if ( !options.loader ) {
-                $('body')
-                    .append(defaults.loader);
-
-                this.defaultLoader = $('#maxImagePreloaderDefault');
-            }
-        },
-
-        setVars: function () {
-            this.loader = options.loader || this.defaultLoader;
-            this.spinner = options.spinner || this.defaultLoader.find('#maxImagePreloaderDefault__spinner');
-            this.loaderText = options.loaderText || this.defaultLoader.find('#maxImagePreloaderDefault__loaderText');
-            this.loaderContent = options.loaderText || this.defaultLoader.find('#maxImagePreloaderDefault__content');
-        },
-
-        hide: function() {
-            this.loader.hide();
-        },
-
-        show: function() {
+        start: function() {
             //onStart
             if ( options.onStart ) {
                 options.onStart();
             }
-
-            this.loader.show();
         },
 
-        showPercent: function(loadedImagesNumber) {
-            var percentage = Math.floor(100 * loadedImagesNumber / arrLength);
+        onStep: function() {
+            if ( options.onStep ) {
+                options.onStep.call(null, this, this.loadedImagesNumber, arrLength);
+            }
+        },
 
-            this.loaderText.text(percentage + '%');
+        onEnd: function() {
+            if ( this.loadedImagesNumber === arrLength && options.onEnd) {
+                options.onEnd();
+            }
         },
 
         load: function(imgSrc) {
@@ -78,30 +51,28 @@ $.fn.maxImagePreloader = function(options) {
             $(image)
                 .load(function() {
                     _this.loadedImagesNumber++;
-                    _this.showPercent(_this.loadedImagesNumber);
 
-                    if (mainOptions.logs) {
-                        console.log('Image ' + imgSrc + ' success');
-                    }
-
-                    //onStep
-                    if ( options.onStep ) {
-                        options.onStep.call(null, this, _this.loadedImagesNumber);
-                    }
-
-                    //onEnd
-                    if ( _this.loadedImagesNumber === arrLength) {
-
-                        if (options.onEnd) options.onEnd();
-
-                        _this.hide();
-                    }
+                    _this.logSuccess();
+                    _this.onStep();
+                    _this.onEnd();
                 })
                 .error(function() {
-                    if (mainOptions.logs) {
-                        console.log('Image ' + imgSrc + ' error');
-                    }
+                    _this.loadedImagesNumber++;
+
+                    _this.logError();
                 });
+        },
+
+        logSuccess: function() {
+            if (mainOptions.logs) {
+                console.log('Image ' + imgSrc + ' success');
+            }
+        },
+
+        logError: function() {
+            if (mainOptions.logs) {
+                console.log('Image ' + imgSrc + ' error');
+            }
         }
 
     };
@@ -111,19 +82,23 @@ $.fn.maxImagePreloader = function(options) {
 };
 
 $(function() {
-    var $imgWrapper = $('.img__wrapper');
+    var $preLoader = $('#maxImagePreloaderDefault'),
+        $preLoaderText = $('#maxImagePreloaderDefault__loaderText');
 
     $(document).maxImagePreloader({
         onStart: function() {
             console.log('start');
         },
         onEnd: function() {
+            $preLoader.hide();
             console.log('end');
-            $imgWrapper.show();
         },
-        onStep: function(img, imgNumber) {
-            console.log(img);
+        onStep: function(img, imgNumber, imgsLength) {
+            var percentage = Math.floor(100 * imgNumber / imgsLength);
+            $preLoaderText.text(percentage + '%');
+            /*console.log(img);
             console.log(imgNumber);
+            console.log(imgsLength);*/
         },
         images: [
             "images/1.jpg",

@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Images Preloader</title>
-    <script src="js/jquery-2.1.4.js"></script>
-    <script src="js/js.js"></script>
     <link rel="stylesheet" href="css/css.css"/>
 </head>
 <body>
@@ -12,6 +10,14 @@
 <div class="main-page-link">
     <a href="/">&larr; grinz.ru</a>
 </div>
+    <div id="maxImagePreloaderDefault">
+        <div id="maxImagePreloaderDefault__cover">
+            <div id="maxImagePreloaderDefault__content">
+                <div id="maxImagePreloaderDefault__spinner"></div>
+                <div id="maxImagePreloaderDefault__loaderText">0%</div>
+            </div>
+        </div>
+    </div>
 
     <div class="img__wrapper">
         <img class="img" src="images/1.jpg" alt=""/>
@@ -29,5 +35,8 @@
         <img class="img" src="images/13.jpg" alt=""/>
         <img class="img" src="images/14.jpg" alt=""/>
     </div>
+
+    <script src="js/jquery-2.1.4.js"></script>
+    <script src="js/js.js"></script>
 </body>
 </html>
