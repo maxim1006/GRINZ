@@ -1,12 +1,13 @@
 <?php
+    session_start();
     //начинаю сессию  и могу получить значение, которое передал из index.php. Сессия автоматически заканчивается при закрытии браузера. Но иногда нужно просто закрыть сессию, например при логауте.
-	session_start();
-    //echo $_SESSION['username'];
+
+    echo $_SESSION['username'];
 
     //чтобы закончить сессию делаю
-    session_destroy();
+    //session_destroy();
     //но это удаляет сессию не полностью
     //print_r($_SESSION); выведет ( [username] => Maxim )
     //поэтому надо еще очистить массив
-    $_SESSION = array();
+    //$_SESSION = array();
 ?>

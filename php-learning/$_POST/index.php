@@ -5,11 +5,11 @@
     }*/
 
     if ($_SERVER['REQUEST_METHOD'] === "POST") { //$_SERVER['REQUEST_METHOD'] прослушивает методы которые происходят на странице
+        //var_dump($_POST);
         //print_r($_POST);
         if (mail('maxim1006@list.ru', 'message from grinz $_post', htmlspecialchars($_POST['message']))) {//метод mail возвращает true или false если доставлено
             $status = "Письмо направлено по адресу: {$_POST['email']}";
         }
-
     }
 
 ?>
@@ -34,8 +34,6 @@
     </style>
 </head>
 <body>
-
-
     <h1>Contact form</h1>
 
     <form action="" method="post">
