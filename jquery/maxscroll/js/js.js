@@ -226,6 +226,8 @@
                 //check if scroll is needed
                 if ($scrollHeight <= $yBarHeight) {
                     $ySlider.hide();
+                } else {
+                    $ySlider.show();
                 }
 
                 return delta;
@@ -246,6 +248,8 @@
                 //check if scroll is needed
                 if ($scrollWidth <= $yBarWidth) {
                     $ySliderHorizontal.hide();
+                } else {
+                    $ySliderHorizontal.show();
                 }
 
                 return deltaHorizontal;
