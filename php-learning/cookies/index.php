@@ -12,7 +12,7 @@ setcookie('prefs[fontSize]', 25);
 setcookie('prefs[favouriteCategory]', 'news');
 setcookie('prefs[screenWidth]', '1024');
 
-//Чтобы удалить куку надо поставить время жизни time() - ...
+//Чтобы удалить куку надо поставить время жизни time() -1 ... - т.е. отрицательное число
 //time() - текущее время в секундах
 /*date_default_timezone_set("Europe/Moscow");
 echo date('Y-m-d h:i');*/ //текущее время в Москве
