@@ -3,9 +3,15 @@
     padding: 0;
 }
 
+html,
+body {
+    height: 100%;
+}
+
 .scroll {
     position: relative;
-    width: 600px;
+    width: 60%;
+    height: 40%;
     margin: 100px auto;
     border: 1px solid #ccc;
     background: #999;
@@ -18,7 +24,7 @@
 }
 
 .scroll__inner {
-    height: 400px;
+    height: 100%;
     position: relative;
     overflow: hidden;     
 }

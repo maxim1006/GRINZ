@@ -34,7 +34,9 @@
                 startPositionX,
                 direction,
                 SCROLL_RATIO,
-                SCROLL_RATIO_X;
+                SCROLL_RATIO_X,
+                scrollScrollTop,
+                scrollScrollLeft;
 
 
 
@@ -62,32 +64,44 @@
                 $scrollHeight = $scroll.get(0).scrollHeight;
                 $yBarHeight = $obj.outerHeight();
                 //height of horizontal slider is 20% of the wrapper, same for vertical width
-                $ySlider.css('height', options.sliderHeight || $yBarHeight/5);
+                $ySlider.css('height', options.sliderHeight || (($yBarHeight*$yBarHeight)/$scrollHeight));
                 $ySliderHeight = $ySlider.height()/2;
                 $ySliderHeightFull = $ySliderHeight*2;
                 $yEdgeBtm = $yBarHeight - $ySliderHeightFull;
                 delta = countDelta($yBarHeight, $scrollHeight, $ySliderHeightFull);
                 startPoint = 0;
                 startPosition = 0;
-                $ySlider.css({'top': 0});
-                $scroll.scrollTop(0);
                 canDrag = false;
                 canDragX = false;
-                SCROLL_RATIO = ($yBarHeight - $ySliderHeightFull)/50;
+                SCROLL_RATIO = ($yBarHeight - $ySliderHeightFull)/(Math.ceil($scrollHeight/$yBarHeight*2));
+                scrollScrollTop = $scroll.scrollTop();
+
+                //on block resize, count slider proper position
+                if (scrollScrollTop) {
+                    $ySlider.css({'top': (scrollScrollTop/delta)});
+                } else {
+                    $ySlider.css({'top': 0});
+                }
 
                 if (options.sliderHorizontal) {
                     $scrollWidth = $scroll.get(0).scrollWidth;
                     $yBarWidth = $obj.outerWidth();
-                    $ySliderHorizontal.css('width', options.sliderWidth || $yBarWidth/5);
+                    $ySliderHorizontal.css('width', options.sliderWidth || (($yBarWidth*$yBarWidth)/$scrollWidth));
                     $ySliderHorizontalWidth = $ySliderHorizontal.width()/2;
                     $ySliderHorizontalWidthFull = $ySliderHorizontalWidth*2;
                     $yEdgeRight = $yBarWidth - $ySliderHorizontalWidthFull;
                     deltaHorizontal = countDeltaHorizontal($yBarWidth, $scrollWidth, $ySliderHorizontalWidthFull);
                     startPointX = 0;
                     startPositionX = 0;
-                    $ySliderHorizontal.css({'left': 0});
-                    $scroll.scrollLeft(0);
-                    SCROLL_RATIO_X = ($yBarWidth - $ySliderHorizontalWidthFull)/50;
+                    scrollScrollLeft = $scroll.scrollLeft();
+                    SCROLL_RATIO_X = ($yBarWidth - $ySliderHorizontalWidthFull)/(Math.ceil($scrollHeight/$yBarHeight*2));
+
+                    //on block resize, count slider proper position
+                    if (scrollScrollLeft) {
+                        $ySliderHorizontal.css({'left': (scrollScrollLeft/deltaHorizontal)});
+                    } else {
+                        $ySliderHorizontal.css({'left': 0});
+                    }
                 }
             }
 
@@ -266,7 +280,6 @@
                 resize: updateVars
             };
 
-
             //set public methods
             $obj.data('maxScroll', publicMethods);
 
@@ -285,7 +298,13 @@ $(function() {
         sliderHorizontal: '.jsScrollSliderHorizontal'
     });
 
+    //on window resize example
+    $(window).on('resize.maxScroll', function() {
+        $scroll.each(function() {
+            $(this).data('maxScroll').resize();
+        });
+    });
+
     //trigger this method when resize block with scroll
     //$scroll.data('maxScroll').resize();
-
 });
