@@ -9,9 +9,33 @@
      * Add a new item to the registered users list
      */
     function add_registered_user($name, $email) {
-        file_put_contents(MAILING_LIST, "$name: $email\n", FILE_APPEND); //для защиты этого файла, его стоит расположить выше document root ../
+        if (checkPresence($email)) {
+            file_put_contents(MAILING_LIST, "$name: $email\n", FILE_APPEND); //для защиты этого файла, его стоит расположить выше document root ../
+        }
     }
 
+
+    /**
+     * check if the address is already there
+     * @param $email
+     * @param string $path
+     * @return bool
+     */
+    function checkPresence($email, $path = MAILING_LIST) {
+        $users = file($path);
+
+        if (count($users)) {
+            foreach($users as $user) {
+                list($nameToCheck, $emailToCheck) = explode(': ', htmlspecialchars($user));
+
+                if (trim($emailToCheck) === $email) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
 
     //нужна для того, чтобы имя или емейл не пропадал при отправке запроса
