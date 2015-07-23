@@ -1,5 +1,8 @@
 <?php
 
+    //show table - показывает таблицу
+    //describe table - подробное описание таблицы
+
     //http://dev.mysql.com/doc/refman/5.0/en/set-password.html - про задание паролей;
     //вход через командную строку: mysql -u root -p
     //show databases
@@ -9,7 +12,16 @@
     //  first_name varchar(50) NOT NULL,
     //  PRIMARY KEY (id)); - задаем параметр значения которого будут уникальными
     // )
-    //describe table_name - показать табличку
+
+
+/*Пример создания таблицы*/
+/*CREATE TABLE posts(
+    ID INT AUTO_INCREMENT,
+    title varchar(150),
+    body text,
+    author_id INT NOT NULL,
+    PRIMARY KEY (id)
+);*/
 
 
 
@@ -28,4 +40,17 @@
 
     /*DELETE*/
     //DELETE from users WHERE last_name = 'Maximov'
+
+
+
+    /*UPDATE*/
+    /*UPDATE posts SET author_id = 2 WHERE id = 1;*/
+/*UPDATE posts SET title = "Updated again", body = "Updated body" WHERE id = 1;*/
+/*ALTER TABLE posts CHANGE subject title varchar(100); - апдейт названия колонки*/
+
+
+
+    /*JOIN*/
+    /*SELECT * FROM posts inner JOIN users on users.id = posts.author_id*/
+
 ?>
