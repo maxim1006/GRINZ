@@ -64,7 +64,6 @@
             $numbers.on('click', onNumberClick);
 
             function onDragStart(e) {
-                e.preventDefault();
 
                 e.type === 'touchstart' &&
                 (function() {
@@ -78,7 +77,6 @@
             }
 
             function onDrag(e) {
-                e.preventDefault();
 
                 e.type === 'touchmove' &&
                 (function() {
@@ -108,7 +106,6 @@
             }
 
             function onDragEnd(e) {
-                e.preventDefault();
 
                 e.type === 'touchend' &&
                 (function() {
