@@ -110,6 +110,12 @@
             function bindEvents() {
 
                 $ySlider.on('mousedown touchstart', function(e) {
+                    e.preventDefault();
+
+                    e.type === 'touchstart' && (function() {
+                        e = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+                    })();
+
                     canDrag = true;
                     startPoint = e.pageY;
                     startPosition = $ySlider.position().top;
@@ -117,6 +123,12 @@
 
                 if (options.sliderHorizontal) {
                     $ySliderHorizontal.on('mousedown touchstart', function (e) {
+                        e.preventDefault();
+
+                        e.type === 'touchstart' && (function() {
+                            e = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+                        })();
+
                         canDragX = true;
                         startPointX = e.pageX;
                         startPositionX = $ySliderHorizontal.position().left;
@@ -132,6 +144,12 @@
 
 
                 function onMouseMove(e) {
+
+                    e.preventDefault();
+
+                    e.type === 'touchmove' && (function() {
+                        e = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+                    })();
 
                     if( !canDrag && !canDragX ) return;
 
@@ -176,9 +194,6 @@
                         $scroll.scrollLeft(blockResultX);
 
                     }
-
-                    e.preventDefault();
-
                 }
 
 
