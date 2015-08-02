@@ -1,5 +1,5 @@
 /*maxScroll*/
-(function($, undefined) {
+;(function($, undefined) {
 
     $.fn.maxScroll = function(options) {
         var defaults = {},
@@ -17,7 +17,9 @@
                 $scrollHeight,
                 $scrollWidth,
                 $ySlider,
+                $ySliderWrap,
                 $ySliderHorizontal,
+                $ySliderHorizontalWrap,
                 $ySliderHeight,
                 $ySliderHorizontalWidth,
                 $ySliderHeightFull,
@@ -42,6 +44,9 @@
 
             function init() {
                 initVars();
+                appendScroll();
+                initSliderVars();
+                setMarginToScrolledBlock();
                 updateVars();
                 bindEvents();
             }
@@ -51,11 +56,6 @@
             function initVars() {
                 $doc = $(document);
                 $scroll = $obj.find(options.scrolledBlock);
-                $ySlider = $obj.find(options.slider);
-
-                if (options.sliderHorizontal) {
-                    $ySliderHorizontal = $obj.find(options.sliderHorizontal);
-                }
             }
 
 
@@ -83,25 +83,23 @@
                     $ySlider.css({'top': 0});
                 }
 
-                if (options.sliderHorizontal) {
-                    $scrollWidth = $scroll.get(0).scrollWidth;
-                    $yBarWidth = $obj.outerWidth();
-                    $ySliderHorizontal.css('width', options.sliderWidth || (($yBarWidth*$yBarWidth)/$scrollWidth));
-                    $ySliderHorizontalWidth = $ySliderHorizontal.width()/2;
-                    $ySliderHorizontalWidthFull = $ySliderHorizontalWidth*2;
-                    $yEdgeRight = $yBarWidth - $ySliderHorizontalWidthFull;
-                    deltaHorizontal = countDeltaHorizontal($yBarWidth, $scrollWidth, $ySliderHorizontalWidthFull);
-                    startPointX = 0;
-                    startPositionX = 0;
-                    scrollScrollLeft = $scroll.scrollLeft();
-                    SCROLL_RATIO_X = ($yBarWidth - $ySliderHorizontalWidthFull)/(Math.ceil($scrollHeight/$yBarHeight*2));
+                $scrollWidth = $scroll.get(0).scrollWidth;
+                $yBarWidth = $obj.outerWidth();
+                $ySliderHorizontal.css('width', options.sliderWidth || (($yBarWidth*$yBarWidth)/$scrollWidth));
+                $ySliderHorizontalWidth = $ySliderHorizontal.width()/2;
+                $ySliderHorizontalWidthFull = $ySliderHorizontalWidth*2;
+                $yEdgeRight = $yBarWidth - $ySliderHorizontalWidthFull;
+                deltaHorizontal = countDeltaHorizontal($yBarWidth, $scrollWidth, $ySliderHorizontalWidthFull);
+                startPointX = 0;
+                startPositionX = 0;
+                scrollScrollLeft = $scroll.scrollLeft();
+                SCROLL_RATIO_X = ($yBarWidth - $ySliderHorizontalWidthFull)/(Math.ceil($scrollHeight/$yBarHeight*2));
 
-                    //on block resize, count slider proper position
-                    if (scrollScrollLeft) {
-                        $ySliderHorizontal.css({'left': (scrollScrollLeft/deltaHorizontal)});
-                    } else {
-                        $ySliderHorizontal.css({'left': 0});
-                    }
+                //on block resize, count slider proper position
+                if (scrollScrollLeft) {
+                    $ySliderHorizontal.css({'left': (scrollScrollLeft/deltaHorizontal)});
+                } else {
+                    $ySliderHorizontal.css({'left': 0});
                 }
             }
 
@@ -109,33 +107,38 @@
 
             function bindEvents() {
 
-                $ySlider.on('mousedown touchstart', function(e) {
-                    canDrag = true;
-                    startPoint = e.pageY;
-                    startPosition = $ySlider.position().top;
-                });
+                $ySlider
+                    .on('mousedown touchstart', function(e) {
+                        canDrag = true;
+                        startPoint = e.pageY;
+                        startPosition = $ySlider.position().top;
+                    })
+                    .add($ySliderWrap)
+                    .on('DOMMouseScroll mousewheel MozMousePixelScroll', onMouseWheel);
 
-                if (options.sliderHorizontal) {
-                    $ySliderHorizontal.on('mousedown touchstart', function (e) {
+                $ySliderHorizontal
+                    .on('mousedown touchstart', function (e) {
                         canDragX = true;
                         startPointX = e.pageX;
                         startPositionX = $ySliderHorizontal.position().left;
-                    });
-                }
+                    })
+                    .add($ySliderHorizontalWrap)
+                    .on('DOMMouseScroll mousewheel MozMousePixelScroll', onMouseWheel);
 
-                $doc.on('mousemove.maxSlider touchmove.maxSlider', onMouseMove);
 
-                $obj.on('DOMMouseScroll mousewheel MozMousePixelScroll', onMouseScroll);
+                $doc
+                    .on('mousemove.maxSlider touchmove.maxSlider', onMouseMove)
+                    .on('mouseup touchend', onMouseUp);
 
-                $doc.on('mouseup touchend', onMouseUp);
+                $scroll.on('scroll', onMouseScroll);
 
 
 
                 function onMouseMove(e) {
 
-                    if( !canDrag && !canDragX ) return;
+                    if(!canDrag && !canDragX) return;
 
-                    if ( canDrag ) {
+                    if (canDrag) {
 
                         var diff1 = e.pageY - startPoint,
                             diff = diff1 + startPosition,
@@ -178,12 +181,9 @@
                     }
 
                     e.preventDefault();
-
                 }
 
-
-
-                function onMouseScroll(e) {
+                function onMouseWheel(e) {
                     var sliderResult, blockResult,
                         curY = $ySlider.position().top;
 
@@ -213,17 +213,81 @@
                     return false;
                 }
 
-
-
                 function onMouseUp() {
                     canDrag = false;
                     canDragX = false;
                 }
 
-
-
+                function onMouseScroll(e) {
+                    if (canDrag) return;
+                    $ySlider.css({'top':  ($scroll.scrollTop())/delta});
+                    $ySliderHorizontal.css({'left':  ($scroll.scrollLeft())/deltaHorizontal});
+                }
             } //end of bindEvents
 
+
+
+
+            /**HELPERS**/
+            function initSliderVars() {
+                $ySlider = $obj.find('.maxscroll__slider');
+                $ySliderWrap = $obj.find('.maxscroll__slider-wrap');
+                $ySliderHorizontal = $obj.find('.maxscroll__slider_horizontal');
+                $ySliderHorizontalWrap = $obj.find('.maxscroll__slider-wrap_horizontal');
+            }
+
+            /**
+             * append and find scroll elements
+             */
+            function appendScroll() {
+                $(
+                    '<div class="maxscroll__slider-wrap">' +
+                        '<div class="maxscroll__slider"></div>' +
+                    '</div>' +
+                    '<div class="maxscroll__slider-wrap_horizontal">' +
+                        '<div class="maxscroll__slider_horizontal"></div>' +
+                    '</div>'
+                ).insertAfter($scroll);
+            }
+
+
+            /**
+             * Get width of the browser scroll
+             * @returns {number}
+             */
+            function getScrollbarWidth() {
+                var scrollDiv, scrollbarWidth;
+
+                scrollDiv = document.createElement("div");
+                scrollDiv.className = "maxscroll-measure";
+                document.body.appendChild(scrollDiv);
+                scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+                document.body.removeChild(scrollDiv);
+
+                return scrollbarWidth;
+            }
+
+            function makeScrollBarWidthCache(f) {
+                var cache = {};
+
+                return function(x) {
+                    if (!(x in cache)) {
+                        cache[x] = f.call(this);
+                    }
+                    return cache[x];
+                }
+            }
+
+            getScrollbarWidth = makeScrollBarWidthCache(getScrollbarWidth);
+
+
+            function setMarginToScrolledBlock() {
+                var margin = getScrollbarWidth();
+                $scroll.css({
+                    'marginRight': -margin,
+                    'paddingBottom': margin
+                });
+            }
 
 
             /**
@@ -293,9 +357,7 @@ $(function() {
     var $scroll = $('.scroll');
 
     $scroll.maxScroll({
-        scrolledBlock: '.jsScrollInner',
-        slider: '.jsScrollSlider',
-        sliderHorizontal: '.jsScrollSliderHorizontal'
+        scrolledBlock: '.jsMaxScroll'
     });
 
     //on window resize example
