@@ -1,6 +1,6 @@
 var Storage = window.Storage || {};
 
-var logContainer = document.querySelector('.log');
+var logContainer;
 
 Storage.inherit = function(child, parent) {
     child.prototype = Object.create(parent.prototype);
@@ -29,7 +29,6 @@ Storage.baseClass.prototype = {
     enqueue: function(params) {
         var id = this.nextId();
 
-        this.queueCleared = false;
         this.id = id;
         this.queue[id] = params;
         this.size++;
@@ -71,7 +70,6 @@ Storage.baseClass.prototype = {
 
         this.size = 0;
         this.id = 0;
-        this.queueCleared = true;
 
         logContainer.innerHTML += '<p>' + 'all requests are done' + '</p>';
     }
@@ -92,7 +90,7 @@ Storage.Loader.prototype.enqueue = function(params) {
 
 Storage.Loader.prototype.dequeue = function(params) {
     Storage.baseClass.prototype.dequeue.call(this, params);
-    if ( this.size === 0 && !this.queueCleared) {
+    if ( this.size === 0 && document.getElementById('layoutCover').style.display !== "none") {
         logContainer.innerHTML += '<p>' + 'all requests are done' + '</p>';
 
         document.getElementById('layoutCover').style.display = "none";
@@ -110,6 +108,8 @@ Storage.loader = new Storage.Loader();
 
 
 document.addEventListener("DOMContentLoaded", function(e) {
+
+    logContainer = document.querySelector('.log');
 
     document.querySelector('.block1').addEventListener('click', function(e) {
         var loader = Storage.loader.enqueue({logs:'request from .block1'});
@@ -137,6 +137,10 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     document.querySelector('.block-delete').addEventListener('click', function(e) {
         Storage.loader.clearQueue();
+    });
+
+    document.querySelector('.clear-log').addEventListener('click', function(e) {
+        logContainer.innerHTML = '';
     });
 
 });
