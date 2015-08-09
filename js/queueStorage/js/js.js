@@ -109,7 +109,7 @@ Storage.loader = new Storage.Loader();
 
 
 
-$(function() {
+document.addEventListener("DOMContentLoaded", function(e) {
 
     document.querySelector('.block1').addEventListener('click', function(e) {
         var loader = Storage.loader.enqueue({logs:'request from .block1'});
