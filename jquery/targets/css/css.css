@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.page {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 60%;
+    height: 80vh;
+    margin: 20px auto;
+    background-color: #ccc;
+}
+
+.target {
+    margin: auto;
+    font-size: 3vw;
+}
