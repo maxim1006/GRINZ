@@ -51,6 +51,9 @@
 
 
     /*JOIN*/
-    /*SELECT * FROM posts inner JOIN users on users.id = posts.author_id*/
-
+    /*SELECT * FROM posts inner JOIN users on users.id = posts.author_id*/ //inner JOIN - возвращает все строки, совпадающие в 2х таблицах
+    /*SELECT * FROM users1 INNER JOIN orders ON orders.user_id = users1.id;*/
+    /*SELECT users1.id, username, number as order_number FROM users1 INNER JOIN orders ON orders.user_id = users1.id;*/ //as - меняю на лету название колонки
+/*SELECT users1.id, username, number as order_number FROM users1 INNER JOIN orders ON orders.user_id = users1.id where id = 1;*/ //выбираю все строки в смерженной таблице, где id = 1;
+/*SELECT users1.id, username, count(orders.number) as order_number from users1 inner join orders on orders.user_id = users1.id where users1.id = 1;*/ // count - считает количество ордеров, которые заказал users1.id = 1
 ?>
