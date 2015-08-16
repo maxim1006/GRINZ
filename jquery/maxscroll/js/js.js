@@ -125,12 +125,14 @@
                     .add($ySliderHorizontalWrap)
                     .on('DOMMouseScroll mousewheel MozMousePixelScroll', onMouseWheel);
 
-
                 $doc
                     .on('mousemove.maxSlider touchmove.maxSlider', onMouseMove)
                     .on('mouseup touchend', onMouseUp);
 
                 $scroll.on('scroll', onMouseScroll);
+
+                $ySliderWrap.on('mousedown touchstart', onClick);
+                $ySliderHorizontalWrap.on('mousedown touchstart', onClickHorizontal);
 
 
 
@@ -181,6 +183,26 @@
                     }
 
                     e.preventDefault();
+                }
+
+                function onClick(e) {
+                    if (canDrag) return;
+
+                    var pageY = e.pageY,
+                        offsetTop = $(this).offset().top,
+                        diff = pageY - offsetTop - $ySliderHeight;
+
+                    $scroll.scrollTop(diff*delta);
+                }
+
+                function onClickHorizontal(e) {
+                    if (canDragX) return;
+
+                    var pageX = e.pageX,
+                        offsetLeft = $(this).offset().left,
+                        diff = pageX - offsetLeft - $ySliderHorizontalWidth;
+
+                    $scroll.scrollLeft(diff*deltaHorizontal);
                 }
 
                 function onMouseWheel(e) {
