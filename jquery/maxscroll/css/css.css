@@ -73,6 +73,12 @@ body {
     top: -9999px;
 }
 
+/*to hide scroll on mobile devices*/
+.scroll__inner::-webkit-scrollbar,
+.scroll__inner::-webkit-scrollbar-track {
+    width: 0;
+}
+
 
 /**Additional**/
 
