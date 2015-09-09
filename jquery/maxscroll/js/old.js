@@ -1,5 +1,5 @@
 /*maxScroll*/
-(function($, undefined) {
+;(function($, undefined) {
 
     $.fn.maxScroll = function(options) {
         var defaults = {},
@@ -12,103 +12,204 @@
 
             var $doc,
                 $yBarHeight,
+                $yBarWidth,
                 $scroll,
                 $scrollHeight,
+                $scrollWidth,
                 $ySlider,
+                $ySliderWrap,
+                $ySliderHorizontal,
+                $ySliderHorizontalWrap,
                 $ySliderHeight,
+                $ySliderHorizontalWidth,
                 $ySliderHeightFull,
+                $ySliderHorizontalWidthFull,
                 $yEdgeBtm,
-                $ySliderBtmEdge,
+                $yEdgeRight,
                 delta,
+                deltaHorizontal,
                 startPoint,
+                startPointX,
                 canDrag,
+                canDragX,
                 startPosition,
+                startPositionX,
                 direction,
-                SCROLL_RATIO;
-
-
+                SCROLL_RATIO,
+                SCROLL_RATIO_X,
+                scrollScrollTop,
+                scrollScrollLeft;
 
 
 
             function init() {
+                initVars();
+                appendScroll();
+                initSliderVars();
+                setMarginToScrolledBlock();
                 updateVars();
                 bindEvents();
             }
 
 
 
-
-
-            function updateVars() {
+            function initVars() {
                 $doc = $(document);
-                //$scroll = $obj.find('.jsLineupsTableInner');
-                $scroll = $obj.find(options.wrapper);
-                $scrollHeight = $scroll.get(0).scrollHeight;
-                $yBarHeight = $obj.outerHeight();
-                //$ySlider = $obj.find('.jsLineupsInner');
-                $ySlider = $obj.find(options.slider);
-                $ySliderHeight = $ySlider.height()/2;
-                $ySliderHeightFull = $ySliderHeight*2;
-                $yEdgeBtm = $yBarHeight - $ySliderHeightFull;
-                $ySliderBtmEdge = $yBarHeight - $ySliderHeightFull;
-                delta = countDelta($yBarHeight, $scrollHeight, $ySliderHeightFull);
-                startPoint = 0;
-                startPosition = 0;
-                $ySlider.css({'top': 0});
-                $scroll.scrollTop(0);
-                canDrag = false;
-                SCROLL_RATIO = ($yBarHeight - $ySliderHeightFull)/50;
+                $scroll = $obj.find(options.scrolledBlock);
             }
 
 
+
+            function updateVars() {
+                $scrollHeight = $scroll.get(0).scrollHeight;
+                $yBarHeight = $obj.outerHeight();
+                //height of horizontal slider is 20% of the wrapper, same for vertical width
+                $ySlider.css('height', options.sliderHeight || (($yBarHeight*$yBarHeight)/$scrollHeight));
+                $ySliderHeight = $ySlider.height()/2;
+                $ySliderHeightFull = $ySliderHeight*2;
+                $yEdgeBtm = $yBarHeight - $ySliderHeightFull;
+                delta = countDelta($yBarHeight, $scrollHeight, $ySliderHeightFull);
+                startPoint = 0;
+                startPosition = 0;
+                canDrag = false;
+                canDragX = false;
+                SCROLL_RATIO = ($yBarHeight - $ySliderHeightFull)/(Math.ceil($scrollHeight/$yBarHeight*2));
+                scrollScrollTop = $scroll.scrollTop();
+
+                //on block resize, count slider proper position
+                if (scrollScrollTop) {
+                    $ySlider.css({'top': (scrollScrollTop/delta)});
+                } else {
+                    $ySlider.css({'top': 0});
+                }
+
+                $scrollWidth = $scroll.get(0).scrollWidth;
+                $yBarWidth = $obj.outerWidth();
+                $ySliderHorizontal.css('width', options.sliderWidth || (($yBarWidth*$yBarWidth)/$scrollWidth));
+                $ySliderHorizontalWidth = $ySliderHorizontal.width()/2;
+                $ySliderHorizontalWidthFull = $ySliderHorizontalWidth*2;
+                $yEdgeRight = $yBarWidth - $ySliderHorizontalWidthFull;
+                deltaHorizontal = countDeltaHorizontal($yBarWidth, $scrollWidth, $ySliderHorizontalWidthFull);
+                startPointX = 0;
+                startPositionX = 0;
+                scrollScrollLeft = $scroll.scrollLeft();
+                SCROLL_RATIO_X = ($yBarWidth - $ySliderHorizontalWidthFull)/(Math.ceil($scrollHeight/$yBarHeight*2));
+
+                //on block resize, count slider proper position
+                if (scrollScrollLeft) {
+                    $ySliderHorizontal.css({'left': (scrollScrollLeft/deltaHorizontal)});
+                } else {
+                    $ySliderHorizontal.css({'left': 0});
+                }
+            }
 
 
 
             function bindEvents() {
 
-                $ySlider.on('mousedown touchstart', function(e) {
-                    canDrag = true;
-                    startPoint = e.pageY;
-                    startPosition = $ySlider.position().top;
+                $ySlider
+                    .on('mousedown touchstart', function(e) {
+                        canDrag = true;
+                        startPoint = e.pageY;
+                        startPosition = $ySlider.position().top;
 
-                    $doc.on('mousemove.maxSlider touchmove.maxSlider', onMouseMove);
-                });
+                        turnOffSelection($scroll);
+                    })
+                    .add($ySliderWrap)
+                    .on('DOMMouseScroll mousewheel MozMousePixelScroll', onMouseWheel);
 
-                $obj.on('DOMMouseScroll mousewheel MozMousePixelScroll', onMouseScroll);
+                $ySliderHorizontal
+                    .on('mousedown touchstart', function (e) {
+                        canDragX = true;
+                        startPointX = e.pageX;
+                        startPositionX = $ySliderHorizontal.position().left;
 
+                        turnOffSelection($scroll);
+                    })
+                    .add($ySliderHorizontalWrap)
+                    .on('DOMMouseScroll mousewheel MozMousePixelScroll', onMouseWheel);
 
+                $doc
+                    .on('mousemove.maxSlider touchmove.maxSlider', onMouseMove)
+                    .on('mouseup touchend', onMouseUp);
+
+                $scroll.on('scroll', onMouseScroll);
+
+                $ySliderWrap.on('mousedown touchstart', onClick);
+                $ySliderHorizontalWrap.on('mousedown touchstart', onClickHorizontal);
 
 
 
                 function onMouseMove(e) {
-                    var sliderResult, blockResult;
 
-                    if(!canDrag) return;
+                    if(!canDrag && !canDragX) return;
 
-                    var diff1 = e.pageY - startPoint,
-                        diff = diff1 + startPosition;
+                    if (canDrag) {
 
-                    if (diff1 < 0 && Math.abs(diff1) >= startPosition) {
-                        sliderResult = 0;
-                        blockResult = 0;
-                    } else if(diff1 > 0 && diff1 >= $yEdgeBtm - startPosition) {
-                        sliderResult = $ySliderBtmEdge + 'px';
-                        blockResult = $scrollHeight - $yBarHeight;
-                    } else {
-                        sliderResult = diff + 'px';
-                        blockResult = diff*delta;
+                        var diff1 = e.pageY - startPoint,
+                            diff = diff1 + startPosition,
+                            sliderResult, blockResult;
+
+                        if (diff1 < 0 && Math.abs(diff1) >= startPosition) {
+                            sliderResult = 0;
+                            blockResult = 0;
+                        } else if(diff1 > 0 && diff1 >= $yEdgeBtm - startPosition) {
+                            sliderResult = $yEdgeBtm + 'px';
+                            blockResult = $scrollHeight;
+                        } else {
+                            sliderResult = diff + 'px';
+                            blockResult = diff*delta;
+                        }
+
+                        $ySlider.css({'top': sliderResult});
+                        $scroll.scrollTop(blockResult);
+
+                    } else if ( canDragX ) {
+
+                        var diffX1 = e.pageX - startPointX,
+                            diffX = diffX1 + startPositionX,
+                            sliderResultX, blockResultX;
+
+                        if (diffX1 < 0 && Math.abs(diffX1) >= startPositionX) {
+                            sliderResultX = 0;
+                            blockResultX = 0;
+                        } else if(diffX1 > 0 && diffX1 >= $yEdgeRight - startPositionX) {
+                            sliderResultX = $yEdgeRight + 'px';
+                            blockResultX = $scrollWidth;
+                        } else {
+                            sliderResultX = diffX + 'px';
+                            blockResultX = diffX*deltaHorizontal;
+                        }
+
+                        $ySliderHorizontal.css({'left': sliderResultX});
+                        $scroll.scrollLeft(blockResultX);
+
                     }
 
-                    $ySlider.css({'top': sliderResult});
-                    $scroll.scrollTop(blockResult);
-
+                    e.preventDefault();
                 }
 
+                function onClick(e) {
+                    if (canDrag) return;
 
+                    var pageY = e.pageY,
+                        offsetTop = $(this).offset().top,
+                        diff = pageY - offsetTop - $ySliderHeight;
 
+                    $scroll.scrollTop(diff*delta);
+                }
 
+                function onClickHorizontal(e) {
+                    if (canDragX) return;
 
-                function onMouseScroll(e) {
+                    var pageX = e.pageX,
+                        offsetLeft = $(this).offset().left,
+                        diff = pageX - offsetLeft - $ySliderHorizontalWidth;
+
+                    $scroll.scrollLeft(diff*deltaHorizontal);
+                }
+
+                function onMouseWheel(e) {
                     var sliderResult, blockResult,
                         curY = $ySlider.position().top;
 
@@ -119,7 +220,7 @@
                     }
 
                     if (curY > $yEdgeBtm - SCROLL_RATIO && direction === "down") {
-                        sliderResult = $ySliderBtmEdge + 'px';
+                        sliderResult = $yEdgeBtm + 'px';
                         blockResult = $scrollHeight;
                     } else if (curY < 0) {
                         sliderResult = 0;
@@ -138,33 +239,172 @@
                     return false;
                 }
 
+                function onMouseUp() {
+                    canDrag = false;
+                    canDragX = false;
+
+                    turnOnSelection($scroll);
+                }
+
+                function onMouseScroll(e) {
+                    if (canDrag) return;
+                    $ySlider.css({'top':  ($scroll.scrollTop())/delta});
+                    $ySliderHorizontal.css({'left':  ($scroll.scrollLeft())/deltaHorizontal});
+                }
             } //end of bindEvents
 
 
 
-            $(document).on('mouseup touchend', function() {
-                canDrag = false;
-                $(this).off('mousemove.maxSlider touchmove.maxSlider');
-            });
+
+            /**HELPERS**/
+            function initSliderVars() {
+                $ySlider = $obj.find('.maxscroll__slider');
+                $ySliderWrap = $obj.find('.maxscroll__slider-wrap');
+                $ySliderHorizontal = $obj.find('.maxscroll__slider_horizontal');
+                $ySliderHorizontalWrap = $obj.find('.maxscroll__slider-wrap_horizontal');
+            }
+
+            /**
+             * append and find scroll elements
+             */
+            function appendScroll() {
+                $(
+                    '<div class="maxscroll__slider-wrap">' +
+                    '<div class="maxscroll__slider"></div>' +
+                    '</div>' +
+                    '<div class="maxscroll__slider-wrap_horizontal">' +
+                    '<div class="maxscroll__slider_horizontal"></div>' +
+                    '</div>'
+                ).insertAfter($scroll);
+            }
 
 
+            /**
+             * Get width of the browser scroll
+             * @returns {number}
+             */
+            function getScrollbarWidth() {
+                var scrollDiv, scrollbarWidth;
+
+                scrollDiv = document.createElement("div");
+                scrollDiv.className = "maxscroll-measure";
+                document.body.appendChild(scrollDiv);
+                scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+                document.body.removeChild(scrollDiv);
+
+                return scrollbarWidth;
+            }
+
+            function makeScrollBarWidthCache(f) {
+                var cache = {};
+
+                return function(x) {
+                    if (!(x in cache)) {
+                        cache[x] = f.call(this);
+                    }
+                    return cache[x];
+                }
+            }
+
+            getScrollbarWidth = makeScrollBarWidthCache(getScrollbarWidth);
 
 
+            function setMarginToScrolledBlock() {
+                var margin = getScrollbarWidth();
+                $scroll.css({
+                    'marginRight': -margin,
+                    'paddingBottom': margin,
+                    'height': 'calc(100% + ' + margin + 'px)'
+                });
+            }
 
+
+            /**
+             * Count delta - the ratio of block scroll to slider top position
+             *
+             * @param {Number} $yBarHeight
+             * @param {Number} $scrollHeight
+             * @param {Number} $ySliderHeightFull
+             * @returns {number} delta
+             */
             function countDelta($yBarHeight, $scrollHeight, $ySliderHeightFull) {
                 delta = (($scrollHeight-$yBarHeight)/($yBarHeight - $ySliderHeightFull));
 
                 //check if scroll is needed
                 if ($scrollHeight <= $yBarHeight) {
                     $ySlider.hide();
+                } else {
+                    $ySlider.show();
                 }
 
                 return delta;
             }
 
 
+            /**
+             * Count delta - the ratio of block scroll to slider left position
+             *
+             * @param $yBarWidth
+             * @param $scrollWidth
+             * @param $ySliderHorizontalWidthFull
+             * @returns {number} deltaHorizontal
+             */
+            function countDeltaHorizontal($yBarWidth, $scrollWidth, $ySliderHorizontalWidthFull) {
+                deltaHorizontal = (($scrollWidth-$yBarWidth)/($yBarWidth - $ySliderHorizontalWidthFull));
+
+                //check if scroll is needed
+                if ($scrollWidth <= $yBarWidth) {
+                    $ySliderHorizontal.hide();
+                } else {
+                    $ySliderHorizontal.show();
+                }
+
+                console.log($scrollWidth <= $yBarWidth);
+
+                return deltaHorizontal;
+            }
+
+
+            /**
+             * off selection from element
+             */
+            function turnOffSelection(el) {
+                el.attr('unselectable','on')
+                    .addClass('_unselectable')
+                    .on('selectstart', returnFalse);
+            }
+
+
+            /**
+             * on selection from element
+             */
+            function turnOnSelection(el) {
+                el.removeAttr('unselectable')
+                    .removeClass('_unselectable')
+                    .off('selectstart', returnFalse);
+            }
+
+
+            /**
+             * return false function, need for select logic
+             */
+            function returnFalse(){
+                return false;
+            }
+
+
 
             init();
+
+
+
+            //Public api
+            var publicMethods = {
+                resize: updateVars
+            };
+
+            //set public methods
+            $obj.data('maxScroll', publicMethods);
 
         });
     };
