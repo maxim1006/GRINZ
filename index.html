@@ -2,7 +2,7 @@
 <!--[if IE 7]> <html class="no-js ie7 no-borderradius no-rgba ie"> <![endif]-->
 <!--[if IE 8]> <html class="no-js ie8 no-borderradius no-rgba ie"> <![endif]-->
 <!--[if IE 9]> <html class="no-js ie9 borderradius rgba ie"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="no-js borderradius rgba"> <!--<![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js borderradius rgba" ng-app="grinz"> <!--<![endif]-->
 <head>
     <title>Grinz</title>
 
@@ -68,109 +68,15 @@
     <style type=text/css>#layout-outer{display:table;height:100%}</style>
     <![endif]-->
 </head>
-<body>
+<body ng-controller="GrinzController as grinz">
+
 <div id=layout-outer>
     <div id=layout-inner>
-        <div class=header>
-            <a href=/ class=header__label>
-                <span class=header__label_part1>G</span>
-                <span class=header__label_part2>R</span>
-                <span class=header__label_part3>I</span>
-                <span class=header__label_part4>N</span>
-                <span class=header__label_part5>Z</span>
-                <span class=header__label_part6>.</span>
-                <span class=header__label_part7>r</span>
-                <span class=header__label_part8>u</span>
-            </a>
-        </div>
-        <header class=header>
-            <h1 class=header__h1><strong>Grinz</strong> - готовые примеры для веб-разработчика, </h1>
-        </header>
-        <nav class=nav>
-            <ul class=nav__list>
-                <li class=nav__list-item>
-                    <a class=nav__list-item-link href=#html-css id=html-css><strong>html/css</strong></a>
-                    <div class=nav__dropdown>
-                        <ul class=nav__list-inner>
-                            <li class=nav__list-inner-item><a href=css-examples/stickyFooter/>Sticky Footer</a></li>
-                            <li class=nav__list-inner-item><a href=css-examples/flexbox/>Flexboxes</a></li>
-                            <li class=nav__list-inner-item><a href=css-examples/svg-background/>SVG background</a></li>
-                            <li class=nav__list-inner-item><a href=css-examples/flexible-table/>Flexible table</a></li>
-                            <li class=nav__list-inner-item><a href=css-examples/super-blocks.html>Super blocks</a></li>
-                            <li class=nav__list-inner-item><a href=css-examples/rotated-cubes.html>Rotated cubes</a></li>
-                            <li class=nav__list-inner-item><a href=css-examples/shadows.html>CSS shadows</a></li>
-                            <li class=nav__list-inner-item><a href=css-examples/fonts.html>Наборы шрифтов</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class=nav__list-item>
-                    <a class=nav__list-item-link href=#javascript id=javascript><strong>JavaScript</strong></a>
-                    <div class=nav__dropdown>
-                        <ul class=nav__list-inner>
-                            <li class=nav__list-inner-item><a href=js/gulp/>Gulp, руководство с примерами</a></li>
-                            <li class=nav__list-inner-item><a href=js/queueStorage/>Custom queue Storage</a></li>
-                            <li class=nav__list-inner-item><a href=js/grunt/>Grunt, руководство с примерами</a></li>
-                            <li class=nav__list-inner-item><a href=js/promises/>Promises in Javascript</a></li>
-                            <li class=nav__list-inner-item><a href=js/video-player/>Video player IE9+</a></li>
-                            <li class=nav__list-inner-item><a href=js/throttle/>Throttle, debounce, resizeend</a></li>
-                            <li class=nav__list-inner-item><a href=js/call-apply-bind-proxy.html>Call, apply, bind, proxy</a></li>
-                            <li class=nav__list-inner-item><a href=js/scrolltop-scrollleft/>ScrollLeft, ScrollTop</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class=nav__list-item>
-                    <a class=nav__list-item-link href=#jquery id=jquery><strong>jQuery</strong></a>
-                    <div class=nav__dropdown_right-rows>
-                        <ul class=nav__list-inner>
-                            <li class=nav__list-inner-item><a href=jquery/maxcarousel/>Maxcarousel</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/maxgallery/>Maxgallery</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/maxscroll/>Maxscroll</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/maxslider/>Maxslider</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/maxtooltip/>Maxtooltip</a></li>
-                        </ul>
-                        <ul class=nav__list-inner>
-                            <li class=nav__list-inner-item><a href=jquery/imagePreloading/>imagePreloading</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/Collapser/>Collapser</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/simple-popup/>Simple popup</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/floating-menu/>Floating menu</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/equalheight/>Equal height</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/memory-training/>Memory training</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/lazy-load/>Lazy load</a></li>
-                        </ul>
-                        <ul class=nav__list-inner>
-                            <li class=nav__list-inner-item><a href=jquery/targets/>targets</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/deferred/>jQuery deferred</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/jquery-coords/>jQuery coords</a></li>
-                            <li class=nav__list-inner-item><a href=jquery/jquery-vs-velocity/>jQuery vs Velocity.js</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class=nav__list-item>
-                    <a class=nav__list-item-link href=#require-backbone-underscore id=require-backbone-underscore><strong>Require.js + Underscore.js + Backbone.js</strong></a>
-                    <div class=nav__dropdown>
-                        <ul class=nav__list-inner>
-                            <li class=nav__list-inner-item><a href=require-backbone-underscore/models/>Backbone models</a></li>
-                            <li class=nav__list-inner-item><a href=require-backbone-underscore/collections/>Backbone collections</a></li>
-                            <li class=nav__list-inner-item><a href=require-backbone-underscore/views/>Backbone views</a></li>
-                            <li class=nav__list-inner-item><a href=require-backbone-underscore/router/>Backbone router</a></li>
-                            <li class=nav__list-inner-item><a href=require-backbone-underscore/inheritance/>Backbone inheritance</a></li>
-                            <li class=nav__list-inner-item><a href=require-backbone-underscore/underscore-template/>Underscore.js template</a></li>
-                            <li class=nav__list-inner-item><a href=require-backbone-underscore/backbone-underscore-require/>Backbone + underscore + require</a></li>
-                            <li class=nav__list-inner-item><a href=require-backbone-underscore/require-backbone-router/>Backbone Routing + underscore + require</a></li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+        <grinz-header></grinz-header>
+        <grinz-nav></grinz-nav>
     </div>
 </div>
-
-<footer id=layout-footer>
-    <div class=layout-footer__corp>
-        2014 © - "grinz.ru". Use it as you want :-) <a href=https://github.com/maxim1006>Github link</a>. Write me a letter: maxim1006@list.ru
-    </div>
-</footer>
-
+<grinz-footer></grinz-footer>
 <script type = "text/javascript">
     window.onload = function() {
         var link = document.createElement('link');
@@ -181,6 +87,9 @@
         (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter24251140 = new Ya.Metrika({id:24251140, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");
     }
 </script>
+
+<script src="scripts/angular.min.js"></script>
+<script src="scripts/app.js"></script>
 
 </body>
 </html>
