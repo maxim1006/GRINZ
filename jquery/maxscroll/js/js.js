@@ -112,6 +112,8 @@
                         canDrag = true;
                         startPoint = e.pageY;
                         startPosition = $ySlider.position().top;
+
+                        turnOffSelection($scroll);
                     })
                     .add($ySliderWrap)
                     .on('DOMMouseScroll mousewheel MozMousePixelScroll', onMouseWheel);
@@ -121,6 +123,8 @@
                         canDragX = true;
                         startPointX = e.pageX;
                         startPositionX = $ySliderHorizontal.position().left;
+
+                        turnOffSelection($scroll);
                     })
                     .add($ySliderHorizontalWrap)
                     .on('DOMMouseScroll mousewheel MozMousePixelScroll', onMouseWheel);
@@ -238,6 +242,8 @@
                 function onMouseUp() {
                     canDrag = false;
                     canDragX = false;
+
+                    turnOnSelection($scroll);
                 }
 
                 function onMouseScroll(e) {
@@ -353,6 +359,34 @@
                 }
 
                 return deltaHorizontal;
+            }
+
+
+            /**
+             * off selection from element
+             */
+            function turnOffSelection(el) {
+                el.attr('unselectable','on')
+                    .addClass('_unselectable')
+                    .on('selectstart', returnFalse);
+            }
+
+
+            /**
+             * on selection from element
+             */
+            function turnOnSelection(el) {
+                el.removeAttr('unselectable')
+                    .removeClass('_unselectable')
+                    .off('selectstart', returnFalse);
+            }
+
+
+            /**
+             * return false function, need for select logic
+             */
+            function returnFalse(){
+                return false;
             }
 
 

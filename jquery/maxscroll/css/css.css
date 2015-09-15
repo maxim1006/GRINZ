@@ -73,6 +73,19 @@ body {
     top: -9999px;
 }
 
+._unselectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/*to hide scroll on mobile devices*/
+.scroll__inner::-webkit-scrollbar,
+.scroll__inner::-webkit-scrollbar-track {
+    width: 0;
+}
+
 
 /**Additional**/
 
