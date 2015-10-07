@@ -107,6 +107,10 @@
             {
                 "links": [
                     {
+                        "name": "Multiline Ellipsis",
+                        "link": "jquery/ellipsis/"
+                    },
+                    {
                         "name": "imagePreloading",
                         "link": "jquery/imagePreloading/"
                     },
