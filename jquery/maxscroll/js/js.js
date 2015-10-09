@@ -388,7 +388,7 @@
              * Turn on auto resize mode
              */
             function autoResize() {
-                if (options.autoResize) {
+                if (options.autoResize) { 
                     $obj
                         .on('mouseenter', function() {
                             autoResizeFlag = true;
