@@ -382,6 +382,32 @@
             }
 
 
+            var timeoutID, autoResizeFlag, tempScrollHeight;
+
+            /**
+             * Turn on auto resize mode
+             */
+            function autoResize() {
+                if (options.autoResize) {
+                    $obj
+                        .on('mouseenter', function() {
+                            autoResizeFlag = true;
+                            timeoutID = setTimeout(function resize() {
+                                tempScrollHeight = $scroll.get(0).scrollHeight;
+
+                                if (tempScrollHeight !== $scrollHeight) $obj.data('maxScroll').resize();
+
+                                if (autoResizeFlag) setTimeout(resize, options.autoResizeTime || 1000);
+                            }, options.autoResizeTime || 1000);
+                        })
+                        .on('mouseleave', function() {
+                            autoResizeFlag = false;
+                            clearInterval(timeoutID);
+                        });
+                }
+            }
+
+
             /**
              * return false function, need for select logic
              */
