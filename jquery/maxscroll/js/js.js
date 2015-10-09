@@ -331,7 +331,7 @@
                 delta = (($scrollHeight-$yBarHeight)/($yBarHeight - $ySliderHeightFull));
 
                 //check if scroll is needed
-                if ($scrollHeight <= $yBarHeight) {
+                if (delta <= 1) {
                     $ySlider.hide();
                 } else {
                     $ySlider.show();
@@ -353,7 +353,7 @@
                 deltaHorizontal = (($scrollWidth-$yBarWidth)/($yBarWidth - $ySliderHorizontalWidthFull));
 
                 //check if scroll is needed
-                if ($scrollWidth <= $yBarWidth) {
+                if (deltaHorizontal <= 1) {
                     $ySliderHorizontal.hide();
                 } else {
                     $ySliderHorizontal.show();

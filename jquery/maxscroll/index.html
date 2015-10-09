@@ -12,8 +12,9 @@
             <a href="/">&larr; grinz.ru</a>
         </div>
 
-        <div style="margin:20px auto 0;width: 200px;text-align: center;cursor:pointer;">
-            <span style="color: blue;" class="js-addTextButton">Add Text to the 1st block</span>
+        <div style="margin:20px auto 0;text-align: center;cursor:pointer;">
+            <span style="color: blue;margin-right: 40px;" class="js-addTextButton">Add Text to the 1st block</span>
+            <span style="color: blue;" class="js-removeTextButton">Remove Text from the 1st block</span>
         </div>
 
         <div class="scroll">
@@ -50,15 +51,24 @@
 
         <script>
             var popup = document.querySelector('.jsMaxScroll'),
-                button = document.querySelector('.js-addTextButton'),
+                buttonAdd = document.querySelector('.js-addTextButton'),
+                buttonRemove = document.querySelector('.js-removeTextButton'),
                 paragraph;
 
-            button.addEventListener('click', function() {
+            buttonAdd.addEventListener('click', function() {
                 paragraph = document.querySelector('.scroll__par').cloneNode(true);
                 popup.insertBefore(paragraph, popup.firstChild);
             });
 
-            button.addEventListener('mousedown', function(e) {
+            buttonAdd.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+            });
+
+            buttonRemove.addEventListener('click', function(e) {
+                popup.removeChild(popup.firstChild);
+            });
+
+            buttonRemove.addEventListener('mousedown', function(e) {
                 e.preventDefault();
             });
 
