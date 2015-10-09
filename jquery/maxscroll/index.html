@@ -57,7 +57,7 @@
 
             buttonAdd.addEventListener('click', function() {
                 paragraph = document.querySelector('.scroll__par').cloneNode(true);
-                popup.insertBefore(paragraph, popup.firstChild);
+                popup.insertBefore(paragraph, popup.firstElementChild);
             });
 
             buttonAdd.addEventListener('mousedown', function(e) {
@@ -65,7 +65,7 @@
             });
 
             buttonRemove.addEventListener('click', function(e) {
-                popup.removeChild(popup.firstChild);
+                popup.removeChild(popup.firstElementChild);
             });
 
             buttonRemove.addEventListener('mousedown', function(e) {
