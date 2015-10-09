@@ -49,6 +49,7 @@
                 setMarginToScrolledBlock();
                 updateVars();
                 bindEvents();
+                autoResize();
             }
 
 
@@ -388,7 +389,7 @@
              * Turn on auto resize mode
              */
             function autoResize() {
-                if (options.autoResize) { 
+                if (options.autoResize) {
                     $obj
                         .on('mouseenter', function() {
                             autoResizeFlag = true;
@@ -439,7 +440,8 @@ $(function() {
     var $scroll = $('.scroll');
 
     $scroll.maxScroll({
-        scrolledBlock: '.jsMaxScroll'
+        scrolledBlock: '.jsMaxScroll',
+        autoResize: true
     });
 
     //on window resize example

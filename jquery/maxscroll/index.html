@@ -12,6 +12,10 @@
             <a href="/">&larr; grinz.ru</a>
         </div>
 
+        <div style="margin:20px auto 0;width: 200px;text-align: center;cursor:pointer;">
+            <span style="color: blue;" class="js-addTextButton">Add Text to the 1st block</span>
+        </div>
+
         <div class="scroll">
             <div class="scroll__inner jsMaxScroll">
                 <div class="scroll__par scroll__par_wide">Параграф 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, in, nihil sapiente modi perspiciatis facilis similique ex officiis aspernatur autem doloremque deleniti vero numquam. Quibusdam esse pariatur maxime repudiandae. Pariatur.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, in, nihil sapiente modi perspiciatis facilis similique ex officiis aspernatur autem doloremque deleniti vero numquam. Quibusdam esse pariatur maxime repudiandae. Pariatur.</div>
@@ -40,7 +44,24 @@
             </div>
         </div>
 
+
         <script src="js/jquery.js"></script>
         <script src="js/js.js"></script>
+
+        <script>
+            var popup = document.querySelector('.jsMaxScroll'),
+                button = document.querySelector('.js-addTextButton'),
+                paragraph;
+
+            button.addEventListener('click', function() {
+                paragraph = document.querySelector('.scroll__par').cloneNode(true);
+                popup.insertBefore(paragraph, popup.firstChild);
+            });
+
+            button.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+            });
+
+        </script>
     </body>
 </html>
