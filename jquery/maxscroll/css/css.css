@@ -1,6 +1,9 @@
 * {
     margin: 0;
     padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html,
@@ -100,4 +103,5 @@ body {
 .scroll__par_wide {
     width: 3000px;
 }
+
 

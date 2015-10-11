@@ -159,13 +159,7 @@
                         "link": "jquery/jquery-vs-velocity/"
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "header": "Require.js + Underscore.js + Backbone.js",
-        "lists": [
-            {
+            }, {
                 "links": [
                     {
                         "name": "Backbone models",
@@ -201,6 +195,7 @@
                     }
                 ]
             }
+
         ]
     }
 ]

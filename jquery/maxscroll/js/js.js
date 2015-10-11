@@ -314,6 +314,7 @@
                 var margin = getScrollbarWidth();
                 $scroll.css({
                     'marginRight': -margin,
+                    'paddingRight': margin,
                     'paddingBottom': margin
                 });
             }
