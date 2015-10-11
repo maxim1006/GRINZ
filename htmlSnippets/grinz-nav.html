@@ -6,7 +6,7 @@
             <div ng-class="nav.header === 'jQuery' ? 'nav__dropdown_right-rows' : 'nav__dropdown'">
                 <ul class=nav__list-inner ng-repeat="list in nav.lists">
                     <li class=nav__list-inner-item ng-repeat="link in list.links">
-                        <a href="{{link.link}}">
+                        <a href="{{link.link}}" class="nav__list-inner-link">
                             {{link.name}}
                         </a>
                     </li>

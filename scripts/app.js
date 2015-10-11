@@ -21,7 +21,16 @@
     app.directive('grinzNav', function() {
         return {
             restrict: "E",
-            templateUrl: './htmlSnippets/grinz-nav.html'
+            templateUrl: './htmlSnippets/grinz-nav.html',
+            link: function(scope, element, attrs) {
+                element.ready(function() {
+                    var linksArr = Array.prototype.slice.call(document.querySelectorAll('.nav__list-inner-link'));
+
+                    linksArr.forEach(function(el) {
+                        if (isEllipsisActive(el)) el.setAttribute('title', el.textContent);
+                    });
+                });
+            }
         };
     });
 
@@ -31,5 +40,9 @@
             templateUrl: './htmlSnippets/grinz-footer.html'
         };
     });
+
+    function isEllipsisActive(e) {
+        return (e.offsetWidth < e.scrollWidth);
+    }
 
 })();
