@@ -50,6 +50,7 @@
                 updateVars();
                 bindEvents();
                 autoResize();
+                setMobileState();
             }
 
 
@@ -314,8 +315,7 @@
                 var nativeScrollSize = getScrollbarWidth();
                 $scroll.css({
                     'height': 'calc(100% + ' + nativeScrollSize + 'px)',
-                    'width': 'calc(100% + ' + nativeScrollSize + 'px)',
-                    'paddingRight': nativeScrollSize
+                    'width': 'calc(100% + ' + nativeScrollSize + 'px)'
                 });
             }
 
@@ -415,6 +415,22 @@
              */
             function returnFalse(){
                 return false;
+            }
+
+
+            /**
+             * detect mobile browser
+             * @returns {boolean}
+             */
+            function isMobile() {
+                return (/android|webos|iphone|ipad|ipod|blackberry|Windows Phone/i.test(navigator.userAgent));
+            }
+
+
+            function setMobileState() {
+                if (isMobile()) {
+                    $scroll.addClass('maxscroll_mobile');
+                }
             }
 
 

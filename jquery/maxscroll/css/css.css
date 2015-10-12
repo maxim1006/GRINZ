@@ -23,7 +23,6 @@ body {
 .scroll__inner {
     position: relative;
     overflow: scroll;
-    -webkit-overflow-scrolling: touch;
     height: calc(100% + 50px); /*to prevent browser scroll appearance, will be overwritten by script*/
     width: calc(100% + 50px); /*to prevent browser scroll appearance, will be overwritten by script*/
 }
@@ -84,8 +83,9 @@ body {
 }
 
 /*to hide scroll on mobile devices*/
-.scroll__inner::-webkit-scrollbar,
-.scroll__inner::-webkit-scrollbar-track {
+.maxscroll_mobile::-webkit-scrollbar,
+.maxscroll_mobile::-webkit-scrollbar-track {
+    display: none;
     width: 0;
 }
 
