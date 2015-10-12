@@ -21,11 +21,10 @@ body {
 }
 
 .scroll__inner {
-    height: 100%;
     position: relative;
     overflow: scroll;
-    margin-right: -50px; /*to prevent browser scroll appearance, will be overwritten by script*/
-    padding-bottom: 50px; /*to prevent browser scroll appearance, will be overwritten by script*/
+    height: calc(100% + 50px); /*to prevent browser scroll appearance, will be overwritten by script*/
+    width: calc(100% + 50px); /*to prevent browser scroll appearance, will be overwritten by script*/
 }
 
 .maxscroll__slider-wrap {

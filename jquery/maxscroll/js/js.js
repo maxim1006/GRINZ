@@ -46,7 +46,7 @@
                 initVars();
                 appendScroll();
                 initSliderVars();
-                setMarginToScrolledBlock();
+                hideNativeScrolls();
                 updateVars();
                 bindEvents();
                 autoResize();
@@ -310,12 +310,12 @@
             getScrollbarWidth = makeScrollBarWidthCache(getScrollbarWidth);
 
 
-            function setMarginToScrolledBlock() {
-                var margin = getScrollbarWidth();
+            function hideNativeScrolls() {
+                var nativeScrollSize = getScrollbarWidth();
                 $scroll.css({
-                    'marginRight': -margin,
-                    'paddingRight': margin,
-                    'paddingBottom': margin
+                    'height': 'calc(100% + ' + nativeScrollSize + 'px)',
+                    'width': 'calc(100% + ' + nativeScrollSize + 'px)',
+                    'paddingRight': nativeScrollSize
                 });
             }
 
