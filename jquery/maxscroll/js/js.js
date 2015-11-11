@@ -11,6 +11,7 @@
             var $obj = $(this);
 
             var $doc,
+                $objHeight,
                 $yBarHeight,
                 $yBarWidth,
                 $scroll,
@@ -58,6 +59,7 @@
             function initVars() {
                 $doc = $(document);
                 $scroll = $obj.find(options.scrolledBlock);
+                $objHeight = $obj.outerHeight();
             }
 
 
@@ -399,7 +401,7 @@
             }
 
 
-            var timeoutID, autoResizeFlag, tempScrollHeight;
+            var timeoutID, autoResizeFlag, tempScrollHeight, tempObjHeight;
 
             /**
              * Turn on auto resize mode
@@ -411,8 +413,12 @@
                             autoResizeFlag = true;
                             timeoutID = setTimeout(function resize() {
                                 tempScrollHeight = $scroll.get(0).scrollHeight;
+                                tempObjHeight = $obj.outerHeight(true);
 
-                                if (tempScrollHeight !== $scrollHeight) $obj.data('maxScroll').resize();
+                                if (tempScrollHeight !== $scrollHeight ||
+                                    tempObjHeight !== $objHeight) {
+                                    $obj.data('maxScroll').resize();
+                                }
 
                                 if (autoResizeFlag) setTimeout(resize, options.autoResizeTime || 1000);
                             }, options.autoResizeTime || 1000);

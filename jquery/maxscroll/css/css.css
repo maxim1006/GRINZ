@@ -19,8 +19,12 @@ body {
     overflow: hidden;
 }
 
-.scroll:nth-of-type(4) {
+.scroll:nth-of-type(5) {
     height: 40%;
+}
+
+.scroll:nth-of-type(3) {
+    height: 300px;
 }
 
 .scroll__inner {
