@@ -14,10 +14,13 @@ body {
 .scroll {
     position: relative;
     width: 60%;
-    height: 40%;
     margin: 100px auto;
     border: 1px solid #ccc;
     overflow: hidden;
+}
+
+.scroll:nth-of-type(4) {
+    height: 40%;
 }
 
 .scroll__inner {
@@ -35,6 +38,7 @@ body {
     width: 10px;
     height: 100%;
     border-radius: 10px;
+    z-index: 10;
 }
 
 .maxscroll__slider-wrap_horizontal {
@@ -45,6 +49,7 @@ body {
     width: 100%;
     height: 10px;
     border-radius: 10px;
+    z-index: 10;
 }
 
 .maxscroll__slider {

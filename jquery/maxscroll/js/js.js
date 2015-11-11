@@ -65,6 +65,10 @@
             function updateVars() {
                 $scrollHeight = $scroll.get(0).scrollHeight;
                 $yBarHeight = $obj.outerHeight();
+
+                //set height to the obj in case it hasn't fixed height
+                //$obj.css("height", $yBarHeight);
+
                 //height of horizontal slider is 20% of the wrapper, same for vertical width
                 $ySlider.css('height', options.sliderHeight || (($yBarHeight*$yBarHeight)/$scrollHeight));
                 $ySliderHeight = $ySlider.height()/2;
@@ -360,7 +364,18 @@
                     $ySliderHorizontal.hide();
                 }
 
+                //check if height is auto then hide x scroll
+                if ($ySlider.css("display") === "none") {
+                    hideXNativeScroll();
+                }
+
                 return deltaHorizontal;
+            }
+
+
+            function hideXNativeScroll() {
+                var h = getScrollbarWidth();
+                $scroll.css('marginBottom', -h);
             }
 
 
