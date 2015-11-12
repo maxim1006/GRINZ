@@ -478,3 +478,16 @@
     };
 
 })(jQuery);
+
+
+$(function() {
+    var $scroll = $('.scroll');
+
+    $scroll.maxScroll({
+        scrolledBlock: '.jsMaxScroll',
+        autoResize: true
+    });
+
+    //trigger this method when resize block with scroll
+    //$scroll.data('maxScroll').resize();
+});
