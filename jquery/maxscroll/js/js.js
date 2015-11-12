@@ -278,10 +278,10 @@
             function appendScroll() {
                 $(
                     '<div class="maxscroll__slider-wrap">' +
-                        '<div class="maxscroll__slider"></div>' +
+                    '<div class="maxscroll__slider"></div>' +
                     '</div>' +
                     '<div class="maxscroll__slider-wrap_horizontal">' +
-                        '<div class="maxscroll__slider_horizontal"></div>' +
+                    '<div class="maxscroll__slider_horizontal"></div>' +
                     '</div>'
                 ).insertAfter($scroll);
             }
@@ -319,6 +319,7 @@
 
             function hideNativeScrolls() {
                 var nativeScrollSize = getScrollbarWidth();
+
                 $scroll.css({
                     'height': 'calc(100% + ' + nativeScrollSize + 'px)',
                     'width': 'calc(100% + ' + nativeScrollSize + 'px)'
@@ -366,8 +367,10 @@
                     $ySliderHorizontal.hide();
                 }
 
-                //check if height is auto then hide x scroll
-                if ($ySlider.css("display") === "none") {
+                // check if height is auto then hide x scroll,
+                // also if height of scrolled block is the same as wrapper
+                if ($ySlider.css("display") === "none" && $scrollWidth-$yBarWidth > 0 ||
+                    $ySlider.css("display") !== "none" && $obj.outerHeight() === $scroll.outerHeight()) {
                     hideXNativeScroll();
                 }
 
@@ -412,12 +415,15 @@
                         .on('mouseenter', function() {
                             autoResizeFlag = true;
                             timeoutID = setTimeout(function resize() {
+
                                 tempScrollHeight = $scroll.get(0).scrollHeight;
                                 tempObjHeight = $obj.outerHeight(true);
 
                                 if (tempScrollHeight !== $scrollHeight ||
                                     tempObjHeight !== $objHeight) {
+
                                     $obj.data('maxScroll').resize();
+                                    $objHeight = tempObjHeight;
                                 }
 
                                 if (autoResizeFlag) setTimeout(resize, options.autoResizeTime || 1000);
@@ -473,20 +479,12 @@
 
 })(jQuery);
 
-
 $(function() {
     var $scroll = $('.scroll');
 
     $scroll.maxScroll({
         scrolledBlock: '.jsMaxScroll',
         autoResize: true
-    });
-
-    //on window resize example
-    $(window).on('resize.maxScroll', function() {
-        $scroll.each(function() {
-            $(this).data('maxScroll').resize();
-        });
     });
 
     //trigger this method when resize block with scroll
