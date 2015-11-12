@@ -370,7 +370,7 @@
                 // check if height is auto then hide x scroll,
                 // also if height of scrolled block is the same as wrapper
                 if ($ySlider.css("display") === "none" && $scrollWidth-$yBarWidth > 0 ||
-                    $ySlider.css("display") !== "none" && $obj.outerHeight() === $scroll.outerHeight()) {
+                    $obj.outerHeight() === $scroll.outerHeight()) {
                     hideXNativeScroll();
                 }
 
@@ -478,15 +478,3 @@
     };
 
 })(jQuery);
-
-$(function() {
-    var $scroll = $('.scroll');
-
-    $scroll.maxScroll({
-        scrolledBlock: '.jsMaxScroll',
-        autoResize: true
-    });
-
-    //trigger this method when resize block with scroll
-    //$scroll.data('maxScroll').resize();
-});
