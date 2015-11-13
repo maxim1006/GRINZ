@@ -59,12 +59,13 @@
             function initVars() {
                 $doc = $(document);
                 $scroll = $obj.find(options.scrolledBlock);
-                $objHeight = $obj.outerHeight();
+                $objHeight = $obj.height();
             }
 
 
 
             function updateVars() {
+                $objHeight = $obj.height();
                 $scrollHeight = $scroll.get(0).scrollHeight;
                 $yBarHeight = $obj.outerHeight();
 
@@ -369,8 +370,7 @@
 
                 // check if height is auto then hide x scroll,
                 // also if height of scrolled block is the same as wrapper
-                if ($ySlider.css("display") === "none" && $scrollWidth-$yBarWidth > 0 ||
-                    $obj.outerHeight() === $scroll.outerHeight()) {
+                if ($objHeight === $scrollHeight + getScrollbarWidth()) {
                     hideXNativeScroll();
                 }
 
@@ -417,13 +417,14 @@
                             timeoutID = setTimeout(function resize() {
 
                                 tempScrollHeight = $scroll.get(0).scrollHeight;
-                                tempObjHeight = $obj.outerHeight(true);
+                                tempObjHeight = $obj.height();
 
                                 if (tempScrollHeight !== $scrollHeight ||
                                     tempObjHeight !== $objHeight) {
 
                                     $obj.data('maxScroll').resize();
                                     $objHeight = tempObjHeight;
+                                    console.log(123);
                                 }
 
                                 if (autoResizeFlag) setTimeout(resize, options.autoResizeTime || 1000);
