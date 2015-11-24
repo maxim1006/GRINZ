@@ -370,7 +370,7 @@
 
                 // check if height is auto then hide x scroll,
                 // also if height of scrolled block is the same as wrapper
-                if ($objHeight === $scrollHeight + getScrollbarWidth()) {
+                if ($objHeight === $scroll.outerHeight(true)) {
                     hideXNativeScroll();
                 }
 
