@@ -1,8 +1,9 @@
 (function($, undefined) {
 
     jQuery.fn.equalHeight = function(options) {
-
-        var defaults = {};
+        var defaults = {
+            class: 'js-equal-height'
+        };
 
         var $this = $(this);
 
@@ -12,43 +13,45 @@
             var lines = $(this);
 
             function init() {
+                updateVars();
+                bindEvents();
+            }
 
+            function updateVars() {
+            }
+
+            function bindEvents() {
                 lines.each(function() {
                     var $this = $(this),
-                    className = $this.attr('class');
+                        className = $this.attr('class');
 
-                    function resizeBlocks() {
-                        setHeights($this.find('.js-equal-height'));
+                    function resize() {
+                        setHeights($this.find('.' + options.class));
                     }
 
-                    $(window).resize(resizeBlocks);
-                    resizeBlocks();
+                    $(window).resize(resize);
+                    resize();
                 });
-                
             }
 
             init();
 
-            /*helpers*/
             function setHeights(obj) {
-                var viewportWidth = $(window).width(),
-                    maxHeight = 0;
+                var maxHeight = 0;
 
-                if (obj.length < 2) return;
+                obj.css('height', 'auto');
 
+                obj.each(function() {
+                    var objHeight = $(this).innerHeight();
 
-                    obj.each(function() {
+                    if (objHeight > maxHeight) {
+                        maxHeight = objHeight;
+                    }
+                });
 
-                        obj.css('height', 'auto');
-
-                        var height = $(this).innerHeight();
-
-                        if (height > maxHeight) {
-                            maxHeight = height;
-                        }
-                    });
-
+                if (maxHeight > 0) {
                     obj.css('height', maxHeight);
+                }
             }
         });
 
@@ -57,5 +60,9 @@
 })(jQuery);
 
 $(function() {
-    $('.line').equalHeight();
+
+    $('.line').equalHeight({
+        class: 'js-equal-height'
+    });
+
 });
