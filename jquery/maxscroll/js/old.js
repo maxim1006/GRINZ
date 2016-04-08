@@ -11,6 +11,7 @@
             var $obj = $(this);
 
             var $doc,
+                $objHeight,
                 $yBarHeight,
                 $yBarWidth,
                 $scroll,
@@ -46,9 +47,11 @@
                 initVars();
                 appendScroll();
                 initSliderVars();
-                setMarginToScrolledBlock();
+                hideNativeScrolls();
                 updateVars();
                 bindEvents();
+                autoResize();
+                setMobileState();
             }
 
 
@@ -56,13 +59,19 @@
             function initVars() {
                 $doc = $(document);
                 $scroll = $obj.find(options.scrolledBlock);
+                $objHeight = $obj.height();
             }
 
 
 
             function updateVars() {
+                $objHeight = $obj.height();
                 $scrollHeight = $scroll.get(0).scrollHeight;
                 $yBarHeight = $obj.outerHeight();
+
+                //set height to the obj in case it hasn't fixed height
+                //$obj.css("height", $yBarHeight);
+
                 //height of horizontal slider is 20% of the wrapper, same for vertical width
                 $ySlider.css('height', options.sliderHeight || (($yBarHeight*$yBarHeight)/$scrollHeight));
                 $ySliderHeight = $ySlider.height()/2;
@@ -309,12 +318,12 @@
             getScrollbarWidth = makeScrollBarWidthCache(getScrollbarWidth);
 
 
-            function setMarginToScrolledBlock() {
-                var margin = getScrollbarWidth();
+            function hideNativeScrolls() {
+                var nativeScrollSize = getScrollbarWidth();
+
                 $scroll.css({
-                    'marginRight': -margin,
-                    'paddingBottom': margin,
-                    'height': 'calc(100% + ' + margin + 'px)'
+                    'height': 'calc(100% + ' + nativeScrollSize + 'px)',
+                    'width': 'calc(100% + ' + nativeScrollSize + 'px)'
                 });
             }
 
@@ -331,10 +340,10 @@
                 delta = (($scrollHeight-$yBarHeight)/($yBarHeight - $ySliderHeightFull));
 
                 //check if scroll is needed
-                if ($scrollHeight <= $yBarHeight) {
-                    $ySlider.hide();
-                } else {
+                if ($scrollHeight-$yBarHeight > 0) {
                     $ySlider.show();
+                } else {
+                    $ySlider.hide();
                 }
 
                 return delta;
@@ -353,15 +362,25 @@
                 deltaHorizontal = (($scrollWidth-$yBarWidth)/($yBarWidth - $ySliderHorizontalWidthFull));
 
                 //check if scroll is needed
-                if ($scrollWidth <= $yBarWidth) {
-                    $ySliderHorizontal.hide();
-                } else {
+                if ($scrollWidth-$yBarWidth > 0) {
                     $ySliderHorizontal.show();
+                } else {
+                    $ySliderHorizontal.hide();
                 }
 
-                console.log($scrollWidth <= $yBarWidth);
+                // check if height is auto then hide x scroll,
+                // also if height of scrolled block is the same as wrapper
+                if ($objHeight === $scroll.outerHeight(true)) {
+                    hideXNativeScroll();
+                }
 
                 return deltaHorizontal;
+            }
+
+
+            function hideXNativeScroll() {
+                var h = getScrollbarWidth();
+                $scroll.css('marginBottom', -h);
             }
 
 
@@ -385,11 +404,61 @@
             }
 
 
+            var timeoutID, autoResizeFlag, tempScrollHeight, tempObjHeight;
+
+            /**
+             * Turn on auto resize mode
+             */
+            function autoResize() {
+                if (options.autoResize) {
+                    $obj
+                        .on('mouseenter', function() {
+                            autoResizeFlag = true;
+                            timeoutID = setTimeout(function resize() {
+
+                                tempScrollHeight = $scroll.get(0).scrollHeight;
+                                tempObjHeight = $obj.height();
+
+                                if (tempScrollHeight !== $scrollHeight ||
+                                    tempObjHeight !== $objHeight) {
+
+                                    $obj.data('maxScroll').resize();
+                                    $objHeight = tempObjHeight;
+                                    console.log(123);
+                                }
+
+                                if (autoResizeFlag) setTimeout(resize, options.autoResizeTime || 1000);
+                            }, options.autoResizeTime || 1000);
+                        })
+                        .on('mouseleave', function() {
+                            autoResizeFlag = false;
+                            clearInterval(timeoutID);
+                        });
+                }
+            }
+
+
             /**
              * return false function, need for select logic
              */
             function returnFalse(){
                 return false;
+            }
+
+
+            /**
+             * detect mobile browser
+             * @returns {boolean}
+             */
+            function isMobile() {
+                return (/android|webos|iphone|ipad|ipod|blackberry|Windows Phone/i.test(navigator.userAgent));
+            }
+
+
+            function setMobileState() {
+                if (isMobile()) {
+                    $scroll.addClass('maxscroll_mobile');
+                }
             }
 
 
@@ -410,3 +479,16 @@
     };
 
 })(jQuery);
+
+
+$(function() {
+    var $scroll = $('.scroll');
+
+    $scroll.maxScroll({
+        scrolledBlock: '.jsMaxScroll',
+        autoResize: true
+    });
+
+    //trigger this method when resize block with scroll
+    //$scroll.data('maxScroll').resize();
+});

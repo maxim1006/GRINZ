@@ -1,5 +1,11 @@
 /*maxScroll*/
-;(function($, undefined) {
+(function(factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(jQuery)
+    }
+})(function($) {
 
     $.fn.maxScroll = function(options) {
         var defaults = {},
@@ -58,7 +64,7 @@
 
             function initVars() {
                 $doc = $(document);
-                $scroll = $obj.find(options.scrolledBlock);
+                $scroll = options.scrolledBlock ? $obj.children(options.scrolledBlock).eq(0) : $obj.children('.nc-scroll__main').eq(0);
                 $objHeight = $obj.height();
             }
 
@@ -267,10 +273,10 @@
 
             /**HELPERS**/
             function initSliderVars() {
-                $ySlider = $obj.find('.maxscroll__slider');
-                $ySliderWrap = $obj.find('.maxscroll__slider-wrap');
-                $ySliderHorizontal = $obj.find('.maxscroll__slider_horizontal');
-                $ySliderHorizontalWrap = $obj.find('.maxscroll__slider-wrap_horizontal');
+                $ySliderWrap = $obj.children('.maxscroll__slider-wrap').eq(0);
+                $ySlider = $ySliderWrap.children('.maxscroll__slider').eq(0);
+                $ySliderHorizontalWrap = $obj.children('.maxscroll__slider-wrap_horizontal').eq(0);
+                $ySliderHorizontal = $ySliderHorizontalWrap.children('.maxscroll__slider_horizontal').eq(0);
             }
 
             /**
@@ -341,9 +347,9 @@
 
                 //check if scroll is needed
                 if ($scrollHeight-$yBarHeight > 0) {
-                    $ySlider.show();
+                    $ySliderWrap.show();
                 } else {
-                    $ySlider.hide();
+                    $ySliderWrap.hide();
                 }
 
                 return delta;
@@ -363,9 +369,9 @@
 
                 //check if scroll is needed
                 if ($scrollWidth-$yBarWidth > 0) {
-                    $ySliderHorizontal.show();
+                    $ySliderHorizontalWrap.show();
                 } else {
-                    $ySliderHorizontal.hide();
+                    $ySliderHorizontalWrap.hide();
                 }
 
                 // check if height is auto then hide x scroll,
@@ -404,7 +410,7 @@
             }
 
 
-            var timeoutID, autoResizeFlag, tempScrollHeight, tempObjHeight;
+            var timeoutID, autoResizeFlag;
 
             /**
              * Turn on auto resize mode
@@ -412,25 +418,30 @@
             function autoResize() {
                 if (options.autoResize) {
                     $obj
-                        .on('mouseenter', function() {
+                        .on('mouseenter touchstart', function() {
+                            var tempScrollHeight, tempObjHeight, tempScrollWidth, tempObjWidth;
+
                             autoResizeFlag = true;
                             timeoutID = setTimeout(function resize() {
 
                                 tempScrollHeight = $scroll.get(0).scrollHeight;
+                                tempScrollWidth = $scroll.get(0).scrollWidth;
                                 tempObjHeight = $obj.height();
+                                tempObjWidth = $obj.outerWidth();
 
-                                if (tempScrollHeight !== $scrollHeight ||
-                                    tempObjHeight !== $objHeight) {
+                                if ( ((tempScrollHeight !== $scrollHeight ||  tempObjHeight !== $objHeight) ||
+                                    (tempScrollWidth !== $scrollWidth ||  tempObjWidth !== $yBarWidth)) &&
+                                    $obj.length) {
 
                                     $obj.data('maxScroll').resize();
                                     $objHeight = tempObjHeight;
-                                    console.log(123);
+                                    $yBarWidth = tempObjWidth;
                                 }
 
                                 if (autoResizeFlag) setTimeout(resize, options.autoResizeTime || 1000);
                             }, options.autoResizeTime || 1000);
                         })
-                        .on('mouseleave', function() {
+                        .on('mouseleave touchend', function() {
                             autoResizeFlag = false;
                             clearInterval(timeoutID);
                         });
@@ -477,18 +488,4 @@
 
         });
     };
-
-})(jQuery);
-
-
-$(function() {
-    var $scroll = $('.scroll');
-
-    $scroll.maxScroll({
-        scrolledBlock: '.jsMaxScroll',
-        autoResize: true
-    });
-
-    //trigger this method when resize block with scroll
-    //$scroll.data('maxScroll').resize();
 });
