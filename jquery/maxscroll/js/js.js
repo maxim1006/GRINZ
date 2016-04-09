@@ -64,7 +64,7 @@
 
             function initVars() {
                 $doc = $(document);
-                $scroll = options.scrolledBlock ? $obj.children(options.scrolledBlock).eq(0) : $obj.children('.nc-scroll__main').eq(0);
+                $scroll = options.scrolledBlock ? $obj.children(options.scrolledBlock).eq(0) : $obj.children('.jsMaxScroll').eq(0);
                 $objHeight = $obj.height();
             }
 
@@ -488,4 +488,16 @@
 
         });
     };
+});
+
+
+$(function() {
+    var $scroll = $('.scroll');
+
+    $scroll.maxScroll({
+        autoResize: true
+    });
+
+    //trigger this method when resize block with scroll
+    //$scroll.data('maxScroll').resize();
 });

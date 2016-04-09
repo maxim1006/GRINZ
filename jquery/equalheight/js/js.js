@@ -22,8 +22,7 @@
 
             function bindEvents() {
                 lines.each(function() {
-                    var $this = $(this),
-                        className = $this.attr('class');
+                    var $this = $(this);
 
                     function resize() {
                         setHeights($this.find('.' + options.class));
