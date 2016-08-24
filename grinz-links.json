@@ -107,6 +107,10 @@
             {
                 "links": [
                     {
+                        "name": "Auto update",
+                        "link": "jquery/autoUpdate/"
+                    },
+                    {
                         "name": "Multiline Ellipsis",
                         "link": "jquery/ellipsis/"
                     },

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Auto update</title>
+        <link rel="stylesheet" href="css/css.css">
+    </head>
+    <body>
+    <div class="main-page-link">
+        <a href="/">&larr; grinz.ru</a>
+    </div>
+
+    <p>Open console</p>
+
+    <div class="auto-updated-block"></div>
+
+        <div class="wrapper">
+            <div class="auto-updated-block"></div>
+        </div>
+
+        <script src="js/jquery.js"></script>
+        <script src="js/js.js"></script>
+
+        <script>
+
+            var autoUpdatedBlocks = document.querySelectorAll('.auto-updated-block'),
+                autoUpdatedBlock = autoUpdatedBlocks[0],
+                autoUpdatedBlock1 = autoUpdatedBlocks[1],
+                buttonAdd = createButton({
+                    text: "add content",
+                    id: "buttonAdd"
+                }),
+                buttonRemove = createButton({
+                    text: "remove content",
+                    id: "buttonRemove"
+                }),
+                buttonDisableUpdate = createButton({
+                    text: "disable update",
+                    id: "buttonDisableUpdate"
+                }),
+                buttonEnableUpdate = createButton({
+                    text: "enable update",
+                    id: "buttonEnableUpdate"
+                });
+
+
+            buttonAdd.addEventListener("click", function() {
+                autoUpdatedBlock.appendChild(getContent());
+                autoUpdatedBlock1.appendChild(getContent());
+            });
+
+            buttonRemove.addEventListener("click", function() {
+                autoUpdatedBlock.removeChild(autoUpdatedBlock.firstElementChild);
+                autoUpdatedBlock1.removeChild(autoUpdatedBlock1.firstElementChild);
+            });
+
+
+            document.body.insertAdjacentElement("beforeEnd", buttonAdd);
+            document.body.insertAdjacentElement("beforeEnd", buttonRemove);
+            document.body.insertAdjacentElement("beforeEnd", buttonDisableUpdate);
+            document.body.insertAdjacentElement("beforeEnd", buttonEnableUpdate);
+
+
+            /*Helpers*/
+            function createButton(options) {
+                var button = document.createElement('button');
+
+                button.textContent = options.text;
+                button.id = options.id;
+
+                return button;
+            }
+
+            function getContent() {
+                var content = document.createElement('div');
+
+                content.textContent = "content";
+
+                return content;
+            }
+        </script>
+
+        <script>
+            $(function() {
+            var     $autoUpdatedBlocks = $('.auto-updated-block'),
+                    $autoUpdatedBlock = $autoUpdatedBlocks.eq(0),
+                    $autoUpdatedBlock1 = $autoUpdatedBlocks.eq(1);
+
+                $autoUpdatedBlock.autoUpdate({
+                    onUpdate: function($elem) {
+                        console.log($elem, ' 1 is updated');
+                    },
+                    //autoUpdateTime: 2000  //default: 500
+                    windowResize: true, //update on window resizeEnd
+                    windowResizeTime: 1000 //default: 500
+                });
+
+                $autoUpdatedBlock1.autoUpdate({
+                    onUpdate: function($elem) {
+                        console.log($elem, ' 2 is updated');
+                    },
+                    //autoUpdateTime: 2000  //default: 500
+                    windowResize: true, //update on window resizeEnd
+                    windowResizeTime: 1000, //default: 500
+                    blockResizeTime: 1000, //default: 500
+                    updateOnBlockResize: $autoUpdatedBlock1.parent()
+                });
+
+                //trigger this method when resize block with scroll
+                //$autoUpdatedBlock.data('autoUpdate').update();
+
+                $('#buttonDisableUpdate').click(function() {
+                    $autoUpdatedBlock.data('autoUpdate').disableUpdate();
+                    $autoUpdatedBlock1.data('autoUpdate').disableUpdate();
+                });
+
+                $('#buttonEnableUpdate').click(function() {
+                    $autoUpdatedBlock.data('autoUpdate').enableUpdate();
+                    $autoUpdatedBlock1.data('autoUpdate').enableUpdate();
+                });
+            });
+
+        </script>
+    </body>
+</html>
