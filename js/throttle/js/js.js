@@ -158,6 +158,34 @@ $(function() {
         });
     })();
 
+    (function() {
+        //Another Javascript approach
+        function debounce(f, time) {
+            var state = null,
+                COOLDOWN = 1;
+
+            return function() {
+
+                if (state) return;
+
+                state = COOLDOWN;
+
+                f.apply(this, arguments);
+
+                setTimeout(function() {
+                    state = null;
+                }, time);
+
+            };
+        }
+
+        function cb() {
+            console.log('debounceend');
+        }
+
+        $('.debounce5').on('mousemove', debounce(cb, 1000));
+    })();
+
 
 });
 

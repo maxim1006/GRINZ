@@ -32,7 +32,8 @@ p {
 .debounce1,
 .debounce2,
 .debounce3,
-.debounce4 {
+.debounce4,
+.debounce5 {
     display: inline-block;
     vertical-align: top;
     width: 30%;
@@ -49,7 +50,8 @@ p {
 .throttle3,
 .debounce2,
 .debounce3,
-.debounce4 {
+.debounce4,
+.debounce5 {
     border-color: green
 }
 
