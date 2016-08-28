@@ -19,6 +19,8 @@
             <div class="auto-updated-block"></div>
         </div>
 
+        <div class="auto-updated-block auto-updated-block_percent"></div>
+
         <script src="js/jquery.js"></script>
         <script src="js/js.js"></script>
 
@@ -27,6 +29,7 @@
             var autoUpdatedBlocks = document.querySelectorAll('.auto-updated-block'),
                 autoUpdatedBlock = autoUpdatedBlocks[0],
                 autoUpdatedBlock1 = autoUpdatedBlocks[1],
+                autoUpdatedBlock2 = autoUpdatedBlocks[2],
                 buttonAdd = createButton({
                     text: "add content",
                     id: "buttonAdd"
@@ -48,6 +51,7 @@
             buttonAdd.addEventListener("click", function() {
                 autoUpdatedBlock.appendChild(getContent());
                 autoUpdatedBlock1.appendChild(getContent());
+                autoUpdatedBlock2.appendChild(getContent());
             });
 
             buttonRemove.addEventListener("click", function() {
@@ -85,26 +89,38 @@
             $(function() {
             var     $autoUpdatedBlocks = $('.auto-updated-block'),
                     $autoUpdatedBlock = $autoUpdatedBlocks.eq(0),
-                    $autoUpdatedBlock1 = $autoUpdatedBlocks.eq(1);
+                    $autoUpdatedBlock1 = $autoUpdatedBlocks.eq(1),
+                    $autoUpdatedBlock2 = $autoUpdatedBlocks.eq(2);
 
                 $autoUpdatedBlock.autoUpdate({
                     onUpdate: function($elem) {
                         console.log($elem, ' 1 is updated');
                     },
-                    //autoUpdateTime: 2000  //default: 500
-                    windowResize: true, //update on window resizeEnd
-                    windowResizeTime: 1000 //default: 500
+                    //DOMNode: false,//disable DOM Node insertion/removing cb; default: true;
+                    mouseUpdate: true,//turn on update on mouseenter/mouseleave; default: false;
+                    mouseUpdateTime: 1000  //default: 500
+//                    windowResize: true, //update on window resizeEnd
+//                    windowResizeTime: 1000 //default: 500
                 });
 
                 $autoUpdatedBlock1.autoUpdate({
                     onUpdate: function($elem) {
                         console.log($elem, ' 2 is updated');
                     },
-                    //autoUpdateTime: 2000  //default: 500
+                    //mouseUpdateTime: 2000  //default: 500
                     windowResize: true, //update on window resizeEnd
                     windowResizeTime: 1000, //default: 500
                     blockResizeTime: 1000, //default: 500
                     updateOnBlockResize: $autoUpdatedBlock1.parent()
+                });
+
+                $autoUpdatedBlock2.autoUpdate({
+                    onUpdate: function($elem) {
+                        console.log($elem, ' 3 is updated');
+                    },
+                    //mouseUpdateTime: 2000  //default: 500
+                    blockResizeTime: 1000, //default: 500
+                    updateOnBlockResize: $autoUpdatedBlock2
                 });
 
                 //trigger this method when resize block with scroll
@@ -113,11 +129,13 @@
                 $('#buttonDisableUpdate').click(function() {
                     $autoUpdatedBlock.data('autoUpdate').disableUpdate();
                     $autoUpdatedBlock1.data('autoUpdate').disableUpdate();
+                    $autoUpdatedBlock2.data('autoUpdate').disableUpdate();
                 });
 
                 $('#buttonEnableUpdate').click(function() {
                     $autoUpdatedBlock.data('autoUpdate').enableUpdate();
                     $autoUpdatedBlock1.data('autoUpdate').enableUpdate();
+                    $autoUpdatedBlock2.data('autoUpdate').enableUpdate();
                 });
             });
 

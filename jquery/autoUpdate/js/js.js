@@ -10,9 +10,10 @@
     $.fn.autoUpdate = function(options) {
 
         var defaults = {
-                autoUpdateTime: 500,
+                mouseUpdateTime: 500,
                 windowResizeTime: 500,
-                blockResizeTime: 500
+                blockResizeTime: 500,
+                DOMNode: true
             },
             options = $.extend({}, defaults, options);
 
@@ -31,7 +32,6 @@
             function init() {
                 initVars();
                 bindEvents();
-                initAutoupdate();
             }
 
 
@@ -47,13 +47,15 @@
             function bindEvents() {
                 var resizeEnd;
 
-                $obj.on('DOMNodeInserted', function() {
-                    update();
-                });
-
-                $obj.on('DOMNodeRemoved', function() {
-                    update();
-                });
+                if (options.DOMNode) {
+                    $obj.on('DOMNodeInserted', function () {
+                        update();
+                    });
+    
+                    $obj.on('DOMNodeRemoved', function () {
+                        update();
+                    });
+                }
 
                 if (options.windowResize) {
                     $win.on('resize', function () {
@@ -66,6 +68,10 @@
 
                 if (options.updateOnBlockResize && options.updateOnBlockResize.length) {
                     updateOnBlockResize();
+                }
+                
+                if (options.mouseUpdate) {
+                    initAutoupdate();
                 }
 
             } //end of bindEvents
@@ -85,9 +91,9 @@
 
                             update();
 
-                            if (autoResizeFlag) setTimeout(tick, options.autoUpdateTime);
+                            if (autoResizeFlag) setTimeout(tick, options.mouseUpdateTime);
 
-                        }, options.autoUpdateTime);
+                        }, options.mouseUpdateTime);
 
                     })
                     .on('mouseleave touchend', function() {
