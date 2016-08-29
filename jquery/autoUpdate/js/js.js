@@ -47,16 +47,6 @@
             function bindEvents() {
                 var resizeEnd;
 
-                if (options.DOMNode) {
-                    $obj.on('DOMNodeInserted', function () {
-                        update();
-                    });
-    
-                    $obj.on('DOMNodeRemoved', function () {
-                        update();
-                    });
-                }
-
                 if (options.windowResize) {
                     $win.on('resize', function () {
                         clearTimeout(resizeEnd);
@@ -74,6 +64,15 @@
                     initAutoupdate();
                 }
 
+                if (options.DOMNode) {
+                    $obj.on('DOMNodeInserted', function () {
+                        update();
+                    });
+
+                    $obj.on('DOMNodeRemoved', function () {
+                        update();
+                    });
+                }
             } //end of bindEvents
 
 
