@@ -5,6 +5,10 @@ ul {
     list-style-type: none;
 }
 
+.tree {
+    margin: 30px;
+}
+
 .tree__brunch {
     position: relative;
     padding-left: 40px;

@@ -18,8 +18,7 @@
                         children: [
                             {
                                 text: "Parameters Deploying Edit v 8.yaml",
-                                type: "leaf",
-                                state: "selected"
+                                type: "leaf"
                             },
                             {
                                 text: "Debug Config 4.conf",
@@ -145,8 +144,7 @@
         });
 
         $treeWrapper.on('click', '.tree__leaf', function(e) {
-            let $this = $(this),
-                code;
+            let $this = $(this);
 
             e.stopPropagation();
 
