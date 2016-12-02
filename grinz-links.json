@@ -107,6 +107,10 @@
             {
                 "links": [
                     {
+                        "name": "Simple tree",
+                        "link": "jquery/simpleTree/"
+                    },
+                    {
                         "name": "Show more",
                         "link": "jquery/show-more/"
                     },
