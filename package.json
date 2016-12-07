@@ -1,0 +1,11 @@
+{
+  "name": "Grinz",
+  "version": "0.0.1",
+  "description": "Grinz package json",
+  "repository": "https://github.com/maxim1006/GRINZ",
+  "main": "",
+  "author": "mama1213",
+  "devDependencies": {
+    "@types/jquery": "^2.0.34"
+  }
+}

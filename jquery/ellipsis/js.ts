@@ -1,53 +1,88 @@
 "use strict";
-(function (factory) {
-    var define = window.define;
+
+/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
+
+
+
+(function(factory) {
+    let define = (window as any).define;
+
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
+    } else {
+        factory(jQuery)
     }
-    else {
-        factory(jQuery);
-    }
-})(function ($) {
-    $.fn.ellipsis = function (options) {
-        var defaults = {
+})(function($) {
+
+    $.fn.ellipsis = function(options) {
+
+        let defaults = {
             h: 16
-        }, fakeDiv = $('<div />', {
+        },
+        fakeDiv = $('<div />', {
             class: 'ellipsis__fake',
             css: {
                 position: 'absolute',
                 left: '-99999px'
             }
         });
+
         $('body').append(fakeDiv);
+
         options = $.extend({}, defaults, options);
-        return $.each($(this), function (idx, el) {
-            var $el = $(el), $elPadding = $el.css('padding'), $elLH = $el.css('lineHeight'), textInitial = $.trim($el.text()), WINDOW_RESIZE_TIME = 50, resizeStartFlag = true, $elW, resizeID;
+
+        return $.each($(this), function(idx, el) {
+            let $el = $(el),
+                $elPadding = $el.css('padding'),
+                $elLH = $el.css('lineHeight'),
+                textInitial = $.trim($el.text()),
+                WINDOW_RESIZE_TIME = 50,
+                resizeStartFlag = true,
+                $elW, resizeID;
+
+
+
             function init() {
                 updateVars();
                 setupFakeDiv();
                 bindEvents();
+
                 setEllipsis({});
             }
+
+
+
             function updateVars() {
                 $elW = $el.width();
             }
+
+
+
             function bindEvents() {
                 $(window).on('resize.ncEllipsis', onResize);
             }
+
+
+
             function setEllipsis(newOptions) {
+
                 if (newOptions) {
                     $.extend(options, newOptions);
                 }
+
                 if (getDotFlag()) {
                     $el.text(addDots(fitText(textInitial)));
                     $el.attr('title', textInitial);
-                }
-                else {
+                } else {
                     $el.text(fitText(textInitial));
                     $el.removeAttr('title');
                 }
             }
+
+
+
             function onResize() {
+
                 if (resizeStartFlag) {
                     $el.css({
                         maxHeight: options.h,
@@ -55,51 +90,72 @@
                     });
                     resizeStartFlag = false;
                 }
+
                 clearTimeout(resizeID);
-                resizeID = setTimeout(function () {
+                resizeID = setTimeout(function() {
                     $el.css({
                         maxHeight: 'auto',
                         overflow: 'visible'
                     });
+
                     updateVars();
                     setupFakeDiv();
                     setEllipsis({});
+
                     resizeStartFlag = true;
                 }, WINDOW_RESIZE_TIME);
             }
+
+
+
+            /*Helpers*/
             function fitText(text) {
+
                 while (fakeDiv.height() > options.h) {
                     text = removeWord(text);
                     fakeDiv.text(text);
                 }
+
                 return text;
             }
+
             function removeWord(text) {
-                var arr = text.split(" ");
+                let arr = text.split(" ");
                 arr.pop();
                 return arr.join(" ");
             }
+
             function addDots(text) {
                 return text.slice(0, -3) + '...';
             }
+
             function getDotFlag() {
                 return fakeDiv.outerHeight() > options.h;
             }
+
             function setupFakeDiv() {
                 fakeDiv
                     .css({
-                    'width': $elW,
-                    'padding': $elPadding,
-                    'lineHeight': $elLH
-                })
+                        'width': $elW,
+                        'padding': $elPadding,
+                        'lineHeight': $elLH
+                    })
                     .text(textInitial);
             }
+
+
             init();
-            var publicMethods = {
+
+
+
+            /*Public Api*/
+            let publicMethods = {
                 update: setEllipsis
             };
+
+            //set public methods
             $el.data('ellipsis', publicMethods);
         });
     };
+
 });
-//# sourceMappingURL=js.js.map

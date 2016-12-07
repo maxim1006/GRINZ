@@ -47,5 +47,15 @@
 <script src="jquery.js"></script>
 <script src="js.js"></script>
 
+<script>
+    $(function() {
+        console.time('timer');
+        $('.ellipsis').ellipsis({
+            h: 32
+        });
+        console.timeEnd('timer');
+    });
+</script>
+
 </body>
 </html>
