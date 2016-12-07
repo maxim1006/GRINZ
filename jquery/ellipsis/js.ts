@@ -14,7 +14,7 @@
     }
 })(function($) {
 
-    $.fn.ellipsis = function(options) {
+    $.fn.maxEllipsis = function(options) {
 
         let defaults = {
             h: 16
@@ -59,7 +59,7 @@
 
 
             function bindEvents() {
-                $(window).on('resize.ncEllipsis', onResize);
+                $(window).on('resize.maxEllipsis', onResize);
             }
 
 
@@ -154,7 +154,7 @@
             };
 
             //set public methods
-            $el.data('ellipsis', publicMethods);
+            $el.data('maxEllipsis', publicMethods);
         });
     };
 

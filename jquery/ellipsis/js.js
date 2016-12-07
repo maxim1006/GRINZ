@@ -8,7 +8,7 @@
         factory(jQuery);
     }
 })(function ($) {
-    $.fn.ellipsis = function (options) {
+    $.fn.maxEllipsis = function (options) {
         var defaults = {
             h: 16
         }, fakeDiv = $('<div />', {
@@ -32,7 +32,7 @@
                 $elW = $el.width();
             }
             function bindEvents() {
-                $(window).on('resize.ncEllipsis', onResize);
+                $(window).on('resize.maxEllipsis', onResize);
             }
             function setEllipsis(newOptions) {
                 if (newOptions) {
@@ -98,7 +98,7 @@
             var publicMethods = {
                 update: setEllipsis
             };
-            $el.data('ellipsis', publicMethods);
+            $el.data('maxEllipsis', publicMethods);
         });
     };
 });
