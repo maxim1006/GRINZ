@@ -26,7 +26,7 @@
                 updateVars();
                 setupFakeDiv();
                 bindEvents();
-                setEllipsis({});
+                setEllipsis();
             }
             function updateVars() {
                 $elW = $el.width();
@@ -34,10 +34,7 @@
             function bindEvents() {
                 $(window).on('resize.maxEllipsis', onResize);
             }
-            function setEllipsis(newOptions) {
-                if (newOptions) {
-                    $.extend(options, newOptions);
-                }
+            function setEllipsis() {
                 if (getDotFlag()) {
                     $el.text(addDots(fitText(textInitial)));
                     $el.attr('title', textInitial);
@@ -46,6 +43,15 @@
                     $el.text(fitText(textInitial));
                     $el.removeAttr('title');
                 }
+            }
+            function update(newOptions) {
+                if (newOptions === void 0) { newOptions = 0; }
+                if (newOptions) {
+                    options = $.extend(options, newOptions);
+                }
+                updateVars();
+                setupFakeDiv();
+                setEllipsis();
             }
             function onResize() {
                 if (resizeStartFlag) {
@@ -61,9 +67,7 @@
                         maxHeight: 'auto',
                         overflow: 'visible'
                     });
-                    updateVars();
-                    setupFakeDiv();
-                    setEllipsis({});
+                    update();
                     resizeStartFlag = true;
                 }, WINDOW_RESIZE_TIME);
             }
@@ -96,7 +100,7 @@
             }
             init();
             var publicMethods = {
-                update: setEllipsis
+                update: update
             };
             $el.data('maxEllipsis', publicMethods);
         });

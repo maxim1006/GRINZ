@@ -47,7 +47,7 @@
                 setupFakeDiv();
                 bindEvents();
 
-                setEllipsis({});
+                setEllipsis();
             }
 
 
@@ -64,12 +64,7 @@
 
 
 
-            function setEllipsis(newOptions) {
-
-                if (newOptions) {
-                    $.extend(options, newOptions);
-                }
-
+            function setEllipsis() {
                 if (getDotFlag()) {
                     $el.text(addDots(fitText(textInitial)));
                     $el.attr('title', textInitial);
@@ -77,6 +72,18 @@
                     $el.text(fitText(textInitial));
                     $el.removeAttr('title');
                 }
+            }
+
+
+
+            function update(newOptions=0) {
+                if (newOptions) {
+                    options = $.extend(options, newOptions);
+                }
+
+                updateVars();
+                setupFakeDiv();
+                setEllipsis();
             }
 
 
@@ -98,9 +105,7 @@
                         overflow: 'visible'
                     });
 
-                    updateVars();
-                    setupFakeDiv();
-                    setEllipsis({});
+                    update();
 
                     resizeStartFlag = true;
                 }, WINDOW_RESIZE_TIME);
@@ -150,7 +155,7 @@
 
             /*Public Api*/
             let publicMethods = {
-                update: setEllipsis
+                update
             };
 
             //set public methods
