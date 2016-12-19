@@ -35,6 +35,8 @@
             let $el = $(el),
                 $elPadding = $el.css('padding'),
                 $elLH = $el.css('lineHeight'),
+                elFontSize = $el.css('fontSize'),
+                elFontFamily = $el.css('fontFamily'),
                 textInitial = $.trim($el.text()),
                 WINDOW_RESIZE_TIME = 50,
                 resizeStartFlag = true,
@@ -143,6 +145,8 @@
                     .css({
                         'width': $elW,
                         'padding': $elPadding,
+                        'fontSize': elFontSize,
+                        'fontFamily': elFontFamily,
                         'lineHeight': $elLH
                     })
                     .text(textInitial);

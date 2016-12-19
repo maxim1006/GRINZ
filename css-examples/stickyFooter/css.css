@@ -12,17 +12,26 @@ body {
 }
 
 
-.main1,
-.main2  {
+
+header {
+    padding: 20px;
+    background-color: #fafafa;
+}
+
+
+
+/*1st variant*/
+.main._variant1 {
     min-height: 100%;
+    padding-bottom: 100px;
     border: 1px solid;
 }
 
-.main1 {
-    padding-bottom: 100px;
+.section._variant1 {
+    padding: 20px;
 }
 
-.footer1 {
+.footer._variant1 {
     height: 100px;
     margin-top: -100px;
     background-color: #ccc;
@@ -33,16 +42,22 @@ body {
     top: -100px;
     background-color: #ccc;*/
 }
+/******************/
 
-.main2 {
+
+
+/*2d variant*/
+.main._variant2  {
     position: relative;
+    min-height: 100%;
+    border: 1px solid;
 }
 
-.section {
-    padding-bottom: 100px;
+.section._variant2 {
+    padding: 20px 20px 120px;
 }
 
-.footer2 {
+.footer._variant2 {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -50,42 +65,57 @@ body {
     width: 100%;
     background-color: lightblue;
 }
+/*****************/
 
+
+
+/*3rd variant*/
+.main._variant3 {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header._variant3 {
+    background: #bce8f1;
+}
+
+.section._variant3 {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.footer._variant3 {
+    min-height: 100px;
+    background: #6ce26c;
+}
+/********************/
 
 
 
 /*not required styles for sticky footer*/
 .variant1,
-.variant2 {
+.variant2,
+.variant3 {
     height: 100%;
-    width: 40%;
-}
-
-.variant1 {
+    width: 25%;
     float: left;
 }
 
-.variant2 {
-    float: right;
-}
-
 h2 {
-    margin-bottom: 30px;
+    margin: 0;
     text-align: center;
 }
 
 .buttons {
-    position: absolute;
-    left: 50%;
+    float: left;
+    width: 25%;
     text-align: center;
-    -webkit-transform: translate(-50%,20px);
-    -ms-transform: translate(-50%,20px);
-    transform: translate(-50%,20px);
 }
 
 .button {
     display: block;
-    width: 100%;
+    width: 200px;
     margin: 20px auto;
     padding: 10px;
     cursor: pointer;
