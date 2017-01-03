@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Request animation frame</title>
+    <style>
+        .buttons__col {
+            display: inline-block;
+            margin-right: 50px;
+        }
+
+        .div {
+            width: 10px;
+            height: 10px;
+            margin: 1px;
+            background-color: #cccccc;
+            position: absolute;
+            top: 0;
+            left: 1px;
+        }
+
+        #wrapper {
+            position: relative;
+            display: inline-block;
+            width: 50%;
+        }
+
+        #wrapper .div:nth-last-child(1):after {
+            content: "RequestAnimationFrame";
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-left: 3px;
+        }
+
+        #wrapperTimeout {
+            position: relative;
+            display: inline-block;
+            width: 50%;
+        }
+
+        #wrapperTimeout .div:nth-last-child(1):after {
+            content: "SetTimeout";
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-left: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<a href="/">← grinz.ru</a>
+
+<div class="buttons">
+    <div class="buttons__col">
+        <h3>Request animation frame</h3>
+        <p>
+            <button id="requestAnimationStart">Start</button>
+            <button id="requestAnimationStop">Stop</button>
+        </p>
+    </div>
+
+    <div class="buttons__col">
+        <h3>SetTimeout</h3>
+        <p>
+            <button id="setTimeoutStart">Start</button>
+            <button id="setTimeoutStop">Stop</button>
+        </p>
+    </div>
+</div>
+
+<div id="wrapper"></div><div id="wrapperTimeout"></div>
+
+
+<script src="./js/js.js"></script>
+
+</body>
+</html>

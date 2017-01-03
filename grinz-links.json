@@ -42,6 +42,10 @@
             {
                 "links": [
                     {
+                        "name": "requestAnimationFrame",
+                        "link": "js/requestAnimationFrame/"
+                    },
+                    {
                         "name": "Gulp",
                         "link": "js/gulp/"
                     },
