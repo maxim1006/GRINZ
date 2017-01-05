@@ -1,5 +1,7 @@
 "use strict";
 
+/// <reference path="../../../scripts/@types/index.d.ts" />
+
 (function () {
 
     let wrapper: Element = document.querySelector('#wrapper'),
@@ -7,8 +9,8 @@
 
 
     /*PolyFill*/
-    (window as any).requestAnimFrame = (function (): any {
-        return (window as any).requestAnimationFrame || (window as any).webkitRequestAnimationFrame || (window as any).mozRequestAnimationFrame || (window as any).oRequestAnimationFrame || (window as any).msRequestAnimationFrame || function (cb: () => any) {
+    window.requestAnimFrame = (function (): any {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (cb: () => any) {
                 window.setTimeout(cb, 1000 / 60);
             };
     })();
