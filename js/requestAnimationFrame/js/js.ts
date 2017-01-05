@@ -1,7 +1,5 @@
 "use strict";
 
-/// <reference path="../../../scripts/@types/index.d.ts" />
-
 (function () {
 
     let wrapper: Element = document.querySelector('#wrapper'),
