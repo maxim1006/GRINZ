@@ -19,12 +19,16 @@ body {
     overflow: hidden;
 }
 
+.scroll:nth-of-type(3) {
+    height: 300px;
+}
+
 .scroll:nth-of-type(5) {
     height: 40%;
 }
 
-.scroll:nth-of-type(3) {
-    height: 300px;
+.scroll:nth-of-type(6)>.scroll__inner {
+    max-height: 300px;
 }
 
 .scroll__inner {
