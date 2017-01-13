@@ -370,14 +370,14 @@
                 //check if scroll is needed
                 if ($scrollWidth-$yBarWidth > 0) {
                     $ySliderHorizontalWrap.show();
-
-                    // check if height is auto then hide x scroll,
-                    // also if height of scrolled block is the same as wrapper
-                    if ($objHeight === $scroll.outerHeight(true)) {
-                        hideXNativeScroll();
-                    }
                 } else {
                     $ySliderHorizontalWrap.hide();
+                }
+
+                // check if height is auto then hide x scroll,
+                // also if height of scrolled block is the same as wrapper
+                if ($objHeight === $scroll.outerHeight(true)) {
+                    hideXNativeScroll();
                 }
 
                 return deltaHorizontal;
