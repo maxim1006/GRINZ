@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Popups</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+
+<div class="main-page-link">
+    <a href="/">&larr; grinz.ru</a>
+</div>
+
+<button id="showPopup">Show popup</button>
+
+
+<div class="popup-wrapper jsPopup">
+    <div class="popup ">
+        <div class="popup__control"></div>
+        <div class="popup__header">
+            <div class="popup__header-text">Header</div>
+        </div>
+        <div class="popup__body">
+            Body
+        </div>
+        <div class="popup__footer ">
+            Footer
+        </div>
+    </div>
+</div>
+
+
+<script src="jquery.js"></script>
+<script src="popup.js"></script>
+
+<script>
+    $(function() {
+        var $popup = $('.jsPopup').popup();
+
+        $('#showPopup').on('click', function(e) {
+            $popup.trigger('show');
+        });
+    });
+</script>
+
+</body>
+</html>

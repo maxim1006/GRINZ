@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#showPopup {
+    margin: 30px;
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-width: 754px;
+    max-width: 760px;
+    max-height: ~'calc(100% - 100px)';
+    min-height: 340px;
+    background-color: #fff;
+    box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.20);
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
+
+    .popup-wrapper._visible & {
+        transform: translateY(50px);
+        opacity: 1;
+    }
+
+    &-wrapper {
+        display: none;
+        position: fixed;
+        justify-content: center;
+        align-items: flex-start;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(109, 110, 113, 0.75);
+        z-index: 1200;
+        overflow: auto;
+
+        &._show {
+            display: flex;
+        }
+    }
+
+    &__control {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 50px;
+        right: 35px;
+        background: url("data:image/svg+xml;base64,PHN2ZyBpZD0iU3ZnanNTdmcxMDI5IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iMTkiIGhlaWdodD0iMTkiIHZpZXdCb3g9IjAgMCAxOSAxOSI+PHRpdGxlPlJlY3RhbmdsZSAyMDY0PC90aXRsZT48ZGVzYz5DcmVhdGVkIHdpdGggQXZvY29kZS48L2Rlc2M+PGRlZnMgaWQ9IlN2Z2pzRGVmczEwMzAiPjwvZGVmcz48cGF0aCBpZD0iU3ZnanNQYXRoMTAzMSIgZD0iTTMxNS40OCAxOTUuNjQ1TDMzMS4zNTQwMDAwMDAwMDAwNCAyMTEuNTE5TDMyOS4zNzAwMDAwMDAwMDAwNiAyMTMuNTA0MDAwMDAwMDAwMDJMMzEzLjQ5NjAwMDAwMDAwMDA0IDE5Ny42MjkwMDAwMDAwMDAwMlpNMzI5LjM3IDE5NS42NDVMMzMxLjM1NCAxOTcuNjI5MDAwMDAwMDAwMDJMMzE1LjQ3OTk5OTk5OTk5OTk2IDIxMy41MDQwMDAwMDAwMDAwMkwzMTMuNDk2IDIxMS41MTlaICIgZmlsbD0iIzkyOTQ5NyIgZmlsbC1vcGFjaXR5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLC0zMTMsLTE5NSkiPjwvcGF0aD48L3N2Zz4=") 0 0 no-repeat;
+        background-position: 50%;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        z-index: 10;
+    }
+
+    &__header {
+        display: flex;
+        position: relative;
+        padding: 45px 80px 0 50px;
+
+        &-text {
+            font-size: 35px;
+        }
+    }
+
+    &__body {
+        flex-grow: 1;
+        padding: 45px 50px 55px;
+    }
+
+    &__footer {
+        padding: 0 50px 20px;
+    }
+
+}

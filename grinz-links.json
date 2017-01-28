@@ -111,6 +111,10 @@
             {
                 "links": [
                     {
+                        "name": "popup",
+                        "link": "jquery/popup/"
+                    },
+                    {
                         "name": "momentCalendar",
                         "link": "jquery/calendar/"
                     },
