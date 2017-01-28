@@ -3,7 +3,7 @@
 
 
 interface options {
-
+    setClassToDate: any
 }
 
 interface Window {
@@ -25,33 +25,34 @@ interface Window {
 
     let moment = window.moment;
 
-    $.fn.momentCalendar = function(options:options) {
+    $.fn.momentCalendar = function(initOptions:options) {
 
-        let defaults:options = {
-            h: 16
-        };
+        let defaults:options = {} as any;
 
-        options = $.extend(defaults, options);
+        return $.each($(this), (idx, el) => {
 
-        return $.each($(this), function(idx, el) {
+            let options = $.extend(defaults, initOptions);
 
             let $el = $(el),
-                currentMonth = createCurrentMonthModel(),
-                currentDayNumber = moment().day(),
-                currentMonthNumber:number = moment().get('month');
+                initDayNumber:number = getInitDayNumber(),
+                initMonthNumber:number = getInitMonthNumber(),
+                initYearNumber:number = getInitYearNumber(),
+                currentMonthModel = createCurrentMonthModel(),
+                currentMonthNumber:number,
+                currentYearNumber:number,
+                clickedDays = [];
 
-
-
-
+            let defaultLocaleWeekdays:string[] = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
+                defaultLocaleWeekdaysShort:string[] = "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"),
+                defaultLocaleMonths:string[] = 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+                defaultLocaleMonthsShort:string[] = "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_");
 
 
             function init() {
-                appendMonthToMainContainer(createMonth(currentMonth));
+                appendToMainContainer(createMonth(currentMonthModel));
                 updateVars();
                 bindEvents();
             }
-
-
 
             function updateVars() {
             }
@@ -59,6 +60,24 @@ interface Window {
 
 
             function bindEvents() {
+
+                $el.on('click', '.calendar__day', (e) => {
+                    if (typeof options.onDayClick === 'function') {
+                        let day = e.currentTarget,
+                            date = day.getAttribute('data-date');
+
+                        options.onDayClick(day);
+
+                        if (day.classList.contains('_clicked')) {
+                            day.classList.remove('_clicked');
+                            clickedDays.splice(clickedDays.indexOf(date), 1);
+                        } else {
+                            day.classList.add('_clicked');
+                            clickedDays.push(date);
+                        }
+                    }
+                });
+
             }
 
 
@@ -74,6 +93,9 @@ interface Window {
                     days = [],
                     day = startOfMonth;
 
+                currentMonthNumber = getInitMonthNumber();
+                currentYearNumber = getInitYearNumber();
+
                 while (day <= endOfMonth) {
                     days.push(day.toDate());
                     day = day.clone().add(1, 'd');
@@ -82,9 +104,18 @@ interface Window {
                 return days;
             }
 
-            function createNextMonthModel(monthNumber) {
-                let startOfMonth = moment().month(monthNumber+1).startOf('month'),
-                    endOfMonth = moment().month(monthNumber+1).endOf('month'),
+            function createNextMonthModel() {
+                ++currentMonthNumber;
+
+                if (moment().month(currentMonthNumber).get('year') !== currentYearNumber) {
+                    currentYearNumber = moment().month(currentMonthNumber).get('year');
+                }
+
+                console.log(currentMonthNumber, ' currentMonthNumber');
+                console.log(currentYearNumber, ' currentYearNumber');
+
+                let startOfMonth = moment().month(currentMonthNumber).startOf('month'),
+                    endOfMonth = moment().month(currentMonthNumber).endOf('month'),
                     days = [],
                     day = startOfMonth;
 
@@ -93,12 +124,23 @@ interface Window {
                     day = day.clone().add(1, 'd');
                 }
 
+                //console.log(days, ' days in month');
+
                 return days;
             }
 
-            function createPrevMonthModel(monthNumber) {
-                let startOfMonth = moment().month(monthNumber-1).startOf('month'),
-                    endOfMonth = moment().month(monthNumber-1).endOf('month'),
+            function createPrevMonthModel() {
+                --currentMonthNumber;
+
+                if (moment().month(currentMonthNumber).get('year') !== currentYearNumber) {
+                    currentYearNumber = moment().month(currentMonthNumber).get('year');
+                }
+
+                console.log(currentMonthNumber, ' currentMonthNumber');
+                console.log(currentYearNumber, ' currentYearNumber');
+
+                let startOfMonth = moment().month(currentMonthNumber).startOf('month'),
+                    endOfMonth = moment().month(currentMonthNumber).endOf('month'),
                     days = [],
                     day = startOfMonth;
 
@@ -114,13 +156,23 @@ interface Window {
                 let monthHtml = createMonthHtml(),
                     weekHtml = createWeekHtml();
 
-                monthHtml.appendChild(createWeekWithDaysHtml());
 
-                currentMonth.forEach((day, index) => {
+                if (options.daysNaming) {
+                    monthHtml.appendChild(createWeekWithDaysHtml());
+                }
+
+
+                month.forEach((day, index) => {
                     let numberOfDayOfWeek = moment(day).format("e"),
-                        numberOfDayOfMonth = moment(day).format("D");
+                        numberOfDayOfMonth = moment(day).format("D"),
+                        dataDate = {
+                            numberOfDayOfMonth,
+                            currentMonthNumber,
+                            currentYearNumber
+                        },
+                        modifier;
 
-                    if (!+numberOfDayOfWeek) { //if Sunday of new week
+                    if (weekHtml.querySelectorAll('.calendar__day').length === 7) { //if Sunday of new week
 
                         if (weekHtml.innerHTML) {
                             monthHtml.appendChild(weekHtml)
@@ -129,18 +181,65 @@ interface Window {
                         weekHtml = createWeekHtml();
                     }
 
-                    weekHtml.appendChild(createDayHtml(numberOfDayOfMonth));
+
+                    if (+numberOfDayOfMonth === initDayNumber &&
+                        currentMonthNumber === initMonthNumber &&
+                        currentYearNumber === initYearNumber) {
+                        modifier = '_current';
+                    } else if (currentMonthNumber === initMonthNumber &&
+                              +numberOfDayOfMonth < initDayNumber
+                    ) {
+                        modifier = '_passed';
+                    } else {
+                        modifier = null;
+                    }
+
+                    weekHtml.appendChild(createDayHtml(numberOfDayOfMonth, modifier, dataDate));
+
                 });
 
                 monthHtml.appendChild(weekHtml);
 
+                let daysInMonth = monthHtml.querySelectorAll('.calendar__day');
+
+                if (options.setClassToDate) {
+                    setClassToDate(options.setClassToDate, daysInMonth);
+                }
+
+                if (clickedDays.length) {
+                    setClassToDate(convertArrToObj(clickedDays, '_clicked'), daysInMonth);
+                }
+
                 return monthHtml;
             }
 
-            function createDayHtml(html):HTMLElement {
+            function setClassToDate(classesObj, days:NodeList) {
+                let arrOfDates:string[] = Object.keys(classesObj),
+                    daysArr:HTMLElement[] = [].slice.call(days);
+
+                arrOfDates.forEach((dataDate) => {
+                    daysArr.forEach((day) => {
+                        if (day.getAttribute('data-date') === dataDate) {
+                            day.classList.add(classesObj[dataDate]);
+                        }
+                    });
+                });
+            }
+
+            function createDayHtml(html, classModifier:string='', dataDate=null):HTMLElement {
                 let day = document.createElement('div');
 
                 day.classList.add('calendar__day');
+
+                if (classModifier) {
+                    day.classList.add(classModifier);
+                }
+
+                if (dataDate) {
+                    day
+                        .setAttribute('data-date',
+                            `${dataDate['numberOfDayOfMonth']}.${moment().month(dataDate['currentMonthNumber']).format('MM')}.${dataDate['currentYearNumber']}`)
+                }
 
                 day.innerHTML = html;
 
@@ -156,12 +255,11 @@ interface Window {
             }
 
             function createWeekWithDaysHtml():HTMLElement {
-                let week = document.createElement('div'),
-                    days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                let week = document.createElement('div');
 
                 week.classList.add('calendar__week-header');
 
-                days.forEach((dayName) => {
+                defaultLocaleWeekdaysShort.forEach((dayName) => {
                     let block = document.createElement('div');
 
                     block.innerHTML = dayName;
@@ -182,10 +280,88 @@ interface Window {
                 return month;
             }
 
-            function appendMonthToMainContainer(monthHtml):void {
-                $el.html(monthHtml);
+            function createYearHtml():HTMLElement {
+                let year = document.createElement('div');
+
+                year.classList.add('calendar__year');
+
+                return year;
             }
 
+            function createCalendarWrapperHtml(html:HTMLElement):HTMLElement {
+                let wrapper = document.createElement('div');
+
+                wrapper.classList.add('calendar');
+                wrapper.classList.add('jsMomentCalendar');
+
+                if (html) {
+                    wrapper.appendChild(html);
+                }
+
+                return wrapper;
+            }
+
+            function appendToMainContainer(monthHtml):void {
+                $el.html(createCalendarWrapperHtml(monthHtml));
+            }
+
+            function getInitDayNumber():number {
+                return moment().date();
+            }
+
+            function getInitMonthNumber():number {
+                return moment().month();
+            }
+
+            function getInitYearNumber():number {
+                return moment().year();
+            }
+
+            function getCurrentDayNumber():number {
+                return moment().day();
+            }
+
+            function getCurrentMonthNumber():number {
+                return currentMonthNumber;
+            }
+
+            function getCurrentYearNumber():number {
+                return currentYearNumber;
+            }
+
+            function getCurrentDayName():string {
+                return defaultLocaleWeekdays[getCurrentDayNumber() - 1];
+            }
+
+            function getCurrentMonthName():string {
+                return moment().month(currentMonthNumber).format('MMMM');
+            }
+
+            function getCurrentYearName():string {
+                return currentYearNumber + '';
+            }
+
+            function changeOptions(newOptions) {
+                options = $.extend(options, newOptions);
+            }
+
+            function convertArrToObj(arr, val) {
+                let obj = {};
+
+                arr.forEach((item) => {
+                    obj[item] = val;
+                });
+
+                return obj;
+            }
+
+            function getClickedDays() {
+                return clickedDays;
+            }
+
+            function setClickedDays(arr) {
+                clickedDays = arr;
+            }
 
 
             init();
@@ -193,6 +369,31 @@ interface Window {
 
 
             /*Public Api*/
+            $el.data('momentCalendar', {
+                'appendNextMonth'() {
+                    appendToMainContainer(createMonth(createNextMonthModel()));
+                },
+                'appendPrevMonth'() {
+                    appendToMainContainer(createMonth(createPrevMonthModel()));
+                },
+                'refresh'() {
+                    appendToMainContainer(createMonth(createCurrentMonthModel()));
+                },
+                getInitDayNumber,
+                getInitMonthNumber,
+                getInitYearNumber,
+                getCurrentDayNumber,
+                getCurrentMonthNumber,
+                getCurrentYearNumber,
+                getCurrentDayName,
+                getCurrentMonthName,
+                getCurrentYearName,
+                changeOptions,
+                getClickedDays,
+                setClickedDays
+            })
+
+
 
         });
     };

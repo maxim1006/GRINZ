@@ -2,12 +2,27 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Multiline Ellipsis</title>
+    <title>Calendar</title>
     <link rel="stylesheet" href="css.css">
 </head>
 <body>
 
-<div id="calendar"></div>
+<div class="main-page-link">
+    <a href="/">&larr; grinz.ru</a>
+</div>
+
+<div class="calendar-wrapper" id="calendar">
+    <div class="calendar-header">
+        <span class="calendar-header__month jsCalendarHeaderMonth"></span>
+        <span class="calendar-header__year jsCalendarHeaderYear"></span>
+    </div>
+    <div class="calendar-body jsCalendarBody"></div>
+</div>
+
+<button id="buttonNext">Next month</button>
+<button id="buttonPrev">Prev month</button>
+<button id="buttonRefresh">Refresh month</button>
+<button id="buttonGetCurrentInfo">Get current info</button>
 
 
 
@@ -17,7 +32,55 @@
 
 <script>
     $(function() {
-        $('#calendar').momentCalendar()
+        let $calendar = $('#calendar'),
+            $jsCalendarHeaderMonth = $calendar.find('.jsCalendarHeaderMonth'),
+            $jsCalendarHeaderYear = $calendar.find('.jsCalendarHeaderYear'),
+            $jsCalendarBody = $calendar.find('.jsCalendarBody'),
+            calendar = $jsCalendarBody.momentCalendar({
+                setClassToDate: {
+                    '14.01.2017': '_autopay',
+                    '23.01.2017': '_autopay-arrow',
+                    '26.01.2017': '_due-date',
+                },
+                daysNaming: true,
+                onDayClick: function(el) {
+                    console.log(el);
+                }
+            }),
+            calendarApi = $jsCalendarBody.data('momentCalendar');
+
+        setMonthAndYear();
+
+        $('#buttonNext').on('click', () => {
+            calendarApi.appendNextMonth();
+            setMonthAndYear();
+        });
+        $('#buttonPrev').on('click', () => {
+            calendarApi.appendPrevMonth();
+            setMonthAndYear();
+        });
+        $('#buttonRefresh').on('click', () => {
+            calendarApi.refresh();
+            setMonthAndYear();
+        });
+        $('#buttonGetCurrentInfo').on('click', () => {
+            console.log(calendarApi.getCurrentDayNumber(), ' getCurrentDayNumber()');
+            console.log(calendarApi.getCurrentDayName(), ' getCurrentDayName()');
+            console.log(calendarApi.getCurrentMonthNumber(), ' getCurrentMonthNumber()');
+            console.log(calendarApi.getCurrentMonthName(), ' getCurrentMonthName()');
+            console.log(calendarApi.getCurrentYearNumber(), ' getCurrentYearNumber()');
+            console.log(calendarApi.getCurrentYearName(), ' getCurrentYearName');
+        });
+
+
+
+        /*Helpers*/
+        function setMonthAndYear() {
+            console.log(calendarApi.getCurrentMonthName());
+            console.log(calendarApi.getCurrentYearName());
+            $jsCalendarHeaderMonth.html(calendarApi.getCurrentMonthName());
+            $jsCalendarHeaderYear.html(calendarApi.getCurrentYearName());
+        }
     });
 </script>
 

@@ -111,6 +111,10 @@
             {
                 "links": [
                     {
+                        "name": "momentCalendar",
+                        "link": "jquery/calendar/"
+                    },
+                    {
                         "name": "Simple tree",
                         "link": "jquery/simpleTree/"
                     },

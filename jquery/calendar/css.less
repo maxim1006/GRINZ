@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.wrap {
+    width: 60%;
+    margin: auto;
+}
+
+.ellipsis {
+    line-height: 16px;
+    margin-bottom: 20px;
+}
+
+header {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+
+    &-wrapper {
+        margin: 30px;
+    }
+
+    &-header {
+        margin-bottom: 15px;
+    }
+
+    &__month {
+        display: table;
+    }
+
+    &__week,
+    &__week-header {
+        display: table-row;
+    }
+
+    &__day,
+    &__day-header {
+        display: table-cell;
+        padding-right: 40px;
+        padding-bottom: 35px;
+
+        &._current {
+            color: red;
+        }
+
+        &._passed {
+            color: gray;
+        }
+
+        &._clicked {
+            color: deepskyblue;
+        }
+    }
+}
