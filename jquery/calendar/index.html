@@ -12,10 +12,6 @@
 </div>
 
 <div class="calendar-wrapper" id="calendar">
-    <div class="calendar-header">
-        <span class="calendar-header__month jsCalendarHeaderMonth"></span>
-        <span class="calendar-header__year jsCalendarHeaderYear"></span>
-    </div>
     <div class="calendar-body jsCalendarBody"></div>
 </div>
 
@@ -43,6 +39,9 @@
                     '26.01.2017': '_due-date',
                 },
                 daysNaming: true,
+                clickableDays: true,
+                clickableOnlyUpcomingDays: true,
+                controlsPanel: true,
                 onDayClick: function(el) {
                     console.log(el);
                 }

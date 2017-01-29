@@ -40,7 +40,9 @@ interface Window {
                 currentMonthModel = createCurrentMonthModel(),
                 currentMonthNumber:number,
                 currentYearNumber:number,
-                clickedDays = [];
+                clickedDays = [],
+                controlsPanelYear,
+                controlsPanelMonth;
 
             let defaultLocaleWeekdays:string[] = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
                 defaultLocaleWeekdaysShort:string[] = "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"),
@@ -54,28 +56,44 @@ interface Window {
                 bindEvents();
             }
 
+
             function updateVars() {
             }
 
 
-
             function bindEvents() {
 
-                $el.on('click', '.calendar__day', (e) => {
-                    if (typeof options.onDayClick === 'function') {
-                        let day = e.currentTarget,
-                            date = day.getAttribute('data-date');
+                if (options.clickableDays) {
+                    $el.on('click', '.calendar__day', (e) => {
+                        if (typeof options.onDayClick === 'function') {
+                            let day = e.currentTarget,
+                                date = day.getAttribute('data-date');
 
-                        options.onDayClick(day);
+                            if (options.clickableOnlyUpcomingDays &&
+                                !isUpcomingDate(date)
+                            ) {
+                                return;
+                            }
 
-                        if (day.classList.contains('_clicked')) {
-                            day.classList.remove('_clicked');
-                            clickedDays.splice(clickedDays.indexOf(date), 1);
-                        } else {
-                            day.classList.add('_clicked');
-                            clickedDays.push(date);
+                            if (day.classList.contains('_clicked')) {
+                                day.classList.remove('_clicked');
+                                clickedDays.splice(clickedDays.indexOf(date), 1);
+                            } else {
+                                day.classList.add('_clicked');
+                                clickedDays.push(date);
+                            }
+
+                            options.onDayClick(day);
                         }
-                    }
+                    });
+                }
+
+                $el.on('click', '.calendar__panel-prev', () => {
+                    appendToMainContainer(createMonth(createPrevMonthModel()));
+                });
+
+                $el.on('click', '.calendar__panel-next', () => {
+                    appendToMainContainer(createMonth(createNextMonthModel()));
                 });
 
             }
@@ -294,11 +312,36 @@ interface Window {
                 wrapper.classList.add('calendar');
                 wrapper.classList.add('jsMomentCalendar');
 
+                if (options.controlsPanel) {
+                    wrapper.appendChild(createControlsPanelHtml());
+                }
+
                 if (html) {
                     wrapper.appendChild(html);
                 }
 
                 return wrapper;
+            }
+
+            function createControlsPanelHtml() {
+                let panel = document.createElement('div');
+
+                panel.classList.add('calendar__panel');
+
+                panel.insertAdjacentHTML('beforeend', `
+                    <div class="calendar__panel-prev"></div>
+                    <div class="calendar__panel-dates">
+                        <div class="calendar__panel-month">
+                            ${getCurrentMonthName()}
+                        </div>
+                        <div class="calendar__panel-year">
+                            ${getCurrentYearName()}
+                        </div>
+                    </div>
+                    <div class="calendar__panel-next"></div>
+                `);
+
+                return panel;
             }
 
             function appendToMainContainer(monthHtml):void {
@@ -330,7 +373,7 @@ interface Window {
             }
 
             function getCurrentDayName():string {
-                return defaultLocaleWeekdays[getCurrentDayNumber() - 1];
+                return moment().day(getCurrentDayNumber()).format('dddd');
             }
 
             function getCurrentMonthName():string {
@@ -363,6 +406,20 @@ interface Window {
                 clickedDays = arr;
             }
 
+            function isUpcomingDate(date) {
+                let dateArr = date.split('.');
+
+                if (dateArr[2] < initYearNumber ||
+                    dateArr[1] < initMonthNumber ||
+                    dateArr[0] < initDayNumber
+                    ) {return false}
+
+                return true;
+            }
+
+            function setMonthAndYearInControlsPanel() {
+
+            }
 
             init();
 
@@ -390,7 +447,8 @@ interface Window {
                 getCurrentYearName,
                 changeOptions,
                 getClickedDays,
-                setClickedDays
+                setClickedDays,
+                isUpcomingDate
             })
 
 

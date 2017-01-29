@@ -13,7 +13,7 @@
         var defaults = {};
         return $.each($(this), function (idx, el) {
             var options = $.extend(defaults, initOptions);
-            var $el = $(el), initDayNumber = getInitDayNumber(), initMonthNumber = getInitMonthNumber(), initYearNumber = getInitYearNumber(), currentMonthModel = createCurrentMonthModel(), currentMonthNumber, currentYearNumber, clickedDays = [];
+            var $el = $(el), initDayNumber = getInitDayNumber(), initMonthNumber = getInitMonthNumber(), initYearNumber = getInitYearNumber(), currentMonthModel = createCurrentMonthModel(), currentMonthNumber, currentYearNumber, clickedDays = [], controlsPanelYear, controlsPanelMonth;
             var defaultLocaleWeekdays = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'), defaultLocaleWeekdaysShort = "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"), defaultLocaleMonths = 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'), defaultLocaleMonthsShort = "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_");
             function init() {
                 appendToMainContainer(createMonth(currentMonthModel));
@@ -23,19 +23,31 @@
             function updateVars() {
             }
             function bindEvents() {
-                $el.on('click', '.calendar__day', function (e) {
-                    if (typeof options.onDayClick === 'function') {
-                        var day = e.currentTarget, date = day.getAttribute('data-date');
-                        options.onDayClick(day);
-                        if (day.classList.contains('_clicked')) {
-                            day.classList.remove('_clicked');
-                            clickedDays.splice(clickedDays.indexOf(date), 1);
+                if (options.clickableDays) {
+                    $el.on('click', '.calendar__day', function (e) {
+                        if (typeof options.onDayClick === 'function') {
+                            var day = e.currentTarget, date = day.getAttribute('data-date');
+                            if (options.clickableOnlyUpcomingDays &&
+                                !isUpcomingDate(date)) {
+                                return;
+                            }
+                            if (day.classList.contains('_clicked')) {
+                                day.classList.remove('_clicked');
+                                clickedDays.splice(clickedDays.indexOf(date), 1);
+                            }
+                            else {
+                                day.classList.add('_clicked');
+                                clickedDays.push(date);
+                            }
+                            options.onDayClick(day);
                         }
-                        else {
-                            day.classList.add('_clicked');
-                            clickedDays.push(date);
-                        }
-                    }
+                    });
+                }
+                $el.on('click', '.calendar__panel-prev', function () {
+                    appendToMainContainer(createMonth(createPrevMonthModel()));
+                });
+                $el.on('click', '.calendar__panel-next', function () {
+                    appendToMainContainer(createMonth(createNextMonthModel()));
                 });
             }
             function update() {
@@ -174,10 +186,19 @@
                 var wrapper = document.createElement('div');
                 wrapper.classList.add('calendar');
                 wrapper.classList.add('jsMomentCalendar');
+                if (options.controlsPanel) {
+                    wrapper.appendChild(createControlsPanelHtml());
+                }
                 if (html) {
                     wrapper.appendChild(html);
                 }
                 return wrapper;
+            }
+            function createControlsPanelHtml() {
+                var panel = document.createElement('div');
+                panel.classList.add('calendar__panel');
+                panel.insertAdjacentHTML('beforeend', "\n                    <div class=\"calendar__panel-prev\"></div>\n                    <div class=\"calendar__panel-dates\">\n                        <div class=\"calendar__panel-month\">\n                            " + getCurrentMonthName() + "\n                        </div>\n                        <div class=\"calendar__panel-year\">\n                            " + getCurrentYearName() + "\n                        </div>\n                    </div>\n                    <div class=\"calendar__panel-next\"></div>\n                ");
+                return panel;
             }
             function appendToMainContainer(monthHtml) {
                 $el.html(createCalendarWrapperHtml(monthHtml));
@@ -201,7 +222,7 @@
                 return currentYearNumber;
             }
             function getCurrentDayName() {
-                return defaultLocaleWeekdays[getCurrentDayNumber() - 1];
+                return moment().day(getCurrentDayNumber()).format('dddd');
             }
             function getCurrentMonthName() {
                 return moment().month(currentMonthNumber).format('MMMM');
@@ -225,6 +246,17 @@
             function setClickedDays(arr) {
                 clickedDays = arr;
             }
+            function isUpcomingDate(date) {
+                var dateArr = date.split('.');
+                if (dateArr[2] < initYearNumber ||
+                    dateArr[1] < initMonthNumber ||
+                    dateArr[0] < initDayNumber) {
+                    return false;
+                }
+                return true;
+            }
+            function setMonthAndYearInControlsPanel() {
+            }
             init();
             $el.data('momentCalendar', {
                 'appendNextMonth': function () {
@@ -247,7 +279,8 @@
                 getCurrentYearName: getCurrentYearName,
                 changeOptions: changeOptions,
                 getClickedDays: getClickedDays,
-                setClickedDays: setClickedDays
+                setClickedDays: setClickedDays,
+                isUpcomingDate: isUpcomingDate
             });
         });
     };
