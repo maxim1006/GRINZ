@@ -52,7 +52,11 @@
             }
             function update() {
             }
-            function createCurrentMonthModel() {
+            function createCurrentMonthModel(newOptions) {
+                if (newOptions === void 0) { newOptions = ''; }
+                if (newOptions) {
+                    $.extend(options, newOptions);
+                }
                 var startOfMonth = moment().startOf('month'), endOfMonth = moment().endOf('month'), days = [], day = startOfMonth;
                 currentMonthNumber = getInitMonthNumber();
                 currentYearNumber = getInitYearNumber();
@@ -67,8 +71,6 @@
                 if (moment().month(currentMonthNumber).get('year') !== currentYearNumber) {
                     currentYearNumber = moment().month(currentMonthNumber).get('year');
                 }
-                console.log(currentMonthNumber, ' currentMonthNumber');
-                console.log(currentYearNumber, ' currentYearNumber');
                 var startOfMonth = moment().month(currentMonthNumber).startOf('month'), endOfMonth = moment().month(currentMonthNumber).endOf('month'), days = [], day = startOfMonth;
                 while (day <= endOfMonth) {
                     days.push(day.toDate());
@@ -81,8 +83,6 @@
                 if (moment().month(currentMonthNumber).get('year') !== currentYearNumber) {
                     currentYearNumber = moment().month(currentMonthNumber).get('year');
                 }
-                console.log(currentMonthNumber, ' currentMonthNumber');
-                console.log(currentYearNumber, ' currentYearNumber');
                 var startOfMonth = moment().month(currentMonthNumber).startOf('month'), endOfMonth = moment().month(currentMonthNumber).endOf('month'), days = [], day = startOfMonth;
                 while (day <= endOfMonth) {
                     days.push(day.toDate());
@@ -96,11 +96,16 @@
                     monthHtml.appendChild(createWeekWithDaysHtml());
                 }
                 month.forEach(function (day, index) {
-                    var numberOfDayOfWeek = moment(day).format("e"), numberOfDayOfMonth = moment(day).format("D"), dataDate = {
+                    var numberOfDayOfWeek = moment(day).format("e"), numberOfDayOfMonth = moment(day).format("DD"), dataDate = {
                         numberOfDayOfMonth: numberOfDayOfMonth,
                         currentMonthNumber: currentMonthNumber,
                         currentYearNumber: currentYearNumber
                     }, modifier;
+                    if (!index && +numberOfDayOfWeek) {
+                        while (numberOfDayOfWeek--) {
+                            weekHtml.appendChild(createDayHtml());
+                        }
+                    }
                     if (weekHtml.querySelectorAll('.calendar__day').length === 7) {
                         if (weekHtml.innerHTML) {
                             monthHtml.appendChild(weekHtml);
@@ -142,6 +147,7 @@
                 });
             }
             function createDayHtml(html, classModifier, dataDate) {
+                if (html === void 0) { html = ''; }
                 if (classModifier === void 0) { classModifier = ''; }
                 if (dataDate === void 0) { dataDate = null; }
                 var day = document.createElement('div');
@@ -230,9 +236,6 @@
             function getCurrentYearName() {
                 return currentYearNumber + '';
             }
-            function changeOptions(newOptions) {
-                options = $.extend(options, newOptions);
-            }
             function convertArrToObj(arr, val) {
                 var obj = {};
                 arr.forEach(function (item) {
@@ -245,6 +248,9 @@
             }
             function setClickedDays(arr) {
                 clickedDays = arr;
+            }
+            function setClassToDateOptions(newSetClassToDate) {
+                options.setClassToDate = newSetClassToDate;
             }
             function isUpcomingDate(date) {
                 var dateArr = date.split('.');
@@ -265,8 +271,8 @@
                 'appendPrevMonth': function () {
                     appendToMainContainer(createMonth(createPrevMonthModel()));
                 },
-                'refresh': function () {
-                    appendToMainContainer(createMonth(createCurrentMonthModel()));
+                'refresh': function (newOptions) {
+                    appendToMainContainer(createMonth(createCurrentMonthModel(newOptions)));
                 },
                 getInitDayNumber: getInitDayNumber,
                 getInitMonthNumber: getInitMonthNumber,
@@ -277,9 +283,9 @@
                 getCurrentDayName: getCurrentDayName,
                 getCurrentMonthName: getCurrentMonthName,
                 getCurrentYearName: getCurrentYearName,
-                changeOptions: changeOptions,
                 getClickedDays: getClickedDays,
                 setClickedDays: setClickedDays,
+                setClassToDateOptions: setClassToDateOptions,
                 isUpcomingDate: isUpcomingDate
             });
         });

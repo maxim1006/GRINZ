@@ -105,7 +105,12 @@ interface Window {
 
 
             /*Helpers*/
-            function createCurrentMonthModel() {
+            function createCurrentMonthModel(newOptions='') {
+
+                if (newOptions) {
+                    $.extend(options, newOptions);
+                }
+
                 let startOfMonth = moment().startOf('month'),
                     endOfMonth = moment().endOf('month'),
                     days = [],
@@ -129,8 +134,8 @@ interface Window {
                     currentYearNumber = moment().month(currentMonthNumber).get('year');
                 }
 
-                console.log(currentMonthNumber, ' currentMonthNumber');
-                console.log(currentYearNumber, ' currentYearNumber');
+                // console.log(currentMonthNumber, ' currentMonthNumber');
+                // console.log(currentYearNumber, ' currentYearNumber');
 
                 let startOfMonth = moment().month(currentMonthNumber).startOf('month'),
                     endOfMonth = moment().month(currentMonthNumber).endOf('month'),
@@ -154,8 +159,8 @@ interface Window {
                     currentYearNumber = moment().month(currentMonthNumber).get('year');
                 }
 
-                console.log(currentMonthNumber, ' currentMonthNumber');
-                console.log(currentYearNumber, ' currentYearNumber');
+                // console.log(currentMonthNumber, ' currentMonthNumber');
+                // console.log(currentYearNumber, ' currentYearNumber');
 
                 let startOfMonth = moment().month(currentMonthNumber).startOf('month'),
                     endOfMonth = moment().month(currentMonthNumber).endOf('month'),
@@ -182,13 +187,20 @@ interface Window {
 
                 month.forEach((day, index) => {
                     let numberOfDayOfWeek = moment(day).format("e"),
-                        numberOfDayOfMonth = moment(day).format("D"),
+                        numberOfDayOfMonth = moment(day).format("DD"),
                         dataDate = {
                             numberOfDayOfMonth,
                             currentMonthNumber,
                             currentYearNumber
                         },
                         modifier;
+
+                    //put empty cells in case of start week not in Sunday
+                    if (!index && +numberOfDayOfWeek) {
+                        while (numberOfDayOfWeek--) {
+                            weekHtml.appendChild(createDayHtml())
+                        }
+                    }
 
                     if (weekHtml.querySelectorAll('.calendar__day').length === 7) { //if Sunday of new week
 
@@ -244,7 +256,7 @@ interface Window {
                 });
             }
 
-            function createDayHtml(html, classModifier:string='', dataDate=null):HTMLElement {
+            function createDayHtml(html='', classModifier:string='', dataDate=null):HTMLElement {
                 let day = document.createElement('div');
 
                 day.classList.add('calendar__day');
@@ -384,10 +396,6 @@ interface Window {
                 return currentYearNumber + '';
             }
 
-            function changeOptions(newOptions) {
-                options = $.extend(options, newOptions);
-            }
-
             function convertArrToObj(arr, val) {
                 let obj = {};
 
@@ -404,6 +412,11 @@ interface Window {
 
             function setClickedDays(arr) {
                 clickedDays = arr;
+            }
+
+
+            function setClassToDateOptions(newSetClassToDate) {
+                options.setClassToDate = newSetClassToDate;
             }
 
             function isUpcomingDate(date) {
@@ -433,8 +446,8 @@ interface Window {
                 'appendPrevMonth'() {
                     appendToMainContainer(createMonth(createPrevMonthModel()));
                 },
-                'refresh'() {
-                    appendToMainContainer(createMonth(createCurrentMonthModel()));
+                'refresh'(newOptions) {
+                    appendToMainContainer(createMonth(createCurrentMonthModel(newOptions)));
                 },
                 getInitDayNumber,
                 getInitMonthNumber,
@@ -445,9 +458,9 @@ interface Window {
                 getCurrentDayName,
                 getCurrentMonthName,
                 getCurrentYearName,
-                changeOptions,
                 getClickedDays,
                 setClickedDays,
+                setClassToDateOptions,
                 isUpcomingDate
             })
 
