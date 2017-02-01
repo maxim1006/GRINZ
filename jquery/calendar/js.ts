@@ -271,7 +271,7 @@ interface Window {
                             `${dataDate['numberOfDayOfMonth']}.${moment().month(dataDate['currentMonthNumber']).format('MM')}.${dataDate['currentYearNumber']}`)
                 }
 
-                day.innerHTML = html;
+                day.innerHTML = html ? +parseFloat(html) + '' : '';
 
                 return day;
             }
