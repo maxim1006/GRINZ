@@ -34,9 +34,9 @@
             $jsCalendarBody = $calendar.find('.jsCalendarBody'),
             calendar = $jsCalendarBody.momentCalendar({
                 setClassToDate: {
-                    '14.01.2017': '_autopay',
-                    '23.01.2017': '_autopay-arrow',
-                    '26.01.2017': '_due-date',
+                    '14.02.2017': '_autopay',
+                    '23.02.2017': '_autopay-arrow',
+                    '26.02.2017': '_due-date',
                 },
                 daysNaming: true,
                 clickableDays: true,
@@ -59,10 +59,18 @@
             setMonthAndYear();
         });
         $('#buttonRefresh').on('click', () => {
-            calendarApi.refresh();
+            calendarApi.refresh({
+                setClassToDate: {
+                    '16.02.2017': '_autopay',
+                    '25.02.2017': '_autopay-arrow',
+                    '28.02.2017': '_due-date'
+                }
+            });
             setMonthAndYear();
         });
-        $('#buttonGetCurrentInfo').on('click', () => {
+        $('#buttonGetCurrentInfo').on('click', (
+
+        ) => {
             console.log(calendarApi.getCurrentDayNumber(), ' getCurrentDayNumber()');
             console.log(calendarApi.getCurrentDayName(), ' getCurrentDayName()');
             console.log(calendarApi.getCurrentMonthNumber(), ' getCurrentMonthNumber()');
