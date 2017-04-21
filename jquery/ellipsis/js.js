@@ -21,7 +21,7 @@
         $('body').append(fakeDiv);
         options = $.extend({}, defaults, options);
         return $.each($(this), function (idx, el) {
-            var $el = $(el), $elPadding = $el.css('padding'), $elLH = $el.css('lineHeight'), elFontSize = $el.css('fontSize'), elFontFamily = $el.css('fontFamily'), textInitial = $.trim($el.text()), WINDOW_RESIZE_TIME = 50, resizeStartFlag = true, $elW, resizeID;
+            var $el = $(el), $elPadding = $el.css('padding'), $elLH = $el.css('lineHeight'), elFontSize = $el.css('fontSize'), elFontWeight = $el.css('fontWeight'), elLetterSpacing = $el.css('letterSpacing'), elFontFamily = $el.css('fontFamily'), textInitial = $.trim($el.text()), WINDOW_RESIZE_TIME = 50, resizeStartFlag = true, $elW, resizeID;
             function init() {
                 updateVars();
                 setupFakeDiv();
@@ -96,6 +96,8 @@
                     'padding': $elPadding,
                     'fontSize': elFontSize,
                     'fontFamily': elFontFamily,
+                    'fontWeight': elFontWeight,
+                    'letterSpacing': elLetterSpacing,
                     'lineHeight': $elLH
                 })
                     .text(textInitial);

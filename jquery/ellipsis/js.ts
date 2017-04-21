@@ -36,6 +36,8 @@
                 $elPadding = $el.css('padding'),
                 $elLH = $el.css('lineHeight'),
                 elFontSize = $el.css('fontSize'),
+                elFontWeight = $el.css('fontWeight'),
+                elLetterSpacing = $el.css('letterSpacing'),
                 elFontFamily = $el.css('fontFamily'),
                 textInitial = $.trim($el.text()),
                 WINDOW_RESIZE_TIME = 50,
@@ -147,6 +149,8 @@
                         'padding': $elPadding,
                         'fontSize': elFontSize,
                         'fontFamily': elFontFamily,
+                        'fontWeight': elFontWeight,
+                        'letterSpacing': elLetterSpacing,
                         'lineHeight': $elLH
                     })
                     .text(textInitial);
