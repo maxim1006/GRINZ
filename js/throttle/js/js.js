@@ -75,6 +75,34 @@ $(function() {
             $('.throttle3').on('mousemove', $.throttle(DELAY_3,f) );
         });
     })();
+
+    (function() {
+        //Another Javascript approach
+        function throttle(f, time) {
+            var state = null,
+                COOLDOWN = 1;
+
+            return function() {
+
+                if (state) return;
+
+                state = COOLDOWN;
+
+                f.apply(this, arguments);
+
+                setTimeout(function() {
+                    state = null;
+                }, time);
+
+            };
+        }
+
+        function cb() {
+            console.log('throttle');
+        }
+
+        $('.debounce5').on('mousemove', throttle(cb, 1000));
+    })();
      
     //resizeend
     var resizeend;
@@ -147,43 +175,23 @@ $(function() {
     })();
 
     (function() {
-        //Javascript approach
         var debounceend;
 
-        $('.debounce4').on('mousemove', function () {
-            clearTimeout(debounceend);
-            debounceend = setTimeout(function() {
-                console.log('debounceend');
-            }, 300);
-        });
-    })();
-
-    (function() {
-        //Another Javascript approach
-        function debounce(f, time) {
-            var state = null,
-                COOLDOWN = 1;
-
+        var debounce = function(f, delay) {
             return function() {
+                clearTimeout(debounceend);
+                debounceend = window.setTimeout(function() {
+                    f.apply(null, arguments);
+                }, delay);
+            }
+        };
 
-                if (state) return;
+        //Javascript approach
 
-                state = COOLDOWN;
 
-                f.apply(this, arguments);
-
-                setTimeout(function() {
-                    state = null;
-                }, time);
-
-            };
-        }
-
-        function cb() {
+        $('.debounce4').on('mousemove', debounce(function() {
             console.log('debounceend');
-        }
-
-        $('.debounce5').on('mousemove', debounce(cb, 1000));
+        }, 300));
     })();
 
 
