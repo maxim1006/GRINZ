@@ -84,7 +84,7 @@ header {
   background-position: 50%;
 }
 
-.calendar__years,
-.calendar__months {
+.calendar-years,
+.calendar-months {
   display: none;
 }
