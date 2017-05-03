@@ -6,13 +6,14 @@ interface options {
 
 interface Window {
     define: any,
+    exports: any,
     moment: any
 }
-
 
 let moment = window.moment;
 
 class MomentCalendar {
+    calendarClickBinded: any;
     monthsEl: any;
     currentMonthModel: any[];
     clickedDays: any[] = [];
@@ -26,10 +27,12 @@ class MomentCalendar {
     defaults: any;
     initOptions: any;
     private yearsEl: any;
+    private calendarEl: any;
 
     constructor(element, initOptions: any) {
         this.createMainTemplate(element);
 
+        this.calendarEl = element;
         this.el = element.querySelector('.calendar-body');
         this.monthsEl = element.querySelector('.calendar-months');
         this.yearsEl = element.querySelector('.calendar-years');
@@ -67,118 +70,116 @@ class MomentCalendar {
     }
 
     makeMonthsHtml() {
+        let i = 0;
         MomentCalendar.defaultLocaleMonthsShort.forEach((month) => {
             this.monthsEl.insertAdjacentHTML('beforeend', `
-                <div class="calendar-months__month">${month}</div>
+                <div class="calendar-months__month" data-month="${i++}">${month}</div>
             `);
         });
     }
 
     makeYearsHtml() {
         let yearsBefore = 6,
-        yearsAfter = 8,
-        c = 0;
+            yearsAfter = 8,
+            c = 0;
 
         while (yearsBefore--) {
-           this.yearsEl.insertAdjacentHTML('beforeend', `
-                <div class="calendar-years__year">${this.getCurrentYearNumber() - yearsBefore - 1}</div> 
+            this.yearsEl.insertAdjacentHTML('beforeend', `
+                <div class="calendar-years__year" data-year="${this.getCurrentYearNumber() - yearsBefore - 1}"
+                >${this.getCurrentYearNumber() - yearsBefore - 1}</div> 
            `);
         }
 
         this.yearsEl.insertAdjacentHTML('beforeend', `
-            <div class="calendar-years__year">${this.getCurrentYearNumber()}</div> 
+            <div class="calendar-years__year" data-year="${this.getCurrentYearNumber()}">${this.getCurrentYearNumber()}</div> 
        `);
 
         while (++c < yearsAfter) {
             this.yearsEl.insertAdjacentHTML('beforeend', `
-                <div class="calendar-years__year">${this.getCurrentYearNumber() + c}</div> 
+                <div class="calendar-years__year" data-year="${this.getCurrentYearNumber() + c}">${this.getCurrentYearNumber() + c}</div> 
            `);
         }
-
 
     }
 
     bindEvents() {
-
-        if (this.options.clickableDays) {
-            this.el.addEventListener('click', (e) => {
-                if (e.target.classList.contains('calendar__day') && typeof this.options.onDayClick === 'function') {
-                    let day = e.target,
-                        date = day.getAttribute('data-date');
-
-                    if (this.options.clickableOnlyUpcomingDays && !this.isUpcomingDate(date)) {
-                        return;
-                    }
-
-                    if (day.classList.contains('_clicked')) {
-                        day.classList.remove('_clicked');
-                        this.clickedDays.splice(this.clickedDays.indexOf(date), 1);
-                    } else {
-                        day.classList.add('_clicked');
-                        this.clickedDays.push(date);
-                    }
-
-                    this.options.onDayClick(day);
-                }
-            });
-        }
-
-        this.el.addEventListener('click', (e) => {
-            if (e.target.classList.contains("calendar__panel-prev")) {
-                this.appendToMainContainer(this.createMonth(this.createPrevMonthModel()));
-            }
-        });
-
-        this.el.addEventListener('click', (e) => {
-            if (e.target.classList.contains("calendar__panel-next")) {
-                this.appendToMainContainer(this.createMonth(this.createNextMonthModel()));
-            }
-        });
-
-        this.el.querySelector('.calendar__panel-month').addEventListener('click', (e) => {
-            this.show(this.monthsEl);
-            this.hide(this.el);
-        });
-
-        this.el.querySelector('.calendar__panel-year').addEventListener('click', (e) => {
-            this.show(this.yearsEl);
-            this.hide(this.el);
-        });
-
-        this.yearsEl.addEventListener('click', (e) => {
-            this.hide(this.yearsEl);
-            this.show(this.monthsEl);
-            this.currentYearNumber = +e.target.textContent;
-        });
-
-        this.monthsEl.addEventListener('click', (e) => {
-            this.hide(this.monthsEl);
-            this.show(this.el);
-        });
+        this.calendarClickBinded = this.calendarClick.bind(this);
+        this.calendarEl.addEventListener('click', this.calendarClickBinded);
     }
 
-    update() {}
+    calendarClick(e) {
+        let target = e.target,
+            targetClassList = target.classList;
+
+        if (targetClassList.contains('calendar__day') && typeof this.options.onDayClick === 'function') {
+            let day = e.target,
+                date = day.getAttribute('data-date');
+
+            if (this.options.clickableOnlyUpcomingDays && !this.isUpcomingDate(date)) {
+                return;
+            }
+
+            if (day.classList.contains('_clicked')) {
+                day.classList.remove('_clicked');
+                this.clickedDays.splice(this.clickedDays.indexOf(date), 1);
+            } else {
+                day.classList.add('_clicked');
+                this.clickedDays.push(date);
+            }
+
+            this.options.onDayClick(day);
+        }
+
+
+        if (targetClassList.contains("calendar__panel-prev")) {
+            this.appendToMainContainer(this.createMonth(this.createPrevMonthModel()));
+        }
+
+        if (targetClassList.contains("calendar__panel-next")) {
+            this.appendToMainContainer(this.createMonth(this.createNextMonthModel()));
+        }
+
+        if (targetClassList.contains("calendar__panel-month")) {
+            this.show(this.monthsEl);
+            this.hide(this.el);
+        }
+
+        if (targetClassList.contains("calendar__panel-year")) {
+            this.show(this.yearsEl);
+            this.hide(this.el);
+        }
+
+        if (targetClassList.contains("calendar-years__year")) {
+            this.hide(this.yearsEl);
+            this.show(this.monthsEl);
+            this.currentYearNumber = +target.getAttribute('data-year');
+        }
+
+        if (targetClassList.contains("calendar-months__month")) {
+            this.hide(this.monthsEl);
+            this.show(this.el);
+            this.currentMonthNumber = +target.getAttribute('data-month');
+            this.appendToMainContainer(this.createMonth(this.createMonthModel()));
+        }
+    }
+
+    update() {
+    }
+
+    destroy() {
+        this.calendarEl.removeEventListener('click', this.calendarClickBinded);
+        this.calendarEl.innerHTML = '';
+    }
 
     createCurrentMonthModel(newOptions = '') {
-
         if (newOptions) {
             $.extend(this.options, newOptions);
         }
 
-        let startOfMonth = moment().startOf('month'),
-            endOfMonth = moment().endOf('month'),
-            days = [],
-            day = startOfMonth;
-
         this.currentMonthNumber = this.getInitMonthNumber();
         this.currentYearNumber = this.getInitYearNumber();
 
-        while (day <= endOfMonth) {
-            days.push(day.toDate());
-            day = day.clone().add(1, 'd');
-        }
-
-        return days;
+        return this.createMonthModel();
     }
 
     createNextMonthModel() {
@@ -188,22 +189,7 @@ class MomentCalendar {
             this.currentYearNumber = moment().month(this.currentMonthNumber).get('year');
         }
 
-        // console.log(currentMonthNumber, ' currentMonthNumber');
-        // console.log(currentYearNumber, ' currentYearNumber');
-
-        let startOfMonth = moment().month(this.currentMonthNumber).startOf('month'),
-            endOfMonth = moment().month(this.currentMonthNumber).endOf('month'),
-            days = [],
-            day = startOfMonth;
-
-        while (day <= endOfMonth) {
-            days.push(day.toDate());
-            day = day.clone().add(1, 'd');
-        }
-
-        //console.log(days, ' days in month');
-
-        return days;
+        return this.createMonthModel();
     }
 
     createPrevMonthModel() {
@@ -213,11 +199,12 @@ class MomentCalendar {
             this.currentYearNumber = moment().month(this.currentMonthNumber).get('year');
         }
 
-        // console.log(currentMonthNumber, ' currentMonthNumber');
-        // console.log(currentYearNumber, ' currentYearNumber');
+        return this.createMonthModel();
+    }
 
-        let startOfMonth = moment().month(this.currentMonthNumber).startOf('month'),
-            endOfMonth = moment().month(this.currentMonthNumber).endOf('month'),
+    createMonthModel() {
+        let startOfMonth = moment().year(this.currentYearNumber).month(this.currentMonthNumber).startOf('month'),
+            endOfMonth = moment().year(this.currentYearNumber).month(this.currentMonthNumber).endOf('month'),
             days = [],
             day = startOfMonth;
 
@@ -401,7 +388,7 @@ class MomentCalendar {
                             ${this.getCurrentMonthName()}
                         </div>
                         <div class="calendar__panel-year">
-                            ${this.getCurrentYearName()}
+                            ${this.getCurrentYearNumber()}
                         </div>
                     </div>
                     <div class="calendar__panel-next"></div>
@@ -427,10 +414,6 @@ class MomentCalendar {
         return moment().year();
     }
 
-    getCurrentDayNumber(): number {
-        return moment().day();
-    }
-
     getCurrentMonthNumber(): number {
         return this.currentMonthNumber;
     }
@@ -439,16 +422,12 @@ class MomentCalendar {
         return this.currentYearNumber;
     }
 
-    getCurrentDayName(): string {
-        return moment().day(this.getCurrentDayNumber()).format('dddd');
+    getInitDayName(): string {
+        return moment().day(this.getInitDayNumber()).format('dddd');
     }
 
     getCurrentMonthName(): string {
         return moment().month(this.currentMonthNumber).format('MMMM');
-    }
-
-    getCurrentYearName(): string {
-        return this.currentYearNumber + '';
     }
 
     convertArrToObj(arr, val) {
@@ -474,6 +453,8 @@ class MomentCalendar {
     }
 
     isUpcomingDate(date) {
+        if (!date) return;
+
         let dateArr = date.split('.');
 
         if (dateArr[2] < this.initYearNumber ||
@@ -486,7 +467,8 @@ class MomentCalendar {
         return true;
     }
 
-    setMonthAndYearInControlsPanel() {}
+    setMonthAndYearInControlsPanel() {
+    }
 
     appendNextMonth() {
         this.appendToMainContainer(this.createMonth(this.createNextMonthModel()));
@@ -528,9 +510,8 @@ $el.data('momentCalendar', {
     getCurrentDayNumber,
     getCurrentMonthNumber,
     getCurrentYearNumber,
-    getCurrentDayName,
+    getInitDayName,
     getCurrentMonthName,
-    getCurrentYearName,
     getClickedDays,
     setClickedDays,
     setClassToDateOptions,
@@ -578,12 +559,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.querySelector('#buttonGetCurrentInfo').addEventListener('click', () => {
-        console.log(calendarApi.getCurrentDayNumber(), ' getCurrentDayNumber()');
-        console.log(calendarApi.getCurrentDayName(), ' getCurrentDayName()');
+        console.log(calendarApi.getInitDayNumber(), ' getInitDayNumber()');
+        console.log(calendarApi.getInitDayName(), ' getInitDayName()');
         console.log(calendarApi.getCurrentMonthNumber(), ' getCurrentMonthNumber()');
         console.log(calendarApi.getCurrentMonthName(), ' getCurrentMonthName()');
         console.log(calendarApi.getCurrentYearNumber(), ' getCurrentYearNumber()');
-        console.log(calendarApi.getCurrentYearName(), ' getCurrentYearName');
+        console.log(calendarApi.getCurrentYearNumber(), ' getCurrentYearNumber');
     });
 
 
@@ -591,6 +572,6 @@ document.addEventListener('DOMContentLoaded', () => {
     /*Helpers*/
     function setMonthAndYear() {
         console.log(calendarApi.getCurrentMonthName());
-        console.log(calendarApi.getCurrentYearName());
+        console.log(calendarApi.getCurrentYearNumber());
     }
 });
