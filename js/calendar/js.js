@@ -6,7 +6,9 @@ var MomentCalendar = (function () {
         this.createMainTemplate(element);
         this.calendarEl = element;
         this.el = element.querySelector('.calendar-body');
+        this.monthsElWrapper = element.querySelector('.calendar-months-wrapper');
         this.monthsEl = element.querySelector('.calendar-months');
+        this.yearsElWrapper = element.querySelector('.calendar-years-wrapper');
         this.yearsEl = element.querySelector('.calendar-years');
         this.initOptions = initOptions;
         this.defaults = {};
@@ -18,7 +20,7 @@ var MomentCalendar = (function () {
         this.init();
     }
     MomentCalendar.prototype.createMainTemplate = function (element) {
-        element.insertAdjacentHTML('afterbegin', "\n            <div class=\"calendar-body\"></div>\n            <div class=\"calendar-months\"></div>\n            <div class=\"calendar-years\"></div>\n        ");
+        element.insertAdjacentHTML('afterbegin', "\n            <div class=\"calendar-body\"></div>\n            <div class=\"calendar-months-wrapper\">\n                <div class=\"calendar-months\"></div>\n            </div>\n            <div class=\"calendar-years-wrapper\">\n                <div class=\"calendar-years\"></div>\n            </div>\n        ");
     };
     MomentCalendar.prototype.init = function () {
         this.appendToMainContainer(this.createMonth(this.currentMonthModel));
@@ -33,14 +35,46 @@ var MomentCalendar = (function () {
             _this.monthsEl.insertAdjacentHTML('beforeend', "\n                <div class=\"calendar-months__month\" data-month=\"" + i++ + "\">" + month + "</div>\n            ");
         });
     };
+    MomentCalendar.prototype.setCurrentYearClass = function () {
+        var _this = this;
+        var years = this.yearsEl.querySelectorAll('.calendar-years__year');
+        Array.prototype.forEach.call(years, function (year) {
+            var dataYear = +year.getAttribute('data-year');
+            if (dataYear === _this.currentYearNumber) {
+                year.classList.add('_current');
+            }
+            else {
+                year.classList.remove('_current');
+            }
+        });
+    };
+    MomentCalendar.prototype.setCurrentMonthClass = function () {
+        var _this = this;
+        var months = this.monthsEl.querySelectorAll('.calendar-months__month');
+        Array.prototype.forEach.call(months, function (month) {
+            var dataMonth = +month.getAttribute('data-month');
+            if (dataMonth === _this.currentMonthNumber) {
+                month.classList.add('_current');
+            }
+            else {
+                month.classList.remove('_current');
+            }
+        });
+    };
+    MomentCalendar.prototype.clearCurrentMonthClass = function () {
+        var months = this.monthsEl.querySelectorAll('.calendar-months__month');
+        Array.prototype.forEach.call(months, function (month) {
+            month.classList.remove('_current');
+        });
+    };
     MomentCalendar.prototype.makeYearsHtml = function () {
-        var yearsBefore = 6, yearsAfter = 8, c = 0;
-        while (yearsBefore--) {
-            this.yearsEl.insertAdjacentHTML('beforeend', "\n                <div class=\"calendar-years__year\" data-year=\"" + (this.getCurrentYearNumber() - yearsBefore - 1) + "\"\n                >" + (this.getCurrentYearNumber() - yearsBefore - 1) + "</div> \n           ");
-        }
+        var yearsBefore = 6, yearsAfter = 8, c = 0, k = 0;
         this.yearsEl.insertAdjacentHTML('beforeend', "\n            <div class=\"calendar-years__year\" data-year=\"" + this.getCurrentYearNumber() + "\">" + this.getCurrentYearNumber() + "</div> \n       ");
-        while (++c < yearsAfter) {
-            this.yearsEl.insertAdjacentHTML('beforeend', "\n                <div class=\"calendar-years__year\" data-year=\"" + (this.getCurrentYearNumber() + c) + "\">" + (this.getCurrentYearNumber() + c) + "</div> \n           ");
+        while (k++ < yearsBefore) {
+            this.yearsEl.insertAdjacentHTML('beforeend', "\n                <div class=\"calendar-years__year\" data-year=\"" + (this.getCurrentYearNumber() - k) + "\"\n                >" + (this.getCurrentYearNumber() - k) + "</div> \n           ");
+        }
+        while (c++ < yearsAfter) {
+            this.yearsEl.insertAdjacentHTML('afterbegin', "\n                <div class=\"calendar-years__year\" data-year=\"" + (this.getCurrentYearNumber() + c) + "\">" + (this.getCurrentYearNumber() + c) + "</div> \n           ");
         }
     };
     MomentCalendar.prototype.bindEvents = function () {
@@ -71,20 +105,23 @@ var MomentCalendar = (function () {
             this.appendToMainContainer(this.createMonth(this.createNextMonthModel()));
         }
         if (targetClassList.contains("calendar__panel-month")) {
-            this.show(this.monthsEl);
+            this.show(this.monthsElWrapper);
             this.hide(this.el);
+            this.setCurrentMonthClass();
         }
         if (targetClassList.contains("calendar__panel-year")) {
-            this.show(this.yearsEl);
+            this.show(this.yearsElWrapper);
             this.hide(this.el);
+            this.setCurrentYearClass();
+            this.clearCurrentMonthClass();
         }
         if (targetClassList.contains("calendar-years__year")) {
-            this.hide(this.yearsEl);
-            this.show(this.monthsEl);
+            this.hide(this.yearsElWrapper);
+            this.show(this.monthsElWrapper);
             this.currentYearNumber = +target.getAttribute('data-year');
         }
         if (targetClassList.contains("calendar-months__month")) {
-            this.hide(this.monthsEl);
+            this.hide(this.monthsElWrapper);
             this.show(this.el);
             this.currentMonthNumber = +target.getAttribute('data-month');
             this.appendToMainContainer(this.createMonth(this.createMonthModel()));
@@ -107,15 +144,15 @@ var MomentCalendar = (function () {
     };
     MomentCalendar.prototype.createNextMonthModel = function () {
         ++this.currentMonthNumber;
-        if (moment().month(this.currentMonthNumber).get('year') !== this.currentYearNumber) {
-            this.currentYearNumber = moment().month(this.currentMonthNumber).get('year');
+        if (moment().year(this.currentYearNumber).month(this.currentMonthNumber).get('year') !== this.currentYearNumber) {
+            ++this.currentYearNumber;
         }
         return this.createMonthModel();
     };
     MomentCalendar.prototype.createPrevMonthModel = function () {
         --this.currentMonthNumber;
-        if (moment().month(this.currentMonthNumber).get('year') !== this.currentYearNumber) {
-            this.currentYearNumber = moment().month(this.currentMonthNumber).get('year');
+        if (moment().year(this.currentYearNumber).month(this.currentMonthNumber).get('year') !== this.currentYearNumber) {
+            --this.currentYearNumber;
         }
         return this.createMonthModel();
     };
@@ -155,8 +192,10 @@ var MomentCalendar = (function () {
                 _this.currentYearNumber === _this.initYearNumber) {
                 modifier = '_current';
             }
-            else if (_this.currentMonthNumber === _this.initMonthNumber &&
-                +numberOfDayOfMonth < _this.initDayNumber) {
+            else if (_this.currentYearNumber < _this.initYearNumber ||
+                _this.currentMonthNumber < _this.initMonthNumber ||
+                (_this.currentMonthNumber === _this.initMonthNumber &&
+                    +numberOfDayOfMonth < _this.initDayNumber)) {
                 modifier = '_passed';
             }
             else {
@@ -289,12 +328,28 @@ var MomentCalendar = (function () {
         if (!date)
             return;
         var dateArr = date.split('.');
-        if (dateArr[2] < this.initYearNumber ||
-            dateArr[1] < this.initMonthNumber ||
-            dateArr[0] < this.initDayNumber) {
+        if (dateArr[2] > this.initYearNumber) {
+            return true;
+        }
+        else if (dateArr[2] == this.initYearNumber) {
+            if (dateArr[1] > this.initMonthNumber) {
+                return true;
+            }
+            else if (dateArr[1] == this.initMonthNumber) {
+                if (dateArr[0] > this.initDayNumber || dateArr[1] == this.initMonthNumber) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        else {
             return false;
         }
-        return true;
     };
     MomentCalendar.prototype.setMonthAndYearInControlsPanel = function () {
     };

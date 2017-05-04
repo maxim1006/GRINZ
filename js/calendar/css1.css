@@ -83,7 +83,15 @@ header {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAMCAYAAACulacQAAAAv0lEQVQoU42QvQrCQBCEZ04UBMEcGGzEyr/CH9DOJ4h5VDtB4hsoCNepENAitZCLWNm4ckIkWrnVsjMMOx83eroC2Zf0NglxfqAwjPQsIdmGyDmwpkdAcp0ROj68+omKDRGJQ2sGH9EtW7SqmddMqOiLyCG0ZuTuzF1rjLTyKrEz4Cn7e2bmH9GZlkCppmdXkhqC3X+iiy155RhKfcf+PHQMrRm+HypWASRepIUqBQiXwJruFwSHT6gGSLPxL74XUx1U623iUlsAAAAASUVORK5CYII=") 0 0 no-repeat;
     background-position: 50%;
 }
-.calendar-months,
-.calendar-years {
+.calendar-months-wrapper,
+.calendar-years-wrapper {
     display: none;
+}
+
+.calendar-years__year._current {
+    color: red;
+}
+
+.calendar-months__month._current {
+    color: red;
 }
