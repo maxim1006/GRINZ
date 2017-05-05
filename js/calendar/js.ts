@@ -20,6 +20,7 @@ class MomentCalendar {
     currentMonthModel: any[];
     clickedDays: any[] = [];
     currentMonthNumber: number;
+    currentDayNumber: number;
     currentYearNumber: number;
     initYearNumber: any;
     initMonthNumber: number;
@@ -223,13 +224,13 @@ class MomentCalendar {
         this.calendarEl.innerHTML = '';
     }
 
-    createCurrentMonthModel(newOptions = '') {
+    createCurrentMonthModel(newOptions:any = {}) {
         if (newOptions) {
-            $.extend(this.options, newOptions);
+            Object.assign(this.options, newOptions);
         }
 
-        this.currentMonthNumber = this.getInitMonthNumber();
-        this.currentYearNumber = this.getInitYearNumber();
+        this.currentMonthNumber = newOptions.month || this.getInitMonthNumber();
+        this.currentYearNumber = newOptions.year || this.getInitYearNumber();
 
         return this.createMonthModel();
     }
@@ -624,10 +625,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#buttonRefresh').addEventListener('click', () => {
         calendarApi.refresh({
             setClassToDate: {
-                '16.02.2017': '_autopay',
-                '25.02.2017': '_autopay-arrow',
-                '28.02.2017': '_due-date'
-            }
+                '16.07.2018': '_clicked'
+            },
+            month: '06',
+            year: 2018
         });
         setMonthAndYear();
     });
@@ -638,7 +639,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(calendarApi.getCurrentMonthNumber(), ' getCurrentMonthNumber()');
         console.log(calendarApi.getCurrentMonthName(), ' getCurrentMonthName()');
         console.log(calendarApi.getCurrentYearNumber(), ' getCurrentYearNumber()');
-        console.log(calendarApi.getCurrentYearNumber(), ' getCurrentYearNumber');
     });
 
 

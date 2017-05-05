@@ -140,12 +140,12 @@ var MomentCalendar = (function () {
         this.calendarEl.innerHTML = '';
     };
     MomentCalendar.prototype.createCurrentMonthModel = function (newOptions) {
-        if (newOptions === void 0) { newOptions = ''; }
+        if (newOptions === void 0) { newOptions = {}; }
         if (newOptions) {
-            $.extend(this.options, newOptions);
+            Object.assign(this.options, newOptions);
         }
-        this.currentMonthNumber = this.getInitMonthNumber();
-        this.currentYearNumber = this.getInitYearNumber();
+        this.currentMonthNumber = newOptions.month || this.getInitMonthNumber();
+        this.currentYearNumber = newOptions.year || this.getInitYearNumber();
         return this.createMonthModel();
     };
     MomentCalendar.prototype.createNextMonthModel = function () {
@@ -413,10 +413,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#buttonRefresh').addEventListener('click', function () {
         calendarApi.refresh({
             setClassToDate: {
-                '16.02.2017': '_autopay',
-                '25.02.2017': '_autopay-arrow',
-                '28.02.2017': '_due-date'
-            }
+                '16.07.2018': '_clicked'
+            },
+            month: '06',
+            year: 2018
         });
         setMonthAndYear();
     });
@@ -426,7 +426,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(calendarApi.getCurrentMonthNumber(), ' getCurrentMonthNumber()');
         console.log(calendarApi.getCurrentMonthName(), ' getCurrentMonthName()');
         console.log(calendarApi.getCurrentYearNumber(), ' getCurrentYearNumber()');
-        console.log(calendarApi.getCurrentYearNumber(), ' getCurrentYearNumber');
     });
     function setMonthAndYear() {
         console.log(calendarApi.getCurrentMonthName());
