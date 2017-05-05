@@ -174,10 +174,18 @@ class MomentCalendar {
 
         if (targetClassList.contains("calendar__panel-prev")) {
             this.appendToMainContainer(this.createMonth(this.createPrevMonthModel()));
+
+            if (typeof this.options.onPrevButtonClick === 'function') {
+                this.options.onPrevButtonClick(this.calendarEl);
+            }
         }
 
         if (targetClassList.contains("calendar__panel-next")) {
             this.appendToMainContainer(this.createMonth(this.createNextMonthModel()));
+
+            if (typeof this.options.onNextButtonClick === 'function') {
+                this.options.onNextButtonClick(this.calendarEl);
+            }
         }
 
         if (targetClassList.contains("calendar__panel-month")) {
@@ -591,7 +599,14 @@ document.addEventListener('DOMContentLoaded', () => {
             controlsPanel: true,
             onDayClick: function(el) {
                 console.log(el);
+            },
+            onNextButtonClick: function(el) {
+                console.log(el);
+            },
+            onPrevButtonClick: function(el) {
+                console.log(el);
             }
+
         });
 
     setMonthAndYear();
