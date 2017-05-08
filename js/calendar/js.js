@@ -152,6 +152,7 @@ var MomentCalendar = (function () {
         ++this.currentMonthNumber;
         if (moment().year(this.currentYearNumber).month(this.currentMonthNumber).get('year') !== this.currentYearNumber) {
             ++this.currentYearNumber;
+            this.currentMonthNumber = 0;
         }
         return this.createMonthModel();
     };
@@ -159,6 +160,7 @@ var MomentCalendar = (function () {
         --this.currentMonthNumber;
         if (moment().year(this.currentYearNumber).month(this.currentMonthNumber).get('year') !== this.currentYearNumber) {
             --this.currentYearNumber;
+            this.currentMonthNumber = 11;
         }
         return this.createMonthModel();
     };
@@ -366,6 +368,10 @@ var MomentCalendar = (function () {
         this.appendToMainContainer(this.createMonth(this.createPrevMonthModel()));
     };
     MomentCalendar.prototype.refresh = function (newOptions) {
+        this.hide(this.yearsElWrapper);
+        this.hide(this.monthsElWrapper);
+        this.show(this.el);
+        this.setClickedDays([]);
         this.appendToMainContainer(this.createMonth(this.createCurrentMonthModel(newOptions)));
     };
     MomentCalendar.prototype.show = function (el, displayType) {

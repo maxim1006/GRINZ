@@ -240,6 +240,7 @@ class MomentCalendar {
 
         if (moment().year(this.currentYearNumber).month(this.currentMonthNumber).get('year') !== this.currentYearNumber) {
             ++this.currentYearNumber;
+            this.currentMonthNumber = 0;
         }
 
         return this.createMonthModel();
@@ -250,6 +251,7 @@ class MomentCalendar {
 
         if (moment().year(this.currentYearNumber).month(this.currentMonthNumber).get('year') !== this.currentYearNumber) {
             --this.currentYearNumber;
+            this.currentMonthNumber = 11;
         }
 
         return this.createMonthModel();
@@ -547,6 +549,10 @@ class MomentCalendar {
     }
 
     refresh(newOptions: any) {
+        this.hide(this.yearsElWrapper);
+        this.hide(this.monthsElWrapper);
+        this.show(this.el);
+        this.setClickedDays([]);
         this.appendToMainContainer(this.createMonth(this.createCurrentMonthModel(newOptions)));
     }
 
