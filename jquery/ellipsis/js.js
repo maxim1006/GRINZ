@@ -72,11 +72,24 @@
                 }, WINDOW_RESIZE_TIME);
             }
             function fitText(text) {
+                var fittedTextBeforeLastWord = '';
                 while (fakeDiv.height() > options.h) {
+                    fittedTextBeforeLastWord = text;
                     text = removeWord(text);
                     fakeDiv.text(text);
                 }
+                if (fittedTextBeforeLastWord) {
+                    fakeDiv.text(fittedTextBeforeLastWord);
+                    while (fakeDiv.height() > options.h) {
+                        text = removeSymbol(fittedTextBeforeLastWord);
+                        fittedTextBeforeLastWord = text;
+                        fakeDiv.text(text);
+                    }
+                }
                 return text;
+            }
+            function removeSymbol(text) {
+                return text.slice(0, text.length - 1);
             }
             function removeWord(text) {
                 var arr = text.split(" ");

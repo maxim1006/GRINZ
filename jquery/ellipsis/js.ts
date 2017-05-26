@@ -120,12 +120,29 @@
             /*Helpers*/
             function fitText(text) {
 
+                let fittedTextBeforeLastWord = '';
+
                 while (fakeDiv.height() > options.h) {
+                    fittedTextBeforeLastWord = text;
                     text = removeWord(text);
                     fakeDiv.text(text);
                 }
 
+                if (fittedTextBeforeLastWord) {
+                    fakeDiv.text(fittedTextBeforeLastWord);
+
+                    while (fakeDiv.height() > options.h) {
+                        text = removeSymbol(fittedTextBeforeLastWord);
+                        fittedTextBeforeLastWord = text;
+                        fakeDiv.text(text);
+                    }
+                }
+
                 return text;
+            }
+
+            function removeSymbol(text: string):string {
+                return text.slice(0, text.length - 1);
             }
 
             function removeWord(text) {
