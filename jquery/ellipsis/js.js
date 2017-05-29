@@ -111,7 +111,8 @@
                     'fontFamily': elFontFamily,
                     'fontWeight': elFontWeight,
                     'letterSpacing': elLetterSpacing,
-                    'lineHeight': $elLH
+                    'lineHeight': $elLH,
+                    'wordWrap': 'break-word'
                 })
                     .text(textInitial);
             }
