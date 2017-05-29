@@ -17,6 +17,7 @@
             var $obj = $(this);
 
             var $doc,
+                $win,
                 $objHeight,
                 $yBarHeight,
                 $yBarWidth,
@@ -50,6 +51,9 @@
 
 
             function init() {
+
+                if ($obj.data('maxScrollIsInited')) return;
+
                 initVars();
                 appendScroll();
                 initSliderVars();
@@ -63,7 +67,9 @@
 
 
             function initVars() {
+                $obj.data('maxScrollIsInited', true);
                 $doc = $(document);
+                $win = $(window);
                 $scroll = options.scrolledBlock ? $obj.children(options.scrolledBlock).eq(0) : $obj.children('.jsMaxScroll').eq(0);
                 $objHeight = $obj.height();
             }
@@ -124,6 +130,7 @@
 
                 $ySlider
                     .on('mousedown touchstart', function(e) {
+                        e.stopPropagation();
                         canDrag = true;
                         startPoint = e.pageY;
                         startPosition = $ySlider.position().top;
@@ -135,6 +142,7 @@
 
                 $ySliderHorizontal
                     .on('mousedown touchstart', function (e) {
+                        e.stopPropagation();
                         canDragX = true;
                         startPointX = e.pageX;
                         startPositionX = $ySliderHorizontal.position().left;
@@ -147,6 +155,8 @@
                 $doc
                     .on('mousemove.maxSlider touchmove.maxSlider', onMouseMove)
                     .on('mouseup touchend', onMouseUp);
+
+                $win.on('resize', onWindowResize);
 
                 $scroll.on('scroll', onMouseScroll);
 
@@ -283,6 +293,8 @@
              * append and find scroll elements
              */
             function appendScroll() {
+                if ($obj.children('.maxscroll__slider-wrap').length) return;
+
                 $(
                     '<div class="maxscroll__slider-wrap">' +
                     '<div class="maxscroll__slider"></div>' +
@@ -321,7 +333,8 @@
                 }
             }
 
-            getScrollbarWidth = makeScrollBarWidthCache(getScrollbarWidth);
+            /*Remove cache for high resolution calculations*/
+            //getScrollbarWidth = makeScrollBarWidthCache(getScrollbarWidth);
 
 
             function hideNativeScrolls() {
@@ -345,8 +358,8 @@
             function countDelta($yBarHeight, $scrollHeight, $ySliderHeightFull) {
                 delta = (($scrollHeight-$yBarHeight)/($yBarHeight - $ySliderHeightFull));
 
-                //check if scroll is needed
-                if ($scrollHeight-$yBarHeight > 0) {
+                //check if scroll is needed; 1 - because there are big screen resolutions and there are fractional numbers
+                if ($scrollHeight-$yBarHeight >= 1) {
                     $ySliderWrap.show();
                 } else {
                     $ySliderWrap.hide();
@@ -368,7 +381,7 @@
                 deltaHorizontal = (($scrollWidth-$yBarWidth)/($yBarWidth - $ySliderHorizontalWidthFull));
 
                 //check if scroll is needed
-                if ($scrollWidth-$yBarWidth > 0) {
+                if ($scrollWidth-$yBarWidth >= 1) {
                     $ySliderHorizontalWrap.show();
                 } else {
                     $ySliderHorizontalWrap.hide();
@@ -439,6 +452,7 @@
                                 }
 
                                 if (autoResizeFlag) setTimeout(resize, options.autoResizeTime || 1000);
+
                             }, options.autoResizeTime || 1000);
                         })
                         .on('mouseleave touchend', function() {
@@ -446,6 +460,17 @@
                             clearInterval(timeoutID);
                         });
                 }
+            }
+
+
+
+            var windowResizeTimeoutID;
+
+            function onWindowResize() {
+                clearTimeout(windowResizeTimeoutID);
+                windowResizeTimeoutID = setTimeout(function() {
+                    hideNativeScrolls();
+                }, options.windowResizeTime || 300)
             }
 
 
